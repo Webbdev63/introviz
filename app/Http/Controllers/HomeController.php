@@ -12,6 +12,7 @@ class HomeController extends Controller
   public function home()
   {
    $states = State::all();
+   //just for test
    //dd($state);
   // die();
    return view('home', compact('states'));
