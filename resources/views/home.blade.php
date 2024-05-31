@@ -98,13 +98,24 @@
                   </select>
                   </div>
             </div>
-      </div>
-  </div>
-</section>
-<section class="after">
-  <div class="container">
-      <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+
+            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+                  <div class="absences">
+                  <form action="/action_page.php">
+                  <label for="sel1" class="form-label">Search by Carship</label>
+                  <select class="form-select" id="CARSHIP" name="CARSHIP">
+                    <option>Select</option>
+                     <option value="C">Carrier</option>    
+                      <option value="S">Shipper Only</option> 
+                      <option value="B">Broker</option> 
+                      <option value="R">Registrant</option> 
+                      <option value="F">Freight Forwarder</option>   
+                      <option value="T">Cargo Tank</option>
+                  </select>
+                  </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                   <div class="absences">
                 
                   <label for="sel1" class="form-label">Search by Power Units</label>
@@ -121,6 +132,7 @@
                   </select>
                   </div>
             </div>
+
       </div>
   </div>
 </section>
@@ -165,27 +177,6 @@
       </div>
 </section>
 
-<section class="after">
-  <div class="container">
-      <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                  <div class="absences">
-                  <form action="/action_page.php">
-                  <label for="sel1" class="form-label">Search by Carship</label>
-                  <select class="form-select" id="CARSHIP" name="CARSHIP">
-                    <option>Select</option>
-                     <option value="C">Carrier</option>    
-                      <option value="S">Shipper Only</option> 
-                      <option value="B">Broker</option> 
-                      <option value="R">Registrant</option> 
-                      <option value="F">Freight Forwarder</option>   
-                      <option value="T">Cargo Tank</option>
-                  </select>
-                  </div>
-            </div>
-      </div>
-  </div>
-</section>
 <section class="tracking">
       <div class="container">
             <div class="row">
