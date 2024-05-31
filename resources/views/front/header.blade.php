@@ -3,10 +3,13 @@
 <head>
 <title> introviz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+
 <link rel="stylesheet" href="/front/css/font-awesome.min.css">
 <link href="/front/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/front/css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 </body>

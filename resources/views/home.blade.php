@@ -44,7 +44,7 @@
                 //alert(state_id);
                 $('#city').html('');
                 $.ajax({
-                    url: '{{ route("getCities") }}',
+                    url: '{{ route("getCities") }}'.replace('https:', 'http:'),
                     type: 'POST',
                     data: {
                       state_code: state_code,
