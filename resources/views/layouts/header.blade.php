@@ -9,12 +9,12 @@
     <meta content="Myra Studio" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="public/dashboard1/images/favicon.ico">
+    <link rel="shortcut icon" href="/dashboard1/images/favicon.ico">
 
-    <link href="public/dashboard1/libs/morris.js/morris.css" rel="stylesheet" type="text/css" />
+    <link href="/dashboard1/libs/morris.js/morris.css" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
-    <link href="public/dashboard1/css/style.min.css" rel="stylesheet" type="text/css">
-    <link href="public/dashboard1/css/icons.min.css" rel="stylesheet" type="text/css">
-    <script src="public/dashboard1/js/config.js"></script>
+    <link href="/dashboard1/css/style.min.css" rel="stylesheet" type="text/css">
+    <link href="/dashboard1/css/icons.min.css" rel="stylesheet" type="text/css">
+    <script src="/dashboard1/js/config.js"></script>
 </head>

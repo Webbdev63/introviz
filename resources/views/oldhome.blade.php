@@ -3,20 +3,18 @@
 <section class="yourself">
   <div class="container">
       <div class="row">
-         <!--   <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                   <div class="nearly">
                       <p>Find Data Now</p>
                   </div>
-            </div>   -->
+            </div>
       </div>
   </div>
 </section>
-<form method="POST" action="{{ route('search') }}">
-  @csrf
 <section class="after">
   <div class="container">
       <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                   <div class="absences">
                   
                   <label for="sel1" class="form-label">Search by State</label>
@@ -29,7 +27,7 @@
                   </select>
                   </div>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
               <div class="absences">
               <label for="sel1" class="form-label">Search by City</label>
               <select class="form-select" id="city" name="city">
@@ -53,7 +51,7 @@
                     success: function (result) {
                         $('#city').html('<option value="">Select City</option>');
                         $.each(result, function (key, value) {
-                            $('#city').append('<option value="' + value + '">' + value + '</option>');
+                            $('#city').append('<option value="' + key + '">' + value + '</option>');
                         });
                     }
                 });
@@ -62,24 +60,29 @@
     </script>
               </div>
         </div>
-           <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+      </div>
+  </div>
+</section>
+<section class="after">
+  <div class="container">
+      <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                   <div class="absences">
                 
                   <label for="sel1" class="form-label">Search by Zipcode</label>
-                  <input class="form-select" name="Phy_zip" id="Phy_zip">
+                  <input class="form-select" name="zipcode" id="zipcode">
                 
                   </div>
             </div>
       </div>
   </div>
 </section>
-
 <section class="after">
   <div class="container">
       <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                   <div class="absences">
-                
+                  <form action="/action_page.php">
                   <label for="sel1" class="form-label">Search by Class</label>
                   <select class="form-select" id="cls" name="cls">
                     <option>Select</option>
@@ -106,18 +109,12 @@
       <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                   <div class="absences">
-                
+                  <form action="/action_page.php">
                   <label for="sel1" class="form-label">Search by Power Units</label>
-                  <select class="form-select" id="sel1" name="TOT_PWR">
-                    <option>Select Power Units</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                  <select class="form-select" id="sel1" name="sellist1">
+                    <option>Select</option>
+                    <option> Min and Max (max 8)</option>
+                    <option> Min and Max (max 8)</option>
                   </select>
                   </div>
             </div>
@@ -164,7 +161,6 @@
           </div>
       </div>
 </section>
-
 <section class="after">
   <div class="container">
       <div class="row">
@@ -172,7 +168,7 @@
                   <div class="absences">
                   <form action="/action_page.php">
                   <label for="sel1" class="form-label">Search by Carship</label>
-                  <select class="form-select" id="CARSHIP" name="CARSHIP">
+                  <select class="form-select" id="carship" name="carship">
                     <option>Select</option>
                      <option value="C">Carrier</option>    
                       <option value="S">Shipper Only</option> 
@@ -189,335 +185,327 @@
 <section class="tracking">
       <div class="container">
             <div class="row">
-
-
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                         <div class="carship">
-                              <h5>CARGO TRANSPORTED</h5>
+                              <h5>Other Option</h5>
                         </div>
                   </div>
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                        <div class="finaces">
                           <div class="form-check mb-2 mr-sm-2">
                              <label class="form-check-label" for="inlineFormCheck">
-                               GENERAL FREIGHT
+                               Genfreight
                             </label>
-                           <input class="form-check-input" name="Genfreight" value="x" name type="checkbox" id="inlineCheck">
+                           <input class="form-check-input" type="checkbox" id="inlineCheck" value="X" name="Genfreight">
                           </div>
                         </div>
                   </div>
-                  <div class="col-xl-3 col-lg-3 col-md-6  col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                             HOUSEHOLD GOODS
+                              Household
                           </label>
-                          <input class="form-check-input" name="Household" value="x" type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck" value="X" name="Household">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6  col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                         METAL: SHEETS, COILS, ROLLS
+                            Metalsheet
                           </label>
-                          <input class="form-check-input" type="checkbox"  value="x" name="Metalsheet" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck"  value="X" name="Metalsheet">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6  col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                           MOTOR VEHICLES
+                            Motorveh
                           </label>
-                          <input class="form-check-input" name=" Motorveh" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck" value="X" name="Motorveh">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6  col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                            DRIVEAWAY / TOWAWAY
+                            Drivetow
                           </label>
-                          <input class="form-check-input" name="Drivetow" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6  col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                           LOGS, POLES, BEAMS
+                            Logpole
                           </label>
-                          <input class="form-check-input" name="Logpole" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                        <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                          BUILDING MATERIALS
+                            Bldgmat
                          </label>
-                        <input class="form-check-input" name="Bldgmat" value="x"  type="checkbox" id="inlineCheck">
+                        <input class="form-check-input" type="checkbox" id="inlineCheck">
                        </div>
                      </div>
                </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+               <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                 <div class="finaces">
                    <div class="form-check mb-2 mr-sm-2">
                       <label class="form-check-label" for="inlineFormCheck">
-                       MOBILE HOMES
+                       MobileHome
                      </label>
-                    <input class="form-check-input" name="MobileHome" value="x"  type="checkbox" id="inlineCheck">
+                    <input class="form-check-input" type="checkbox" id="inlineCheck">
                    </div>
                  </div>
            </div>
-           <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+           <div class="col-xl-2 col-lg-2 col-md-3 col-12">
             <div class="finaces">
                <div class="form-check mb-2 mr-sm-2">
                   <label class="form-check-label" for="inlineFormCheck">
-                MACHINERY, LARGE OBJECTS
+                  Machlrg
                  </label>
-                <input class="form-check-input" name="Machlrg" value="x"  type="checkbox" id="inlineCheck">
+                <input class="form-check-input" type="checkbox" id="inlineCheck">
                </div>
              </div>
        </div> 
-     
-        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+        <div class="col-xl-2 col-lg-2 col-md-3 col-12">
         <div class="finaces">
            <div class="form-check mb-2 mr-sm-2">
               <label class="form-check-label" for="inlineFormCheck">
-                FRESH PRODUCE 
+                Produce
              </label>
-            <input class="form-check-input" name="Produce" value="x"  type="checkbox" id="inlineCheck">
+            <input class="form-check-input" type="checkbox" id="inlineCheck">
            </div>
          </div>
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+        <div class="col-xl-2 col-lg-2 col-md-3 col-12">
           <div class="finaces">
              <div class="form-check mb-2 mr-sm-2">
                 <label class="form-check-label" for="inlineFormCheck">
-                LIQUIDS/GASES  
+                  Liqgas
                </label>
-              <input class="form-check-input" name="Liqgas" value="x"  type="checkbox" id="inlineCheck">
+              <input class="form-check-input" type="checkbox" id="inlineCheck">
              </div>
            </div>
           </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+          <div class="col-xl-2 col-lg-2 col-md-3 col-12">
             <div class="finaces">
                <div class="form-check mb-2 mr-sm-2">
                   <label class="form-check-label" for="inlineFormCheck">
-              INTERMODAL CONTAINERS      
+                    Intermodal
                  </label>
-                <input class="form-check-input" name="Intermodal" value="x"  type="checkbox" id="inlineCheck">
+                <input class="form-check-input" type="checkbox" id="inlineCheck">
                </div>
              </div>
             </div>
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                          PASSENGERS  
+                            Passengers
                           </label>
-                          <input class="form-check-input" name="Passengers" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="withoutfddgfd">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                        OILFIELD EQUIPMENT    
+                            Oilfield
                           </label>
-                          <input class="form-check-input" name="Oilfield" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                       </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                           <div class="withoutggg">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                      LIVESTOCK      
+                            Livestock
                           </label>
-                          <input class="form-check-input" name="Livestock" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                       </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                          GARBAGE, REFUSE, TRASH
+                            Grainfeed
                           </label>
-                          <input class="form-check-input" name="Grainfeed" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                       COAL/COKE  
+                            Coalcoke
                           </label>
-                          <input class="form-check-input" name="Coalcoke" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                       <div class="better">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                            MEAT
+                            Meat
                           </label>
-                          <input class="form-check-input" name="Meat" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                         </div>
                     </div>
                   </div> 
- 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                  GARBAGE, REFUSE, TRASH          
+                            Garbage
                           </label>
-                          <input class="form-check-input" name="Garbage"  value="x" type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                           U.S. MAIL  
+                            Usmail
                           </label>
-                          <input class="form-check-input" name="Usmail" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                        CHEMICALS    
+                            Chem
                           </label>
-                          <input class="form-check-input" name="Chem" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                       COMMODITIES DRY BULK   
+                            Drybulk
                           </label>
-                          <input class="form-check-input" name="Drybulk" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                REFRIGERATED FOOD            
+                            Coldfood
                           </label>
-                          <input class="form-check-input" name="Coldfood" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                         BEVERAGES   
+                            Beverages
                           </label>
-                          <input class="form-check-input" name="Beverages" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                        PAPER PRODUCTS    
+                            Paperprod
                           </label>
-                          <input class="form-check-input" name="Paperprod"  value="x" type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                       UTILITY     
+                            Utility
                           </label>
-                          <input class="form-check-input" name="Utility"  value="x" type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                         FARM SUPPLIES   
+                            Farmsupp
                           </label>
-                          <input class="form-check-input" name="Farmsupp" value="x" type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                        CONSTRUCTION    
+                            Construct
                           </label>
-                          <input class="form-check-input" name="Construct" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                            WATER-WELL
+                            Waterwell
                           </label>
-                          <input class="form-check-input" name="Waterwell" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div> 
-                  <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-3 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
                           <label class="form-check-label" for="inlineFormCheck">
-                      OTHER      
+                            Cargoother
                           </label>
-                          <input class="form-check-input" name="Cargoother" value="x"  type="checkbox" id="inlineCheck">
+                          <input class="form-check-input" type="checkbox" id="inlineCheck">
                         </div>
                     </div>
                   </div>
-
-
-
                   <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                           <div class="network">
-                            <button type="submit" class="btn btn" >Submit</button>
+                            <button type="button" class="btn btn" ><a href="home.html">Submit </a></button>
                           </div>
                   </div> 
           </div>
      </div> 
 </section>
-      </form>
+
 
 
 @include('front.footer');
-
 

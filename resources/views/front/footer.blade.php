@@ -66,7 +66,7 @@
                   </div>
                   <div class="col-xl-4 col-lg-4 col-md-6 col-12">
                       <div class=" nibh">
-                          <img src="public/front/image/logo.png" class="img-fluid">
+                          <img src="/front/image/logo.png" class="img-fluid">
                       </div>
                   </div>
                   <div class="col-xl-4 col-lg-4 col-md-6 col-12">

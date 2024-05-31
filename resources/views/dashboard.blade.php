@@ -64,28 +64,28 @@
 
                         <li class="dropdown d-none d-md-inline-block">
                             <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="public/dashboard1/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
+                                <img src="/dashboard1/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="public/dashboard1/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    <img src="/dashboard1/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="public/dashboard1/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    <img src="/dashboard1/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="public/dashboard1/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    <img src="/dashboard1/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="public/dashboard1/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    <img src="/dashboard1/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                                 </a>
 
                             </div>
@@ -159,7 +159,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="public/dashboard1/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        <img src="/dashboard1/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
@@ -197,7 +197,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="public/dashboard1/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        <img src="/dashboard1/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
@@ -227,7 +227,7 @@
 
                        <!--  <li class="dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="public/dashboard1/images/users/avatar-4.jpg" alt="user-image" class="rounded-circle">
+                                <img src="/dashboard1/images/users/avatar-4.jpg" alt="user-image" class="rounded-circle">
                                 <span class="ms-1 d-none d-md-inline-block">
                                   {{ Auth::user()->name }}<i class="mdi mdi-chevron-down"></i>
                                 </span>
@@ -237,7 +237,7 @@
                          <li class="dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
                     href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src=public/dashboard1/images/users/avatar-4.jpg alt="user-image" class="rounded-circle">
+                    <img src="/dashboard1/images/users/avatar-4.jpg alt="user-image" class="rounded-circle">
                     <span class="ms-1 d-none d-md-inline-block">
                         {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                     </span>
