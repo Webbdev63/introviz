@@ -89,9 +89,18 @@
                     <img src="/front/image/ifjefe.png">
                 </div>
                 <div class="mind">
-                    <a href="{{route('savedOrder')}}" class="btn btn">place order<img
-                            src="/front/image/touch.png" class="img-fluid"></a>
-                </div>
+      <form method="GET" action="{{ route('census.export') }}">
+
+          @csrf
+
+          @foreach(request()->all() as $key => $value)
+              <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+          @endforeach
+
+          <button type="submit" class="btn btn">Download data <img src="/front/image/touch.png" class="img-fluid"></button>
+      </form>
+  </div>
+
             </div>
 
         </div>

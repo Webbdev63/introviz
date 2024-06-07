@@ -14,6 +14,9 @@ use App\Http\Controllers\HomeController;
  Route::get('/checkoutpage', [HomeController::class, 'checkoutpage'])->name('checkoutpage');
  Route::post('/search', [HomeController::class, 'search'])->name('search');
  Route::get('/saved-order', [HomeController::class, 'savedOrder'])->name('savedOrder');
+ Route::get('census/export', [HomeController::class, 'export'])->name('census.export');
+ Route::get('Outofservicefile', [HomeController::class, 'Outofservicefile'])->name('Outofservicefile');
+
 
  Route::get('/dashboard', function () {
      return view('dashboard');

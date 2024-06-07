@@ -152,12 +152,12 @@ if (localStorage.getItem("username") === null) {
 }
 var stateValue = $('#state').val();
 
-     alert(stateValue);
+  //   alert(stateValue);
     window.onload = function() {
 
       var stateValue = $('#state').val();
 
-     alert(stateValue);
+  //   alert(stateValue);
           if(stateValue!=''){
           var a = localStorage.getItem('city');
           results  =JSON.parse(a);
