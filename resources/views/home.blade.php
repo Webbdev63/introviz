@@ -1,86 +1,159 @@
-@include('front.header');
-
+@include('front.header')
 <style>
-  .range_container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: 35% auto;
-  }
+    .range_container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 35% auto;
+    }
 
-  .sliders_control {
-    position: relative;
-    min-height: 15px;
-  }
+    .sliders_control {
+        position: relative;
+        min-height: 15px;
+    }
 
-  .form_control {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    font-size: 24px;
-    color: #635a5a;
-  }
+    .form_control {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        font-size: 24px;
+        color: #635a5a;
+    }
 
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    pointer-events: all;
-    width: 24px;
-    height: 24px;
-    background-color: #0060aa;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px #C6C6C6;
-    cursor: pointer;
-  }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        pointer-events: all;
+        width: 24px;
+        height: 24px;
+        background-color: #0060aa;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px #C6C6C6;
+        cursor: pointer;
+    }
 
-  input[type=range]::-moz-range-thumb {
-    -webkit-appearance: none;
-    pointer-events: all;
-    width: 24px;
-    height: 24px;
-    background-color: #0060aa;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px #C6C6C6;
-    cursor: pointer;
-  }
+    input[type=range]::-moz-range-thumb {
+        -webkit-appearance: none;
+        pointer-events: all;
+        width: 24px;
+        height: 24px;
+        background-color: #0060aa;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px #C6C6C6;
+        cursor: pointer;
+    }
 
-  input[type=range]::-webkit-slider-thumb:hover {
-    background: #0060aa;
-  }
+    input[type=range]::-webkit-slider-thumb:hover {
+        background: #0060aa;
+    }
 
-  input[type=range]::-webkit-slider-thumb:active {
-    box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-    -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-  }
+    input[type=range]::-webkit-slider-thumb:active {
+        box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+        -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    }
 
-  input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px;
-    width: 100%;
-    position: absolute;
-    background-color: #0060aa;
-    pointer-events: none;
-  }
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 10px;
+        width: 100%;
+        position: absolute;
+        background-color: #0060aa;
+        pointer-events: none;
+    }
 
-  #fromSlider {
-    height: 0;
-    z-index: 1;
-    top: 5px;
+    #fromSlider {
+        height: 0;
+        z-index: 1;
+        top: 5px;
+    }
+
+    .form_data {
+	padding: 0px 30px;
+}
+
+
+.sidebarfilter {
+    margin-bottom: 20px;
+}
+
+.sidebarfilter .form-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-sidbar {
+    display: block;
+    padding: 10px;
+    background-color: #70706e;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.nav-sidbar:hover {
+    background-color: #0056b3;
+
+}
+
+.nav-sidbar.active {
+    background-color: #0056b3;
+}
+.nav-item_sidebar {
+    margin-bottom: 3px;
+}
+.nav-sidbar a:hover {
+	color: #fff;
+}
+.nav-item_sidebar a:hover {
+	color: #fff !important;
+}
+
+@media screen and (max-width: 1400px) {
+  .finaces .form-check-label {
+    font-size: 14px;
   }
+  .finaces #inlineCheck {
+    font-size: 19px;
+    margin: 3px auto;
+  }
+  .form-label {
+    display: block !important;
+  }
+}
 </style>
 
+
+
 <section class="yourself">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <!--   <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                  <div class="nearly">
-                      <p>Find Data Now</p>
-                  </div>
-            </div>   -->
+            <div class="col-sm-2">
+            <div class="sidebar">
+           <div class="sidebarfilter">
+            <label for="sidebarurl" class="form-label">Search By Data Type</label>
+            <ul class="nav-list">
+                <li class="nav-item_sidebar">
+                    <a class="nav-sidbar" aria-current="page" href="/">Census</a>
+                </li>
+                <li class="nav-item_sidebar">
+                    <a class="nav-sidbar" href="{{ route('Outofservicefile') }}">Out of service</a>
+                </li>
+                <li class="nav-item_sidebar">
+                    <a class="nav-sidbar" href="{{ route('InsuranceFile') }}">Insurance</a>
+                </li>
+            </ul>
         </div>
     </div>
-</section>
-<form method="POST" action="{{ route('search') }}">
+            </div>
+            <div class="col-sm-10 form_data">
+            <form method="POST" action="{{ route('search') }}">
     @csrf
     <section class="after">
         <div class="container">
@@ -108,7 +181,7 @@
 
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-12 zipcodeshow" style="display: none;">
                     <div class="absences">
 
                         <label for="sel1" class="form-label">Search by Zipcode</label>
@@ -117,13 +190,26 @@
                         </select>
 
                     </div>
+
+
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-12 zipcodeinput">
+                    <div class="absences">
+
+                        <label for="sel1" class="form-label">Search by Zipcode</label>
+                        <input class="form-input" name="Phy_zip" id="Phy_zip">
+
+                    </div>
+
+
                 </div>
             </div>
         </div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" >
         $(document).ready(function() {
 
             $('#state').on('change', function() {
@@ -131,50 +217,55 @@
                 //alert(state_id);
                 localStorage.removeItem('city');
                 $('#city').html('');
-                $.ajax({
-                    url: '{{ route('getCities') }}',
-                    type: 'POST',
-                    data: {
-                        state_code: state_code,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(result) {
-                      var a=JSON.stringify(result)
-                     localStorage.setItem('city', a);
-                        getCities(result);
-                    }
-                });
+                // $.ajax({
+                //     url: '{{ route('getCities') }}',
+                //     type: 'POST',
+                //     data: {
+                //         state_code: state_code,
+                //         _token: '{{ csrf_token() }}'
+                //     },
+                //     success: function(result) {
+                //         var a = JSON.stringify(result)
+                //         localStorage.setItem('city', a);
+                //         getCities(result);
+                //     }
+                // });
+                cities(state_code);
             });
         });
 
-if (localStorage.getItem("username") === null) {
-  //...
-}
-var stateValue = $('#state').val();
-
-  //   alert(stateValue);
-    window.onload = function() {
-
-      var stateValue = $('#state').val();
-
-  //   alert(stateValue);
-          if(stateValue!=''){
-          var a = localStorage.getItem('city');
-          results  =JSON.parse(a);
-          console.log(results);
-          if(results[0].state_code==stateValue){
-            getCities(results)
-          }}
-}
+        var state_code = localStorage.getItem('state_code');
 
 
+        if (state_code != '') {
+            cities(state_code)
+        }
+
+
+        function cities(state_code) {
+            $.ajax({
+                url: '{{ route('getCities') }}',
+                type: 'POST',
+                data: {
+                    state_code: state_code,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(result) {
+
+                    var a = JSON.stringify(result)
+                    localStorage.setItem('state_code', state_code);
+                    getCities(result);
+                }
+            });
+        }
 
         function getCities(result) {
             $('#city').html('<option value="">Select City</option>');
             $.each(result, function(key, value) {
 
                 var opt_value = value.id + '-' + value.city + '-' + value.state_code;
-                $('#city').append('<option value="' + opt_value + '"  {{ $states == $state->state_code ? 'selected' : '' }}  >' + value.city + '</option>');
+                $('#city').append('<option value="' + opt_value +
+                    '"  {{ $states == $state->state_code ? 'selected' : '' }}  >' + value.city + '</option>');
             });
 
         }
@@ -189,25 +280,49 @@ var stateValue = $('#state').val();
 
             });
         });
+
+
+
         async function fetchcityData(text) {
+    try {
+        var citydata = text.split("-");
+        var CityId = citydata[0];
+        var CityName = citydata[1];
+        var State = citydata[2];
 
+        var apiUrl = `https://www.zipcodeapi.com/rest/q3CGoyPPl4puZfuQnsWhjRow1B8qRepisTOwzWOTES9x1qfNzVPU44CZeKoke6wT/city-zips.json/${CityName}/${State}`;
+        var proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+       // alert(proxyUrl);
 
+        console.log('Requesting URL:', proxyUrl); // Log the request URL
 
-            var citydata = text.split("-");
-            var CityId = citydata[0];
-            var CityName = citydata[1];
-            var State = citydata[2];
+        const response = await fetch(proxyUrl);
 
-
-            var apiUrl =
-                `https://www.zipcodeapi.com/rest/q3CGoyPPl4puZfuQnsWhjRow1B8qRepisTOwzWOTES9x1qfNzVPU44CZeKoke6wT/city-zips.json/${CityName}/${State}`
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            console.log(data)
-            $.each(data.zip_codes, function(key, value) {
-                $('#Phy_zip').append('<option value="' + value + '">' + value + '</option>');
-            });
+        if (!response.ok) {
+            console.error('Network response was not ok:', response.statusText);
+            throw new Error('Network response was not ok: ' + response.statusText);
         }
+
+        const data = await response.json();
+
+        // Check if the response contains the expected data
+        if (!data.contents) {
+            console.error('Unexpected response format:', data);
+            throw new Error('Unexpected response format');
+        }
+
+        const result = JSON.parse(data.contents);
+
+        $('#Phy_zip').html(''); // Clear previous options
+        $.each(result.zip_codes, function(key, value) {
+            $('#Phy_zip').append('<option value="' + value + '">' + value + '</option>');
+        });
+    } catch (error) {
+        console.error('Fetch error:', error);
+        //alert('There was an error fetching the city data. Please try again later.');
+    }
+}
+
     </script>
     <section class="after">
         <div class="container">
@@ -249,32 +364,35 @@ var stateValue = $('#state').val();
                     </div>
                 </div>
 
-        <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-          <div class="absences">
-            <label for="sel1" class="form-label">Search by Power Units</label>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+                    <div class="absences">
+                        <label for="sel1" class="form-label">Search by Power Units</label>
 
 
-          </div>
+                    </div>
 
 
-          <div class="sliders_control">
+                    <div class="sliders_control">
 
-            <input id="fromSlider" type="range" name="TOT_PWR_min" value="1" min="0" max="8" oninput="updateSliderValues()" />
+                        <input id="fromSlider" type="range" name="TOT_PWR_min" value="1" min="0"
+                            max="8" oninput="updateSliderValues()" />
 
 
 
-            <input id="toSlider" type="range" name="TOT_PWR_max" value="2" min="0" max="8" oninput="updateSliderValues()" />
+                        <input id="toSlider" type="range" name="TOT_PWR_max" value="2" min="0"
+                            max="8" oninput="updateSliderValues()" />
 
-          </div>
-          <div>
-          <label for="fromSlider">From:</label>
-          <span class="slider_value" id="fromValue">1</span>
-          <label for="toSlider">To:</label>
-          <span class="slider_value" id="toValue">2</span></div>
-          <input type="hidden" id="TOT_PWR_min" name="TOT_PWR_min" value="1">
-          <input type="hidden" id="TOT_PWR_max" name="TOT_PWR_max" value="2">
+                    </div>
+                    <div>
+                        <label for="fromSlider">From:</label>
+                        <span class="slider_value" id="fromValue">1</span>
+                        <label for="toSlider">To:</label>
+                        <span class="slider_value" id="toValue">2</span>
+                    </div>
+                    <input type="hidden" id="TOT_PWR_min" name="TOT_PWR_min" value="1">
+                    <input type="hidden" id="TOT_PWR_max" name="TOT_PWR_max" value="2">
 
-        </div>
+                </div>
             </div>
         </div>
     </section>
@@ -683,27 +801,47 @@ var stateValue = $('#state').val();
     </section>
     <input type="hidden" name="saveRunCount" value="NO">
 </form>
-<script>
-   function updateSliderValues() {
-    const fromSlider = document.getElementById('fromSlider');
-    const toSlider = document.getElementById('toSlider');
-    const fromValue = parseInt(fromSlider.value);
-    const toValue = parseInt(toSlider.value);
+            </div>
+        </div>
+    </div>
+</section>
 
-    if (fromValue > toValue) {
-      fromSlider.value = toValue;
+<script>
+    function updateTextInput(val) {
+        document.getElementById('selectRange').innerText = val;
+        document.getElementById('selectedRangeTo').value = val;
     }
 
-    document.getElementById('fromValue').innerText = fromSlider.value;
-    document.getElementById('toValue').innerText = toSlider.value;
+    function updateSliderValues() {
+        const fromSlider = document.getElementById('fromSlider');
+        const toSlider = document.getElementById('toSlider');
+        const fromValue = parseInt(fromSlider.value);
+        const toValue = parseInt(toSlider.value);
 
-    document.getElementById('TOT_PWR_min').value = fromSlider.value;
-    document.getElementById('TOT_PWR_max').value = toSlider.value;
-  }
+        if (fromValue > toValue) {
+            fromSlider.value = toValue;
+        }
 
-  window.onload = function() {
-    updateSliderValues();
-  }
+        document.getElementById('fromValue').innerText = fromSlider.value;
+        document.getElementById('toValue').innerText = toSlider.value;
+
+        document.getElementById('TOT_PWR_min').value = fromSlider.value;
+        document.getElementById('TOT_PWR_max').value = toSlider.value;
+    }
+
+    window.onload = function() {
+        updateSliderValues();
+    }
+
+    $(document).ready(function() {
+        $("#city").click(function() {
+            $(".zipcodeshow").show();
+            $(".zipcodeinput").hide();
+        });
+    });
+
+
+
 </script>
 
 @include('front.footer');
