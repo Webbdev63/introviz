@@ -1,7 +1,12 @@
 @include('front.header');
-<a href="/">
-<button type="button" class=" winner">Back</button>
-</a>
+<style>
+    #elementToHide {
+        display: none;
+        color: red
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <section class="support">
     <div class="container">
         <div class="row">
@@ -12,11 +17,11 @@
                     </tr>
                     <tr>
                         <td class="hardest">Search Type</td>
-                        <td class="fields">CENSUS</td>
+                        <td class="fields">{{ $viewName }}</td>
                     </tr>
                     <tr>
                         <td class="without">Filter Type</td>
-                        <td class="passion">{{$filter}}</td>
+                        <td class="passion">{{ $filter }}</td>
                     </tr>
                     <tr>
                         <td class="hardest">Applied Filter</td>
@@ -47,7 +52,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-4 col-lg-5 col-md-6 col-12">
-                <form method="POST" action="{{ route('search') }}">
+                <form method="POST" {{-- action="{{ route('search') }}" --}} id="CensusForm">
                     @csrf
                     <div class="absences">
                         <h5>Create Your Order:</h5>
@@ -65,47 +70,91 @@
                         </ul>
                     </div>
                     <div class="view">
-                        <input type="text" required class="form-control" id="Enter file name"
-                            placeholder="Enter file name" name="fileName">
+                        <input type="text" required class="form-control"
+                            placeholder="Enter file name" id="fileName123" name="fileName">
                     </div>
+                    <p id="elementToHide"> Please Enter name</p>
+                    <input type="hidden" id="totalPrice" value="{{ number_format($count * 0.1, 2) }}"
+                        name="totalPrice">
                     <input type="hidden" name="saveRunCount" value="YES">
                     <div class="explicit">
-                        <button type="submit" class="btn btn-secondary">SaveCount <img
-                                src="/front/image/grocery-store.png" class="img-fluid"></button>
+                        <button type="button" id="save-button" class="btn btn-secondary"
+                            onclick="submitCensusForm()">SaveCount <img
+                                src="{{ asset('public/front/image/grocery-store.png') }}" class="img-fluid"></button>
                     </div>
-                    <input type="hidden" id="totalPrice" value="{{ $count * 0.10; }}" name="totalPrice">
-                  </form>
+
+                </form>
 
 
-                    <div class="empolyee d-flex">
-                        <p>Total Cost: </p>
-                        <div class="were">
-                            <p id="order_count_price">$ {{ $count * 0.10;}}</p>
-                        </div>
+                <div class="empolyee d-flex">
+                    <p>Total Cost: </p>
+                    <div class="were">
+                        <p id="order_count_price">$ {{ number_format($count * 0.1, 2) }}</p>
                     </div>
+                </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="start">
-                    <img src="/front/image/ifjefe.png">
+                    <img src="{{ asset('public/front/image/ifjefe.png') }}">
                 </div>
                 <div class="mind">
-      <form method="GET" action="{{ route('census.export') }}">
 
-          @csrf
 
-          @foreach(request()->all() as $key => $value)
-              <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-          @endforeach
+                    {{-- <form method="POST" action="{{ route('search') }}">
+                        @csrf
+                        @foreach (request()->all() as $key => $value)
+                        <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                       @endforeach
 
-          <button type="submit" class="btn btn">Download data <img src="/front/image/touch.png" class="img-fluid"></button>
-      </form>
-  </div>
 
+                        <input type="hidden" name="exportToExcel" id="" value="yes">
+                        <button type="submit">place order</button>
+                    </form> --}}
+
+                    <a href="{{ route('checkoutpage') }}" class="btn btn">place order<img
+                            src="{{ asset('public/front/image/touch.png') }}" class="img-fluid"></a>
+                </div>
             </div>
 
         </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+    function submitCensusForm() {
+
+
+        var formData = new FormData(document.getElementById("CensusForm"));
+        var fillInput = document.getElementById("fileName123").value;
+        //var inputbox =  fillInput.value;
+        if (fillInput == '') {
+            document.getElementById('elementToHide').style.display = "block";
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('search') }}", // Replace with your backend script URL
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                document.getElementById('save-button').style.visibility = 'hidden';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Form submitted successfully!.Please proccess with Payment',
+                });
+
+            },
+            error: function(xhr, status, error) {
+                // Handle error here
+                console.error("Error submitting form:", error);
+            }
+        });
+
+    }
+
     function updateRowCount() {
 
         var updateCount = document.getElementById('order_quantity').value
@@ -115,10 +164,10 @@
         oldCount = parseInt(oldCount)
         if (updateCount <= oldCount) {
             var price = updateCount * 0.10;
-            document.getElementById('order_count_price').innerHTML = '¢ ' + price.toFixed(2);
-            document.getElementById('totalPrice').value =  price.toFixed(2);
+            document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
+            document.getElementById('totalPrice').value = price.toFixed(2);
             document.getElementById('records').innerHTML = oldCount + ' Records';
-            console.log(price);
+
         } else {
             alert('Please Enter less then ' + oldCount)
         }
