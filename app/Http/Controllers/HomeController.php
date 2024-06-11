@@ -146,7 +146,7 @@ class HomeController extends Controller
 
 
         // die();
-        return view('front.saved_order', compact('savedData'));
+        return view('saved_order', compact('savedData'));
         // return view('home');
     }
 
@@ -336,7 +336,7 @@ class HomeController extends Controller
 
 
         $viewName='CENSUS';
-        return view('search.results', compact('count','viewName', 'filter', 'countFilters'));
+        return view('results', compact('count','viewName', 'filter', 'countFilters'));
     }
 
 
@@ -403,7 +403,7 @@ class HomeController extends Controller
 
     public function checkoutpage()
     {
-        return view('front.checkout');
+        return view('checkout');
     }
 
     public function Outofservicefile()

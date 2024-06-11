@@ -117,7 +117,7 @@ class OutOfService extends Controller
 
         $savedData = SaveOutofServiceFile::where('user_id', $userId)->get();
         // die();
-        return view('front.saved_out_ofService', compact('savedData'));
+        return view('saved_out_ofService', compact('savedData'));
         // return view('home');
     }
     public function exportServiceFile($id)

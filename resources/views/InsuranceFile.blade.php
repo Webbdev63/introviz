@@ -33,7 +33,7 @@
 
 .nav-sidbar:hover {
     background-color: #0056b3;
-
+   
 }
 
 .nav-sidbar.active {
@@ -52,11 +52,11 @@
 
 @media screen and (max-width: 1400px) {
   .finaces .form-check-label {
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .finaces #inlineCheck {
-    font-size: 19px;
-    margin: 3px auto;
+    font-size: 19px !important;
+    margin: 3px auto !important;
   }
   .form-label {
     display: block !important;
@@ -67,7 +67,7 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2">  
                 <div class="sidebar">
                         <div class="sidebarfilter">
                             <label for="sidebarurl" class="form-label">Search By Data Type</label>
@@ -85,7 +85,7 @@
                         </div>
                 </div>
             </div>
-    <div class="col-sm-10 form_data">
+    <div class="col-sm-10 form_data">  
 
     <form method="POST" action="{{ route('outOfServiceSearch') }}">
     @csrf
@@ -154,7 +154,7 @@
 
                         $('#state').on('change', function() {
                             var state_code = this.value;
-
+                       
                             localStorage.removeItem('city');
                             $('#city').html('');
                             $.ajax({
@@ -186,7 +186,7 @@
 
                 </script>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">
+                    <div class="absences">  
 
                         <label for="sel1" class="form-label">Dot number</label>
                         <input class="form-input" name="zip_code" id="zip_code">

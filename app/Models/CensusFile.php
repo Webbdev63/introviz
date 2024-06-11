@@ -11,120 +11,134 @@ class CensusFile extends Model
 
     protected $table = 'Census-file';
 
-    public function scopeFilterByCriteria($query, array $criteria)
-   {
-       return $query->where(function ($query) use ($criteria) {
-           if (!empty($criteria['state'])) {
-               $query->where('PHY_ST', '=', $criteria['state']);
-           }
-           if (!empty($criteria['city'])) {
-               $query->where('PHY_CITY', '=', $criteria['city']);
-           }
-           if (!empty($criteria['zip_code'])) {
-               $query->where('PHY_ZIP', '=', $criteria['zip_code']);
-           }
-           if (!empty($criteria['cls'])) {
-               $query->where('class', '=', $criteria['cls']);
-           }
-           if (!empty($criteria['Carship'])) {
-               $query->where('CARSHIP', '=', $criteria['Carship']);
-           }
-           if (!empty($criteria['TOT_PWR_FROM']) && !empty($criteria['TOT_PWR_TO'])) {
-               $query->whereBetween('TOT_PWR', [$criteria['TOT_PWR_FROM'], $criteria['TOT_PWR_TO']]);
-           }
-           if (!empty($criteria['Private_passenger'])) {
-               $query->where('PASSENGERS', '=', $criteria['Private_passenger']);
-           }
-           if (!empty($criteria['Genfreight'])) {
-               $query->where('GENFREIGHT', '=', $criteria['Genfreight']);
-           }
-           if (!empty($criteria['Household'])) {
-               $query->where('HOUSEHOLD', '=', $criteria['Household']);
-           }
-           if (!empty($criteria['Metalsheet'])) {
-               $query->where('METALSHEET', '=', $criteria['Metalsheet']);
-           }
-           if (!empty($criteria['Motorveh'])) {
-               $query->where('MOTORVEH', '=', $criteria['Motorveh']);
-           }
-           if (!empty($criteria['Drivetow'])) {
-               $query->where('DRIVETOW', '=', $criteria['Drivetow']);
-           }
-           if (!empty($criteria['Logpole'])) {
-               $query->where('LOGPOLE', '=', $criteria['Logpole']);
-           }
-           if (!empty($criteria['Bldgmat'])) {
-               $query->where('BLDGMAT', '=', $criteria['Bldgmat']);
-           }
-           if (!empty($criteria['MobileHome'])) {
-               $query->where('MOBILEHOME', '=', $criteria['MobileHome']);
-           }
-           if (!empty($criteria['Machlrg'])) {
-               $query->where('MACHLRG', '=', $criteria['Machlrg']);
-           }
-           if (!empty($criteria['Produce'])) {
-               $query->where('PRODUCE', '=', $criteria['Produce']);
-           }
-           if (!empty($criteria['Liqgas'])) {
-               $query->where('LIQGAS', '=', $criteria['Liqgas']);
-           }
-           if (!empty($criteria['Oilfield'])) {
-               $query->where('OILFIELD', '=', $criteria['Oilfield']);
-           }
-           if (!empty($criteria['Livestock'])) {
-               $query->where('LIVESTOCK', '=', $criteria['Livestock']);
-           }
-           if (!empty($criteria['Coalcoke'])) {
-               $query->where('COALCOKE', '=', $criteria['Coalcoke']);
-           }
-           if (!empty($criteria['Meat'])) {
-               $query->where('MEAT', '=', $criteria['Meat']);
-           }
-           if (!empty($criteria['Garbage'])) {
-               $query->where('GARBAGE', '=', $criteria['Garbage']);
-           }
-           if (!empty($criteria['Chem'])) {
-               $query->where('CHEM', '=', $criteria['Chem']);
-           }
-           if (!empty($criteria['Drybulk'])) {
-               $query->where('DRYBULK', '=', $criteria['Drybulk']);
-           }
-           if (!empty($criteria['Coldfood'])) {
-               $query->where('COLDFOOD', '=', $criteria['Coldfood']);
-           }
-           if (!empty($criteria['Grainfeed'])) {
-               $query->where('GRAINFEED', '=', $criteria['Grainfeed']);
-           }
-           if (!empty($criteria['Intermodal'])) {
-               $query->where('INTERMODAL', '=', $criteria['Intermodal']);
-           }
-           if (!empty($criteria['Usmail'])) {
-               $query->where('USMAIL', '=', $criteria['Usmail']);
-           }
-           if (!empty($criteria['Beverages'])) {
-               $query->where('BEVERAGES', '=', $criteria['Beverages']);
-           }
-           if (!empty($criteria['Paperprod'])) {
-               $query->where('PAPERPROD', '=', $criteria['Paperprod']);
-           }
-           if (!empty($criteria['Utility'])) {
-               $query->where('UTILITY', '=', $criteria['Utility']);
-           }
-           if (!empty($criteria['Farmsupp'])) {
-               $query->where('FARMSUPP', '=', $criteria['Farmsupp']);
-           }
-           if (!empty($criteria['Construct'])) {
-               $query->where('CONSTRUCT', '=', $criteria['Construct']);
-           }
-           if (!empty($criteria['Waterwell'])) {
-               $query->where('WATERWELL', '=', $criteria['Waterwell']);
-           }
-           if (!empty($criteria['Cargoother'])) {
-               $query->where('CARGOOTHR', '=', $criteria['Cargoother']);
-           }
-           if (!empty($criteria['Hazmat_indicator'])) {
-               $query->where('HM_IND', '=', $criteria['Hazmat_indicator']);
-           }
-       });
-   }
+    // protected $fillable = [
+    //     'state_code',
+    //     'city',
+    //     'phy_zip',rchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	NAME_DBA	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	ACT_STAT	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	CARSHIP	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	DBNUM	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	PHY_NATN	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	REG	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	
+    public function scopeFilterByCriteria($query,$state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole, 
+    $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal, 
+    $Usmail, $Beverages, $Paperprod, $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator)
+    {
+        return $query->where(function ($query) use ($state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole, 
+        $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal, 
+        $Usmail, $Beverages, $Paperprod, $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator) {
+            if ($state != '') {
+                $query->where('PHY_ST', '=', $state);
+            }
+            if ($Phy_city != '') {
+                $query->where('PHY_CITY', '=', $Phy_city);
+            }
+            if ($zip_code != '') {
+                $query->where('PHY_ZIP', '=', $zip_code);
+            }
+            if ($cls != '') {
+                $query->Where('class', $cls);
+            }
+            if ($Carship != '') {
+                $query->Where('CARSHIP', $Carship);
+            }
+            if ($TOT_PWR_FROM != '' && $TOT_PWR_TO != '') {
+                $query->whereBetween('TOT_PWR', [$TOT_PWR_FROM, $TOT_PWR_TO]);
+            }
+            if ($Private_passenger != '') {
+                $query->Where('PASSENGERS', $Private_passenger);
+            }
+            if ($Genfreight != '') {
+                $query->Where('GENFREIGHT', $Genfreight);
+            }
+            if ($Household != '') {
+                $query->Where('HOUSEHOLD', $Household);
+            }
+            if ($Metalsheet != '') {
+                $query->Where('METALSHEET', $Metalsheet);
+            }
+            if ($Motorveh != '') {
+                $query->Where('MOTORVEH', $Motorveh);
+            }
+            if ($Drivetow != '') {
+                $query->Where('DRIVETOW', $Drivetow);
+            }
+            if ($Logpole != '') {
+                $query->Where('LOGPOLE', $Logpole);
+            }
+            if ($Bldgmat != '') {
+                $query->Where('BLDGMAT', $Bldgmat);
+            }
+            if ($MobileHome != '') {
+                $query->Where('MOBILEHOME', $MobileHome);
+            }
+            if ($Machlrg != '') {
+                $query->Where('MACHLRG', $Machlrg);
+            }
+            if ($Produce != '') {
+                $query->Where('PRODUCE', $Produce);
+            }
+            if ($Liqgas != '') {
+                $query->Where('LIQGAS', $Liqgas);
+            }
+            if ($Oilfield != '') {
+                $query->Where('OILFIELD', $Oilfield);
+            }
+            if ($Livestock != '') {
+                $query->Where('LIVESTOCK', $Livestock);
+            }
+            if ($Coalcoke != '') {
+                $query->Where('COALCOKE', $Coalcoke);
+            }
+            if ($Meat != '') {
+                $query->Where('MEAT', $Meat);
+            }
+            if ($Garbage != '') {
+                $query->Where('PHY_CITY', $Garbage);
+            }
+            if ($Chem != '') {
+                $query->Where('CHEM', $Chem);
+            }
+            if ($Drybulk != '') {
+                $query->Where('DRYBULK', $Drybulk);
+            }
+            if ($Coldfood != '') {
+                $query->Where('COLDFOOD', $Coldfood);
+            }
+            if ($Carship != '') {
+                $query->Where('CARSHIP', $Carship);
+            }
+            if ($Grainfeed != '') {
+                $query->Where('CARSHIP', $Grainfeed);
+            }
+            if ($Intermodal != '') {
+                $query->Where('INTERMODAL', $Intermodal);
+            }
+            if ($Usmail != '') {
+                $query->Where('USMAIL', $Usmail);
+            }
+            if ($Beverages != '') {
+                $query->Where('BEVERAGES', $Beverages);
+            }
+            if ($Paperprod != '') {
+                $query->Where('PAPERPROD', $Paperprod);
+            }
+            if ($Utility != '') {
+                $query->Where('UTILITY', $Utility);
+            }
+            if ($Farmsupp != '') {
+                $query->Where('FARMSUPP', $Farmsupp);
+            }
+            if ($Construct != '') {
+                $query->Where('CONSTRUCT', $Construct);
+            }
+            if ($Waterwell != '') {
+                $query->Where('WATERWELL', $Waterwell);
+            }
+            if ($Cargoother != '') {
+                $query->Where('CARGOOTHR', $Cargoother);
+            }
+            if ($Hazmat_indicator != '') {
+                $query->Where('HM_IND', $Hazmat_indicator);
+            }
+        });
+    }
+
+
+      
 }

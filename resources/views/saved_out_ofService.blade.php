@@ -31,7 +31,7 @@
                                             {{-- <td>{{$data->id}}</td> --}}
                                             
                                         
-                                            <td><a href="{{ route('exportToExcel', ['id' => $data->id]) }}" class="btn btn">Download</button></td>
+                                            <td><a href="{{ route('exportServiceFile', ['id' => $data->id]) }}" class="btn btn">Download</button></td>
                                           </tr>
                                           @endforeach
                                         

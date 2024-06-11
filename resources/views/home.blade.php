@@ -99,7 +99,7 @@
 
 .nav-sidbar:hover {
     background-color: #0056b3;
-
+   
 }
 
 .nav-sidbar.active {
@@ -117,11 +117,11 @@
 
 @media screen and (max-width: 1400px) {
   .finaces .form-check-label {
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .finaces #inlineCheck {
-    font-size: 19px;
-    margin: 3px auto;
+    font-size: 19px !important;
+    margin: 3px auto !important;
   }
   .form-label {
     display: block !important;
@@ -134,7 +134,7 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2">  
             <div class="sidebar">
            <div class="sidebarfilter">
             <label for="sidebarurl" class="form-label">Search By Data Type</label>
@@ -152,7 +152,7 @@
         </div>
     </div>
             </div>
-            <div class="col-sm-10 form_data">
+            <div class="col-sm-10 form_data">  
             <form method="POST" action="{{ route('search') }}">
     @csrf
     <section class="after">
