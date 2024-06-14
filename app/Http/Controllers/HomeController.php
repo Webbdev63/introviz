@@ -30,7 +30,10 @@ class HomeController extends Controller
     public function exportToExcel($id)
     {
         $data = SaveCensusFile::where('id', $id)->first()->toArray();
-
+      //  echo "<pre>"; print_r($data); echo "</pre>";
+       // die();
+       $savefilename = $data['fileName'];
+       // die();
         $city =  $data['Phy_city'] != null ? $data['Phy_city'] : '';
         $state =  $data['state'] != null ? $data['state'] : '';
         $Phy_city =  $data['Phy_city'] != null ? $data['Phy_city'] : '';
@@ -128,7 +131,7 @@ class HomeController extends Controller
             array_unshift($filData, $header);
         }
             $xlsx = PhpXlsxGenerator::fromArray($filData);
-            $xlsx->downloadAs('test.xlsx');
+            $xlsx->downloadAs($savefilename . '.xlsx');
 
 
 
@@ -165,13 +168,16 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-
-
+        // echo "<pre>";
+        // print_r($request->all());
+         //die();
         // DB::connection()->enableQueryLog();
 
         if ($request['saveRunCount'] == 'YES') {
 
             $data = Session::get('searchFilter');
+           // echo "<pre>"; print_r($data); echo "</pre>";
+          //  die();
 
             // removed token and flag from array
             $appliedFilter = array_filter($data, function ($value) {
@@ -193,6 +199,7 @@ class HomeController extends Controller
                 $data['TOT_PWR_max'] = $TOT_PWR_TO;
                 $data['TOT_PWR_min'] = $TOT_PWR_FROM ;
                 $data['Phy_city'] =$data['city'];
+                $data['zip_code'] =$data['Phy_zip'];
 
 // dd($data);
                 $saveRecord = SaveCensusFile::create($data);
@@ -243,7 +250,7 @@ class HomeController extends Controller
 
         $state = isset($data['state']) && $data['state'] != null ? $data['state'] : '';
         $Phy_city = isset($data['city']) && $data['city'] != null ? $data['city'] : '';
-        $zip_code = isset($data['zip_code']) && $data['zip_code'] != null ? $data['zip_code'] : '';
+        $zip_code = isset($data['Phy_zip']) && $data['Phy_zip'] != null ? $data['Phy_zip'] : '';
         $cls = isset($data['cls']) && $data['cls'] != null ? $data['cls'] : '';
         $Carship = isset($data['Carship']) && $data['Carship'] != null ? $data['Carship'] : '';
         $Carship = isset($data['Carship']) && $data['Carship'] != null ? $data['Carship'] : '';
@@ -291,6 +298,8 @@ class HomeController extends Controller
 
             $Phy_city = $cityState[1];
         }
+    //   echo "<pre>"; print_r($data); echo "</pre>";
+
         $filData = CensusFile::filterByCriteria(
             $state,
             $Phy_city,
@@ -331,6 +340,9 @@ class HomeController extends Controller
             $Grainfeed,
             $Hazmat_indicator
         )->get()->toArray();
+
+       // echo "<pre>"; print_r($filData); echo "</pre>";
+       // die();
 
         $count = count($filData);
 

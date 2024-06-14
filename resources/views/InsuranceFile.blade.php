@@ -16,39 +16,6 @@
     font-weight: bold;
 }
 
-.nav-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.nav-sidbar {
-    display: block;
-    padding: 10px;
-    background-color: #70706e;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.nav-sidbar:hover {
-    background-color: #0056b3;
-   
-}
-
-.nav-sidbar.active {
-    background-color: #0056b3;
-}
-.nav-item_sidebar {
-    margin-bottom: 3px;
-}
-.nav-sidbar a:hover {
-	color: #fff;
-}
-
-.nav-item_sidebar a:hover {
-	color: #fff !important;
-}
 
 @media screen and (max-width: 1400px) {
   .finaces .form-check-label {
@@ -67,58 +34,11 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">  
-                <div class="sidebar">
-                        <div class="sidebarfilter">
-                            <label for="sidebarurl" class="form-label">Search By Data Type</label>
-                            <ul class="nav-list">
-                                <li class="nav-item_sidebar">
-                                    <a class="nav-sidbar" aria-current="page" href="/">Census</a>
-                                </li>
-                                <li class="nav-item_sidebar">
-                                    <a class="nav-sidbar" href="{{ route('Outofservicefile') }}">Out of service</a>
-                                </li>
-                                <li class="nav-item_sidebar">
-                                    <a class="nav-sidbar" href="{{ route('InsuranceFile') }}">Insurance</a>
-                                </li>
-                            </ul>
-                        </div>
-                </div>
-            </div>
-    <div class="col-sm-10 form_data">  
+
+    <div class="col-sm-12 form_data">
 
     <form method="POST" action="{{ route('outOfServiceSearch') }}">
     @csrf
-  <!--
-    <section class="after">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">
-
-                        <label for="sel1" class="form-label">NAME</label>
-
-                        <input class="form-input" id="LEGAL_NAME" name="LEGAL_NAME">
-
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">
-                        <label for="sel1" class="form-label">BUSINESS NAME</label>
-                          <input class="form-input" id="DBA_NAME" name="DBA_NAME">
-
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">
-
-                        <label for="sel1" class="form-label">PHYSICAL ADDRESS</label>
-                        <input class="form-input" name="BUS_STREET_PO" id="BUS_STREET_PO">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>   -->
 
     <section class="after">
         <div class="container">
@@ -154,7 +74,7 @@
 
                         $('#state').on('change', function() {
                             var state_code = this.value;
-                       
+
                             localStorage.removeItem('city');
                             $('#city').html('');
                             $.ajax({
@@ -186,9 +106,9 @@
 
                 </script>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">  
+                    <div class="absences">
 
-                        <label for="sel1" class="form-label">Dot number</label>
+                        <label for="sel1" class="form-label">Zip Code</label>
                         <input class="form-input" name="zip_code" id="zip_code">
                     </div>
                 </div>
@@ -219,6 +139,7 @@
             <button type="submit" class="btn btn">Submit</button>
         </div>
     </div>
+    </form>
 </div>
             </div>
         </div>

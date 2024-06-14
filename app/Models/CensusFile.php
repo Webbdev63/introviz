@@ -14,13 +14,13 @@ class CensusFile extends Model
     // protected $fillable = [
     //     'state_code',
     //     'city',
-    //     'phy_zip',rchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	NAME_DBA	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	ACT_STAT	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	CARSHIP	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	DBNUM	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	PHY_NATN	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	REG	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	
-    public function scopeFilterByCriteria($query,$state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole, 
-    $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal, 
+    //     'phy_zip',rchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	NAME_DBA	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	ACT_STAT	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	CARSHIP	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	DBNUM	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	PHY_NATN	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop	REG	varchar(555)	utf8mb4_unicode_ci		Yes	NULL			Change Change	Drop Drop
+    public function scopeFilterByCriteria($query,$state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole,
+    $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal,
     $Usmail, $Beverages, $Paperprod, $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator)
     {
-        return $query->where(function ($query) use ($state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole, 
-        $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal, 
+        return $query->where(function ($query) use ($state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole,
+        $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, $Coldfood, $Utility, $Intermodal,
         $Usmail, $Beverages, $Paperprod, $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator) {
             if ($state != '') {
                 $query->where('PHY_ST', '=', $state);
@@ -100,12 +100,6 @@ class CensusFile extends Model
             if ($Coldfood != '') {
                 $query->Where('COLDFOOD', $Coldfood);
             }
-            if ($Carship != '') {
-                $query->Where('CARSHIP', $Carship);
-            }
-            if ($Grainfeed != '') {
-                $query->Where('CARSHIP', $Grainfeed);
-            }
             if ($Intermodal != '') {
                 $query->Where('INTERMODAL', $Intermodal);
             }
@@ -136,9 +130,48 @@ class CensusFile extends Model
             if ($Hazmat_indicator != '') {
                 $query->Where('HM_IND', $Hazmat_indicator);
             }
-        });
+        })->select(
+            'DOT_NUMBER',
+            'NAME',
+            'NAME_DBA',
+            'PHY_STR',
+            'PHY_CITY',
+            'PHY_ST',
+            'PHY_ZIP',
+            'TEL_NUM',
+            'CARSHIP',
+            'TOT_PWR',
+            'HM_IND',
+            'PASSENGERS',
+            'GENFREIGHT',
+            'HOUSEHOLD',
+            'METALSHEET',
+            'MOTORVEH',
+            'DRIVETOW',
+            'LOGPOLE',
+            'BLDGMAT',
+            'MOBILEHOME',
+            'MACHLRG',
+            'PRODUCE',
+            'OILFIELD',
+            'LIVESTOCK',
+            'COALCOKE',
+            'MEAT',
+            'CHEM',
+            'DRYBULK',
+            'COLDFOOD',
+            'INTERMODAL',
+            'USMAIL',
+            'BEVERAGES',
+            'PAPERPROD',
+            'UTILITY',
+            'FARMSUPP',
+            'CONSTRUCT',
+            'WATERWELL',
+            'CARGOOTHR'
+        );
     }
 
 
-      
+
 }

@@ -72,49 +72,6 @@
 }
 
 
-.sidebarfilter {
-    margin-bottom: 20px;
-}
-
-.sidebarfilter .form-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.nav-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.nav-sidbar {
-    display: block;
-    padding: 10px;
-    background-color: #70706e;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.nav-sidbar:hover {
-    background-color: #0056b3;
-   
-}
-
-.nav-sidbar.active {
-    background-color: #0056b3;
-}
-.nav-item_sidebar {
-    margin-bottom: 3px;
-}
-.nav-sidbar a:hover {
-	color: #fff;
-}
-.nav-item_sidebar a:hover {
-	color: #fff !important;
-}
-
 @media screen and (max-width: 1400px) {
   .finaces .form-check-label {
     font-size: 14px !important;
@@ -134,25 +91,8 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">  
-            <div class="sidebar">
-           <div class="sidebarfilter">
-            <label for="sidebarurl" class="form-label">Search By Data Type</label>
-            <ul class="nav-list">
-                <li class="nav-item_sidebar">
-                    <a class="nav-sidbar" aria-current="page" href="/">Census</a>
-                </li>
-                <li class="nav-item_sidebar">
-                    <a class="nav-sidbar" href="{{ route('Outofservicefile') }}">Out of service</a>
-                </li>
-                <li class="nav-item_sidebar">
-                    <a class="nav-sidbar" href="{{ route('InsuranceFile') }}">Insurance</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-            </div>
-            <div class="col-sm-10 form_data">  
+
+            <div class="col-sm-12 form_data">
             <form method="POST" action="{{ route('search') }}">
     @csrf
     <section class="after">
@@ -400,26 +340,25 @@
     <section class="payroll">
         <div class="container">
             <div class="row">
-                <div class="col-xl-5 col-lg-5 col-md-6 col-12">
+                <div class="col-xl-4 col-lg-5 col-md-6 col-12">
                     <div class="units">
                         <h4>Private passenger</h4>
                     </div>
-                    <div class="encodhing">
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineRadio1">Yes</label>
-                            <input class="form-check-input" type="radio" name="Private_passenger"
-                                id="inlineRadio1" value="Yes">
-                        </div>
-                        <div class="form-check form-check-inline best time">
-                            <label class="form-check-label" for="inlineRadio2">No</label>
-                            <input class="form-check-input" type="radio" name="Private_passenger"
-                                id="inlineRadio2" value="No">
+                    <div class="indicators">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                <input class="form-check-input" type="radio" name="Private_passenger"
+                                    id="inlineRadio1" value="Yes">
+                            </div>
+                            <div class="form-check form-check-inline best time">
+                                <label class="form-check-label" for="inlineRadio2">No</label>
+                                <input class="form-check-input" type="radio" name="Private_passenger"
+                                    id="inlineRadio2" value="No">
 
-
-                        </div>
+                            </div>
                     </div>
                 </div>
-                <div class="col-xl-5 col-lg-5 col-md-6 col-12">
+                <div class="col-xl-3 col-lg-5 col-md-6 col-12">
                     <div class="indictors ">
                         <h4> Hazmat Indicator</h4>
                     </div>
@@ -445,8 +384,6 @@
     <section class="tracking">
         <div class="container">
             <div class="row">
-
-
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="carship">
                         <h5>CARGO TRANSPORTED</h5>
@@ -788,9 +725,15 @@
                         </div>
                     </div>
                 </div>
-
-
-
+                <div class="census">
+                <div class="form-check mb-2 mr-sm-2">
+                            <label class="form-check-label" for="inlineFormCheck">
+                                Do you want to incluide the insurance data in the census ?
+                            </label>
+                            <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
+                                id="inlineCheck">
+                        </div>
+                </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="network">
                         <button type="submit" class="btn btn">Submit</button>

@@ -3,7 +3,7 @@
 <head>
 <title> introviz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
 <link rel="stylesheet" href="/front/css/font-awesome.min.css">
 <link href="/front/css/bootstrap.min.css" rel="stylesheet">
@@ -13,10 +13,11 @@
 </head>
 <body>
 </body>
+
 <section class="hardest">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand" href="#"><img src="/front/image/logo.png" class="img-fluid"></a>
+          <a class="navbar-brand" href="#"><img src="{{ asset('/front/image/logo.png') }}" class="img-fluid"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -31,16 +32,36 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Servies</a>
               </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                Filter
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                  <li><a class="nav-sidbar" aria-current="page" href="/">Census</a></li>
+                  <li><a class="nav-sidbar" href="{{ route('Outofservicefile') }}">Out of service</a></li>
+                  <li><a class="nav-sidbar" href="{{ route('InsuranceFile') }}">Insurance</a></li>
+                </ul>
+            </li>
             <form class="d-flex">
                 <div class="sucess">
-                 
+
                 <a href="{{ route('login') }}"><button type="button" class="btn">Login </button></a>
-                
+
                     <a href="{{ route('register') }}"> <button type="button" class=" winner">Register</button> </a>
-                  
                 </div>
             </form>
           </div>
         </div>
       </nav>
 </section>
+
+<script>
+$(document).ready(function(){
+  $(".dropdown-toggle").click(function(){
+    $(".dropdown-menu").show();
+  });
+  //$("#show").click(function(){
+  //  $("p").show();
+ // });
+});
+</script>

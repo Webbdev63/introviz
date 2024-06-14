@@ -7,14 +7,17 @@ use App\Models\SaveOutofServiceFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\PhpXlsxGenerator;
+use DB;
 
 class OutOfService extends Controller
 {
     public function outOfServiceSearch(Request $request)
     {
-        // dd($request->all());
+      //  dd($request->all());
+       // die();
 
         if ($request['saveRunCount'] == 'YES') {
+
 
             $data = Session::get('searchOutOfServiceFilter');
 
@@ -33,7 +36,8 @@ class OutOfService extends Controller
 
 
 
-
+           // echo "<pre>"; print_r($data); echo "</pre>";
+          //  die();
 
 
                 $saveRecord = SaveOutofServiceFile::create($data);
@@ -104,8 +108,8 @@ class OutOfService extends Controller
         )->get()->toArray();
 
         $count = count($filData);
-        $viewName = 'Out Of Service';
-        return view('search.results', compact('count', 'viewName', 'filter', 'countFilters'));
+        $viewName = 'Insurance File';
+        return view('insuranceresults', compact('count', 'viewName', 'filter', 'countFilters'));
     }
     public function savedOutofService()
     {
@@ -123,6 +127,8 @@ class OutOfService extends Controller
     public function exportServiceFile($id)
     {
         $data = SaveOutofServiceFile::where('id', $id)->first()->toArray();
+        $savefilename = $data['fileName'];
+       // echo "<pre>"; print_r($data); echo "</pre>"; die();
 
         $city =  $data['city'] != null ? $data['city'] : '';
         $state =  $data['state'] != null ? $data['state'] : '';
@@ -142,7 +148,7 @@ class OutOfService extends Controller
             $Phy_city = '';
         }
 
-        $filData = OutOfServiceModel::filterOutofService(
+        $filDataaa = OutOfServiceModel::filterOutofService(
             $state,
             $Phy_city,
             $zip_code,
@@ -153,12 +159,66 @@ class OutOfService extends Controller
 
         )->take($data['orderQuantity'])->get()->toArray();
 
+        $dotNumbers = array_column($filDataaa, 'DOT_NUMBER');
+
+
+        $filData = DB::table('Census-file')
+        ->join('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
+        ->whereIn('Census-file.DOT_NUMBER', $dotNumbers)
+        ->select(
+            'Census-file.DOT_NUMBER',
+            'Census-file.NAME',
+            'Census-file.NAME_DBA',
+            'Census-file.PHY_STR',
+            'Census-file.PHY_CITY',
+            'Census-file.PHY_ST',
+            'Census-file.PHY_ZIP',
+            'Census-file.TEL_NUM',
+            'Census-file.CARSHIP',
+            'Census-file.TOT_PWR',
+            'Census-file.HM_IND',
+            'Census-file.PASSENGERS',
+            'Census-file.GENFREIGHT',
+            'Census-file.HOUSEHOLD',
+            'Census-file.METALSHEET',
+            'Census-file.MOTORVEH',
+            'Census-file.DRIVETOW',
+            'Census-file.LOGPOLE',
+            'Census-file.BLDGMAT',
+            'Census-file.MOBILEHOME',
+            'Census-file.MACHLRG',
+            'Census-file.PRODUCE',
+            'Census-file.OILFIELD',
+            'Census-file.LIVESTOCK',
+            'Census-file.COALCOKE',
+            'Census-file.MEAT',
+            'Census-file.CHEM',
+            'Census-file.DRYBULK',
+            'Census-file.COLDFOOD',
+            'Census-file.INTERMODAL',
+            'Census-file.USMAIL',
+            'Census-file.BEVERAGES',
+            'Census-file.PAPERPROD',
+            'Census-file.UTILITY',
+            'Census-file.FARMSUPP',
+            'Census-file.CONSTRUCT',
+            'Census-file.WATERWELL',
+            'Census-file.CARGOOTHR',
+            'CENSUS_INS_ACTIVE.EFFECTIVE_DATE',
+            'CENSUS_INS_ACTIVE.NAME_COMPANY'
+        )
+        ->get()
+        ->map(function($item) {
+            return (array) $item;
+        })
+        ->toArray();
+
         if(count($filData)>0){
             $header = array_keys($filData[0]);
             array_unshift($filData, $header);
         }
             $xlsx = PhpXlsxGenerator::fromArray($filData);
-            $xlsx->downloadAs('test.xlsx');
+            $xlsx->downloadAs($savefilename . '.xlsx');
 
 
 
