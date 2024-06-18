@@ -1,12 +1,11 @@
-
-@include('layouts.header');
+@include('layouts.header')
 
 <body>
 
     <!-- Begin page -->
     <div class="layout-wrapper">
 
-  @include('layouts.sidebar');
+        @include('layouts.sidebar')
 
 
 
@@ -25,14 +24,18 @@
                         <div class="logo-box">
                             <!-- Brand Logo Light -->
                             <a href="index.html" class="logo-light">
-                                <img src="public/dashboard1/images/logo-light.png" alt="logo" class="logo-lg" height="22">
-                                <img src="public/dashboard1/images/logo-sm.png" alt="small logo" class="logo-sm" height="22">
+                                <img src="public/dashboard1/images/logo-light.png" alt="logo" class="logo-lg"
+                                    height="22">
+                                <img src="public/dashboard1/images/logo-sm.png" alt="small logo" class="logo-sm"
+                                    height="22">
                             </a>
 
                             <!-- Brand Logo Dark -->
                             <a href="index.html" class="logo-dark">
-                                <img src="public/dashboard1/images/logo-dark.png" alt="dark logo" class="logo-lg" height="22">
-                                <img src="public/dashboard1/images/logo-sm.png" alt="small logo" class="logo-sm" height="22">
+                                <img src="public/dashboard1/images/logo-dark.png" alt="dark logo" class="logo-lg"
+                                    height="22">
+                                <img src="public/dashboard1/images/logo-sm.png" alt="small logo" class="logo-sm"
+                                    height="22">
                             </a>
                         </div>
 
@@ -41,7 +44,17 @@
                             <i class="mdi mdi-menu"></i>
                         </button>
                     </div>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
 
+                            <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-responsive-nav-link>
+                        </form>
+                    </li>
                     <ul class="topbar-menu d-flex align-items-center gap-4">
 
                         <li class="d-none d-md-inline-block">
@@ -51,48 +64,60 @@
                         </li>
 
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none"
+                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
                                 <i class="mdi mdi-magnify font-size-24"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg p-0">
                                 <form class="p-3">
-                                    <input type="search" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                    <input type="search" class="form-control" placeholder="Search ..."
+                                        aria-label="Recipient's username">
                                 </form>
                             </div>
                         </li>
 
 
                         <li class="dropdown d-none d-md-inline-block">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="/dashboard1/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none"
+                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
+                                <img src="/dashboard1/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1"
+                                    height="18">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="/dashboard1/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    <img src="/dashboard1/images/flags/germany.jpg" alt="user-image" class="me-1"
+                                        height="12"> <span class="align-middle">German</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="/dashboard1/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    <img src="/dashboard1/images/flags/italy.jpg" alt="user-image" class="me-1"
+                                        height="12"> <span class="align-middle">Italian</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="/dashboard1/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    <img src="/dashboard1/images/flags/spain.jpg" alt="user-image" class="me-1"
+                                        height="12"> <span class="align-middle">Spanish</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="/dashboard1/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    <img src="/dashboard1/images/flags/russia.jpg" alt="user-image" class="me-1"
+                                        height="12"> <span class="align-middle">Russian</span>
                                 </a>
 
                             </div>
                         </li>
 
                         <li class="dropdown notification-list">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none"
+                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
                                 <i class="mdi mdi-bell font-size-24"></i>
                                 <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
                             </a>
@@ -103,7 +128,8 @@
                                             <h6 class="m-0 font-size-16 fw-semibold"> Notification</h6>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+                                            <a href="javascript: void(0);"
+                                                class="text-dark text-decoration-underline">
                                                 <small>Clear All</small>
                                             </a>
                                         </div>
@@ -115,9 +141,11 @@
                                     <h5 class="text-muted font-size-13 fw-normal mt-2">Today</h5>
                                     <!-- item-->
 
-                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
                                         <div class="card-body">
-                                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                            <span class="float-end noti-close-btn text-muted"><i
+                                                    class="mdi mdi-close"></i></span>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon bg-primary">
@@ -125,17 +153,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
-                                                    <h5 class="noti-item-title fw-semibold font-size-14">Datacorp <small class="fw-normal text-muted ms-1">1 min ago</small></h5>
-                                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                                    <h5 class="noti-item-title fw-semibold font-size-14">Datacorp
+                                                        <small class="fw-normal text-muted ms-1">1 min ago</small>
+                                                    </h5>
+                                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar
+                                                        commented on Admin</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
                                         <div class="card-body">
-                                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                            <span class="float-end noti-close-btn text-muted"><i
+                                                    class="mdi mdi-close"></i></span>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon bg-info">
@@ -143,8 +176,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
-                                                    <h5 class="noti-item-title fw-semibold font-size-14">Admin <small class="fw-normal text-muted ms-1">1 hours ago</small></h5>
-                                                    <small class="noti-item-subtitle text-muted">New user registered</small>
+                                                    <h5 class="noti-item-title fw-semibold font-size-14">Admin <small
+                                                            class="fw-normal text-muted ms-1">1 hours ago</small></h5>
+                                                    <small class="noti-item-subtitle text-muted">New user
+                                                        registered</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,18 +188,24 @@
                                     <h5 class="text-muted font-size-13 fw-normal mt-0">Yesterday</h5>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
                                         <div class="card-body">
-                                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                            <span class="float-end noti-close-btn text-muted"><i
+                                                    class="mdi mdi-close"></i></span>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="/dashboard1/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        <img src="/dashboard1/images/users/avatar-2.jpg"
+                                                            class="img-fluid rounded-circle" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
-                                                    <h5 class="noti-item-title fw-semibold font-size-14">Cristina Pride <small class="fw-normal text-muted ms-1">1 day ago</small></h5>
-                                                    <small class="noti-item-subtitle text-muted">Hi, How are you? What about our next meeting</small>
+                                                    <h5 class="noti-item-title fw-semibold font-size-14">Cristina Pride
+                                                        <small class="fw-normal text-muted ms-1">1 day ago</small>
+                                                    </h5>
+                                                    <small class="noti-item-subtitle text-muted">Hi, How are you? What
+                                                        about our next meeting</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,9 +214,11 @@
                                     <h5 class="text-muted font-size-13 fw-normal mt-0">30 Dec 2021</h5>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
                                         <div class="card-body">
-                                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                            <span class="float-end noti-close-btn text-muted"><i
+                                                    class="mdi mdi-close"></i></span>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon bg-primary">
@@ -184,25 +227,31 @@
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
                                                     <h5 class="noti-item-title fw-semibold font-size-14">Datacorp</h5>
-                                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar
+                                                        commented on Admin</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1">
                                         <div class="card-body">
-                                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                            <span class="float-end noti-close-btn text-muted"><i
+                                                    class="mdi mdi-close"></i></span>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="/dashboard1/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        <img src="/dashboard1/images/users/avatar-4.jpg"
+                                                            class="img-fluid rounded-circle" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">
-                                                    <h5 class="noti-item-title fw-semibold font-size-14">Karen Robinson</h5>
-                                                    <small class="noti-item-subtitle text-muted">Wow ! this admin looks good and awesome design</small>
+                                                    <h5 class="noti-item-title fw-semibold font-size-14">Karen Robinson
+                                                    </h5>
+                                                    <small class="noti-item-subtitle text-muted">Wow ! this admin looks
+                                                        good and awesome design</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,7 +263,8 @@
                                 </div>
 
                                 <!-- All-->
-                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
+                                <a href="javascript:void(0);"
+                                    class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
                                     View All
                                 </a>
 
@@ -225,7 +275,7 @@
                             <i class="bx bx-moon font-size-24"></i>
                         </li>
 
-                       <!--  <li class="dropdown">
+                        <!--  <li class="dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <img src="/dashboard1/images/users/avatar-4.jpg" alt="user-image" class="rounded-circle">
                                 <span class="ms-1 d-none d-md-inline-block">
@@ -234,50 +284,52 @@
                             </a>
                           
                         </li> -->
-                         <li class="dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="/dashboard1/images/users/avatar-4.jpg alt="user-image" class="rounded-circle">
-                    <span class="ms-1 d-none d-md-inline-block">
-                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
-                    </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                    <!-- item-->
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
+                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
+                                <img src="/dashboard1/images/users/avatar-4.jpg alt="user-image"
+                                    class="rounded-circle">
+                                <span class="ms-1 d-none d-md-inline-block">
+                                    {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                                <!-- item-->
 
-                  <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                      
-                        <x-responsive-nav-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-responsive-nav-link>
-                    </a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
 
-                    <!-- item-->
-                    {{-- <a href="pages-lock-screen.html" class="dropdown-item notify-item">
+                                    <x-responsive-nav-link :href="route('profile.edit')">
+                                        {{ __('Profile') }}
+                                    </x-responsive-nav-link>
+                                </a>
+
+                                <!-- item-->
+                                {{-- <a href="pages-lock-screen.html" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
                         <span>Lock Screen</span>
                     </a> --}}
 
-                    {{-- <div class="dropdown-divider"></div> --}}
+                                {{-- <div class="dropdown-divider"></div> --}}
 
-                    <!-- item-->
-                    {{-- <a href="pages-login.html" class="dropdown-item notify-item">
+                                <!-- item-->
+                                {{-- <a href="pages-login.html" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Logout</span>
                     </a> --}}
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
 
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                                    <x-responsive-nav-link :href="route('logout')"
+                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
+                                        {{ __('Log Out') }}
+                                    </x-responsive-nav-link>
+                                </form>
 
-                </div>
-            </li>
+                            </div>
+                        </li>
 
                     </ul>
                 </div>
@@ -296,12 +348,12 @@
                                 <h4 class="page-title mb-0">dashboard1</h4>
                             </div>
                             <div class="col-lg-6">
-                               <div class="d-none d-lg-block">
-                                <ol class="breadcrumb m-0 float-end">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashtrap</a></li>
-                                    <li class="breadcrumb-item active">dashboard1</li>
-                                </ol>
-                               </div>
+                                <div class="d-none d-lg-block">
+                                    <ol class="breadcrumb m-0 float-end">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashtrap</a></li>
+                                        <li class="breadcrumb-item active">dashboard1</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -413,7 +465,8 @@
                                     </div>
 
                                     <div class="progress shadow-sm" style="height: 5px;">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 57%;"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 57%;">
+                                        </div>
                                     </div>
                                 </div>
                                 <!--end card body-->
@@ -441,9 +494,9 @@
                                     <p class="card-subtitle mb-4">Recent Stock</p>
 
                                     <div class="text-center">
-                                        <input data-plugin="knob" data-width="165" data-height="165" data-linecap=round
-                                            data-fgColor="#7a08c2" value="95" data-skin="tron" data-angleOffset="180"
-                                            data-readOnly=true data-thickness=".15" />
+                                        <input data-plugin="knob" data-width="165" data-height="165"
+                                            data-linecap=round data-fgColor="#7a08c2" value="95" data-skin="tron"
+                                            data-angleOffset="180" data-readOnly=true data-thickness=".15" />
                                         <h5 class="text-muted mt-3">Total sales made today</h5>
 
 
@@ -496,8 +549,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown float-end position-relative">
-                                        <a href="#" class="dropdown-toggle h4 text-muted" data-toggle="dropdown"
-                                            aria-expanded="false">
+                                        <a href="#" class="dropdown-toggle h4 text-muted"
+                                            data-toggle="dropdown" aria-expanded="false">
                                             <i class="mdi mdi-dots-vertical"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -535,7 +588,8 @@
                                 <div class="card-body">
 
                                     <h4 class="card-title">Top 5 Customers</h4>
-                                    <p class="card-subtitle mb-4 font-size-13">Transaction period from 21 July to 25 Aug
+                                    <p class="card-subtitle mb-4 font-size-13">Transaction period from 21 July to 25
+                                        Aug
                                     </p>
 
                                     <div class="table-responsive">
@@ -552,8 +606,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="table-user">
-                                                        <img src="public/dashboard1/images/users/avatar-4.jpg" alt="table-user"
-                                                            class="mr-2 avatar-xs rounded-circle">
+                                                        <img src="public/dashboard1/images/users/avatar-4.jpg"
+                                                            alt="table-user" class="mr-2 avatar-xs rounded-circle">
                                                         <a href="javascript:void(0);"
                                                             class="text-body font-weight-semibold">Paul J. Friend</a>
                                                     </td>
@@ -573,8 +627,8 @@
 
                                                 <tr>
                                                     <td class="table-user">
-                                                        <img src="public/dashboard1/images/users/avatar-3.jpg" alt="table-user"
-                                                            class="mr-2 avatar-xs rounded-circle">
+                                                        <img src="public/dashboard1/images/users/avatar-3.jpg"
+                                                            alt="table-user" class="mr-2 avatar-xs rounded-circle">
                                                         <a href="javascript:void(0);"
                                                             class="text-body font-weight-semibold">Bryan J. Luellen</a>
                                                     </td>
@@ -593,8 +647,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="table-user">
-                                                        <img src="public/dashboard1/images/users/avatar-8.jpg" alt="table-user"
-                                                            class="mr-2 avatar-xs rounded-circle">
+                                                        <img src="public/dashboard1/images/users/avatar-8.jpg"
+                                                            alt="table-user" class="mr-2 avatar-xs rounded-circle">
                                                         <a href="javascript:void(0);"
                                                             class="text-body font-weight-semibold">Kathryn S.
                                                             Collier</a>
@@ -614,8 +668,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="table-user">
-                                                        <img src="public/dashboard1/images/users/avatar-1.jpg" alt="table-user"
-                                                            class="mr-2 avatar-xs rounded-circle">
+                                                        <img src="public/dashboard1/images/users/avatar-1.jpg"
+                                                            alt="table-user" class="mr-2 avatar-xs rounded-circle">
                                                         <a href="javascript:void(0);"
                                                             class="text-body font-weight-semibold">Timothy Kauper</a>
                                                     </td>
@@ -634,8 +688,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="table-user">
-                                                        <img src="public/dashboard1/images/users/avatar-5.jpg" alt="table-user"
-                                                            class="mr-2 avatar-xs rounded-circle">
+                                                        <img src="public/dashboard1/images/users/avatar-5.jpg"
+                                                            alt="table-user" class="mr-2 avatar-xs rounded-circle">
                                                         <a href="javascript:void(0);"
                                                             class="text-body font-weight-semibold">Zara Raws</a>
                                                     </td>
@@ -672,4 +726,4 @@
 
             </div> <!-- content -->
 
-          @include('layouts.footer');
+            @include('layouts.footer');

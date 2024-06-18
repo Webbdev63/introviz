@@ -1,74 +1,12 @@
 @include('front.header')
-<style>
-    .form_data {
-        padding: 0px 30px;
-    }
-
-
-    .sidebarfilter {
-        margin-bottom: 20px;
-    }
-
-    .sidebarfilter .form-label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-
-    @media screen and (max-width: 1400px) {
-        .finaces .form-check-label {
-            font-size: 14px !important;
-        }
-
-        .finaces #inlineCheck {
-            font-size: 19px !important;
-            margin: 3px auto !important;
-        }
-
-        .form-label {
-            display: block !important;
-        }
-    }
-</style>
 
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-
+ 
             <div class="col-sm-12 form_data">
 
                 <form>
-                    <!--
-                                            <section class="after">
-                                            <div class="container">
-                                            <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                            <div class="absences">
-
-                                            <label for="sel1" class="form-label">NAME</label>
-
-                                            <input class="form-input" id="LEGAL_NAME" name="LEGAL_NAME">
-
-                                            </div>
-                                            </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                            <div class="absences">
-                                            <label for="sel1" class="form-label">BUSINESS NAME</label>
-                                            <input class="form-input" id="DBA_NAME" name="DBA_NAME">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                        <div class="absences">
-
-                                            <label for="sel1" class="form-label">PHYSICAL ADDRESS</label>
-                                            <input class="form-input" name="BUS_STREET_PO" id="BUS_STREET_PO">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>   -->
 
                     <section class="after">
                         <div class="container">
@@ -145,25 +83,7 @@
                             </div>
                         </div>
                     </section>
-                    <!--
-                            <section class="after">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                            <div class="absences">
-
-                                                <label for="sel1" class="form-label">Phone number</label>
-
-                                                <input type="number" class="form-input" id="BUS_TELNO" name="BUS_TELNO">
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </section>   -->
-
+         
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                         <div class="network">
                             <button type="submit" class="btn btn">Submit</button>

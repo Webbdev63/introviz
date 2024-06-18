@@ -5,13 +5,7 @@
         color: red
     }
 
-    .saverecord {
-            background-color: red;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -61,18 +55,19 @@
         <div class="row">
             <div class="col-xl-4 col-lg-5 col-md-6 col-12">
           
-                <form method="POST" {{-- action="{{ route('search') }}" --}} id="CensusForm">
+                <form method="POST" {{-- action="{{ route('search') }}" --}} id="InsuranceForm">
                     @csrf
                     <div class="absences">
                         <h5>Create Your Order:</h5>
                     </div>
-                    <p class="saverecord">*You can save minimum 100 records</p>
+             
                     @php
                         if ($count <= 100) {
                         @endphp
                             <div class="outside">
                                 <ul class="list-group">
-                                    <li class="list-group-item box">Order Quantity:</li>
+                                <li class="list-group-item box">Order Quantity:<button data-toggle="tooltip" data-bs-original-title="*You can save minimum 100 records" class="btn btn-secondary tooltip_cst">?</button></li>
+                                   
                                     <li class="list-group-item layout">
                                         <input type="text" class="form-control" id="order_quantity"
                                             value="{{ $count }}" placeholder="Enter order quantity" name="order_quantity" readonly>
@@ -84,12 +79,11 @@
                         @php
                         } else {
                         @endphp
-                        <span class="tooltip">?
-                        <span class="tooltiptext">*You can save minimum 100 records</span>
-                        </span>
+                       
                             <div class="outside">
                                 <ul class="list-group">
-                                    <li class="list-group-item box">Order Quantity:</li>
+                                <li class="list-group-item box">Order Quantity:<button data-toggle="tooltip" data-bs-original-title="*You can save minimum 100 records" class="btn btn-secondary tooltip_cst">?</button></li>
+                                   
                                     <li class="list-group-item layout">
                                         <input type="text" onkeyup="updateRowCount()" class="form-control" id="order_quantity"
                                             value="{{ $count }}" placeholder="Enter order quantity" name="order_quantity">
@@ -113,7 +107,7 @@
                     <input type="hidden" name="saveRunCount" value="YES">
                     <div class="explicit">
                         <button type="button" id="save-button" class="btn btn-secondary"
-                            onclick="submitCensusForm()">SaveCount <img
+                            onclick="submitInsuranceForm()">SaveCount <img
                                 src="/front/image/grocery-store.png" class="img-fluid"></button>
                     </div>
 
@@ -134,19 +128,16 @@
                 <div class="mind">
 
 
-                    {{-- <form method="POST" action="{{ route('search') }}">
-                        @csrf
-                        @foreach (request()->all() as $key => $value)
-                        <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                       @endforeach
-          
-          
-                        <input type="hidden" name="exportToExcel" id="" value="yes">
-                        <button type="submit">place order</button>
-                    </form> --}}
+                  
+                <form method="POST" action="{{ route('processPayment') }}">
+                    @csrf
+                    <input type="hidden" id="orderId" name="orderId">
+                    <input type="hidden" id="orderPrice" name="orderPrice">
+                    <input type="hidden" id="orderQuantity" name="orderQuantity">
+                    <input type="hidden" id="customer_id" name="customer_id">
 
-                    <a href="{{ route('checkoutpage') }}" class="btn btn">place order<img
-                            src="/front/image/touch.png" class="img-fluid"></a>
+                    <button type="submit" class="btn ">place order </button>
+                </form>
                 </div>
             </div>
 
@@ -154,10 +145,10 @@
 </section>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    function submitCensusForm() {
-
+    function submitInsuranceForm() {
+debugger;
      
-        var formData = new FormData(document.getElementById("CensusForm"));
+        var formData = new FormData(document.getElementById("InsuranceForm"));
         var fillInput = document.getElementById("fileName123").value;
         //var inputbox =  fillInput.value;
         if (fillInput == '') {
@@ -174,12 +165,27 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                document.getElementById('save-button').style.visibility = 'hidden';
+                        if(response.message=='success'){
+                    
+              let   savedData=response.data
+           
+                document.getElementById('orderId').value = savedData.id
+                    document.getElementById('orderPrice').value = savedData.orderPrice
+                    document.getElementById('orderQuantity').value = savedData.orderQuantity
+                    document.getElementById('customer_id').value = savedData.user_id
+                    localStorage.setItem('savedData', JSON.stringify(savedData));
+
+
+                    document.getElementById('save-button').style.visibility = 'hidden';
+                    document.getElementById('fileName123').readOnly = true;
+                    document.getElementById('order_quantity').readOnly = true;
+
+                
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
                     text: 'Form submitted successfully!.Please proccess with Payment',
-                });
+                });}
 
             },
             error: function(xhr, status, error) {

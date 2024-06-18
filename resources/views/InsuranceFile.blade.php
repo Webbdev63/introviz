@@ -34,8 +34,8 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-
-    <div class="col-sm-12 form_data">
+ 
+    <div class="col-sm-12 form_data">  
 
     <form method="POST" action="{{ route('outOfServiceSearch') }}">
     @csrf
@@ -74,7 +74,7 @@
 
                         $('#state').on('change', function() {
                             var state_code = this.value;
-
+                       
                             localStorage.removeItem('city');
                             $('#city').html('');
                             $.ajax({
@@ -106,7 +106,7 @@
 
                 </script>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="absences">
+                    <div class="absences">  
 
                         <label for="sel1" class="form-label">Zip Code</label>
                         <input class="form-input" name="zip_code" id="zip_code">

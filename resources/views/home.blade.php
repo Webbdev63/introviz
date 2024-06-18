@@ -1,98 +1,10 @@
 @include('front.header')
-<style>
-    .range_container {
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        margin: 35% auto;
-    }
-
-    .sliders_control {
-        position: relative;
-        min-height: 15px;
-    }
-
-    .form_control {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        font-size: 24px;
-        color: #635a5a;
-    }
-
-    input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        pointer-events: all;
-        width: 24px;
-        height: 24px;
-        background-color: #0060aa;
-        border-radius: 50%;
-        box-shadow: 0 0 0 1px #C6C6C6;
-        cursor: pointer;
-    }
-
-    input[type=range]::-moz-range-thumb {
-        -webkit-appearance: none;
-        pointer-events: all;
-        width: 24px;
-        height: 24px;
-        background-color: #0060aa;
-        border-radius: 50%;
-        box-shadow: 0 0 0 1px #C6C6C6;
-        cursor: pointer;
-    }
-
-    input[type=range]::-webkit-slider-thumb:hover {
-        background: #0060aa;
-    }
-
-    input[type=range]::-webkit-slider-thumb:active {
-        box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-        -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-    }
-
-    input[type="range"] {
-        -webkit-appearance: none;
-        appearance: none;
-        height: 10px;
-        width: 100%;
-        position: absolute;
-        background-color: #0060aa;
-        pointer-events: none;
-    }
-
-    #fromSlider {
-        height: 0;
-        z-index: 1;
-        top: 5px;
-    }
-
-    .form_data {
-	padding: 0px 30px;
-}
-
-
-@media screen and (max-width: 1400px) {
-  .finaces .form-check-label {
-    font-size: 14px !important;
-  }
-  .finaces #inlineCheck {
-    font-size: 19px !important;
-    margin: 3px auto !important;
-  }
-  .form-label {
-    display: block !important;
-  }
-}
-</style>
-
-
 
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-
-            <div class="col-sm-12 form_data">
+           
+            <div class="col-sm-12 form_data">  
             <form method="POST" action="{{ route('search') }}">
     @csrf
     <section class="after">
@@ -174,12 +86,12 @@
             });
         });
 
-        var state_code = localStorage.getItem('state_code');
+        // var state_code = localStorage.getItem('state_code');
 
 
-        if (state_code != '') {
-            cities(state_code)
-        }
+        // if (state_code != '') {
+        //     cities(state_code)
+        // }
 
 
         function cities(state_code) {
@@ -346,16 +258,16 @@
                     </div>
                     <div class="indicators">
                             <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                <label class="form-check-label" for="private-passenger-yes">Yes</label>
                                 <input class="form-check-input" type="radio" name="Private_passenger"
-                                    id="inlineRadio1" value="Yes">
+                                    id="private-passenger-yes" value="Yes">
                             </div>
                             <div class="form-check form-check-inline best time">
-                                <label class="form-check-label" for="inlineRadio2">No</label>
+                                <label class="form-check-label" for="private-passenger-no">No</label>
                                 <input class="form-check-input" type="radio" name="Private_passenger"
-                                    id="inlineRadio2" value="No">
+                                    id="private-passenger-no" value="No">
 
-                            </div>
+                            </div>   
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-5 col-md-6 col-12">
@@ -365,14 +277,14 @@
                     <div class="currency">
                         <div class="encodhing">
                             <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                <label class="form-check-label" for="hazmat_indicator_yes">Yes</label>
                                 <input class="form-check-input" type="radio" name="Hazmat_indicator"
-                                    id="inlineRadio1" value="Y">
+                                    id="hazmat_indicator_yes" value="Y">
                             </div>
                             <div class="form-check form-check-inline  best time">
-                                <label class="form-check-label" for="inlineRadio2">No</label>
+                                <label class="form-check-label" for="hazmat_indicator_no">No</label>
                                 <input class="form-check-input" type="radio" name="Hazmat_indicator"
-                                    id="inlineRadio2" value="N">
+                                    id="hazmat_indicator_no" value="N">
 
                             </div>
                         </div>
@@ -392,203 +304,252 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                GENERAL FREIGHT
-                            </label>
-                            <input class="form-check-input" name="Genfreight" value="x" name type="checkbox"
-                                id="inlineCheck">
+                                <label class="form-check-label" for="Genfreight">
+                                    GENERAL FREIGHT
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Genfreight" value="x" name type="checkbox"
+                                        id="Genfreight">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6  col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                HOUSEHOLD GOODS
-                            </label>
-                            <input class="form-check-input" name="Household" value="x" type="checkbox"
-                                id="inlineCheck">
+                                <label class="form-check-label" for="Household">
+                                    HOUSEHOLD GOODS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Household" value="x" type="checkbox"
+                                        id="Household">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6  col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                METAL: SHEETS, COILS, ROLLS
-                            </label>
-                            <input class="form-check-input" type="checkbox" value="x" name="Metalsheet"
-                                id="inlineCheck">
+                                <label class="form-check-label" for="Metalsheet">
+                                    METAL: SHEETS, COILS, ROLLS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" type="checkbox" value="x" name="Metalsheet"
+                                        id="Metalsheet">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6  col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                MOTOR VEHICLES
-                            </label>
-                            <input class="form-check-input" name=" Motorveh" value="x" type="checkbox"
-                                id="inlineCheck">
+                                <label class="form-check-label" for="Motorveh">
+                                    MOTOR VEHICLES
+                                </label>
+                                <div class="synergy">
+                                <input class="form-check-input" name=" Motorveh" value="x" type="checkbox"
+                                    id="Motorveh">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6  col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                DRIVEAWAY / TOWAWAY
-                            </label>
-                            <input class="form-check-input" name="Drivetow" value="x" type="checkbox"
-                                id="inlineCheck">
+                                <label class="form-check-label" for="Drivetow">
+                                    DRIVEAWAY / TOWAWAY
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Drivetow" value="x" type="checkbox"
+                                        id="Drivetow">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6  col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                LOGS, POLES, BEAMS
-                            </label>
-                            <input class="form-check-input" name="Logpole" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Logpole">
+                                    LOGS, POLES, BEAMS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Logpole" value="x" type="checkbox"
+                                        id="Logpole">
+                            </div>
+                        </div>   
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                BUILDING MATERIALS
-                            </label>
-                            <input class="form-check-input" name="Bldgmat" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Bldgmat">
+                                    BUILDING MATERIALS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Bldgmat" value="x" type="checkbox"
+                                        id="Bldgmat">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                MOBILE HOMES
-                            </label>
-                            <input class="form-check-input" name="MobileHome" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="MobileHome">
+                                    MOBILE HOMES
+                                </label>
+                                <div class="synergy">
+                                <input class="form-check-input" name="MobileHome" value="x" type="checkbox"
+                                    id="MobileHome">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                MACHINERY, LARGE OBJECTS
-                            </label>
-                            <input class="form-check-input" name="Machlrg" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Machlrg">
+                                    MACHINERY, LARGE OBJECTS
+                                </label>
+                                <div class="synergy">
+                                <input class="form-check-input" name="Machlrg" value="x" type="checkbox"
+                                    id="Machlrg">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                FRESH PRODUCE
-                            </label>
-                            <input class="form-check-input" name="Produce" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Produce">
+                                    FRESH PRODUCE
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Produce" value="x" type="checkbox"
+                                        id="Produce">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                LIQUIDS/GASES
-                            </label>
-                            <input class="form-check-input" name="Liqgas" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Liqgas">
+                                    LIQUIDS/GASES
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Liqgas" value="x" type="checkbox"
+                                        id="Liqgas">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                INTERMODAL CONTAINERS
-                            </label>
-                            <input class="form-check-input" name="Intermodal" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Intermodal">
+                                    INTERMODAL CONTAINERS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Intermodal" value="x" type="checkbox"
+                                        id="Intermodal">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                PASSENGERS
-                            </label>
-                            <input class="form-check-input" name="Passengers" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Passengers">
+                                    PASSENGERS
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Passengers" value="x" type="checkbox"
+                                        id="Passengers">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="withoutfddgfd">
-                            <div class="form-check mb-2 mr-sm-2">
-                                <label class="form-check-label" for="inlineFormCheck">
-                                    OILFIELD EQUIPMENT
-                                </label>
-                                <input class="form-check-input" name="Oilfield" value="x" type="checkbox"
-                                    id="inlineCheck">
-                            </div>
+                                <div class="form-check mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="Oilfield">
+                                        OILFIELD EQUIPMENT
+                                    </label>
+                                    <div class="synergy">
+                                        <input class="form-check-input" name="Oilfield" value="x" type="checkbox"
+                                            id="Oilfield">
+                                </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="withoutggg">
+                                <div class="form-check mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="Livestock">
+                                        LIVESTOCK
+                                    </label>
+                                    <div class="synergy">
+                                        <input class="form-check-input" name="Livestock" value="x" type="checkbox"
+                                            id="Livestock">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                    <div class="finaces">
                             <div class="form-check mb-2 mr-sm-2">
-                                <label class="form-check-label" for="inlineFormCheck">
-                                    LIVESTOCK
+                                <label class="form-check-label" for="Grainfeed">
+                                    GARBAGE, REFUSE, TRASH
                                 </label>
-                                <input class="form-check-input" name="Livestock" value="x" type="checkbox"
-                                    id="inlineCheck">
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Grainfeed" value="x" type="checkbox"
+                                        id="Grainfeed">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                GARBAGE, REFUSE, TRASH
-                            </label>
-                            <input class="form-check-input" name="Grainfeed" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-                    <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                COAL/COKE
-                            </label>
-                            <input class="form-check-input" name="Coalcoke" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Coalcoke">
+                                    COAL/COKE
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Coalcoke" value="x" type="checkbox"
+                                        id="Coalcoke">
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="better">
-                            <div class="form-check mb-2 mr-sm-2">
-                                <label class="form-check-label" for="inlineFormCheck">
-                                    MEAT
+                                <div class="form-check mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="Meat">
+                                        MEAT
+                                    </label>
+                                    <div class="synergy">
+                                        <input class="form-check-input" name="Meat" value="x" type="checkbox"
+                                            id="Meat">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+                    <div class="finaces">
+                        <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="Garbage">
+                                    GARBAGE, REFUSE, TRASH
                                 </label>
-                                <input class="form-check-input" name="Meat" value="x" type="checkbox"
-                                    id="inlineCheck">
+                                <div class="synergy">
+                                    <input class="form-check-input" name="Garbage" value="x" type="checkbox"
+                                        id="Garbage">
                             </div>
                         </div>
                     </div>
@@ -596,144 +557,155 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                GARBAGE, REFUSE, TRASH
-                            </label>
-                            <input class="form-check-input" name="Garbage" value="x" type="checkbox"
-                                id="inlineCheck">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-                    <div class="finaces">
-                        <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Usmail">
                                 U.S. MAIL
                             </label>
-                            <input class="form-check-input" name="Usmail" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Usmail" value="x" type="checkbox"
+                                    id="Usmail">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Chem">
                                 CHEMICALS
                             </label>
-                            <input class="form-check-input" name="Chem" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Chem" value="x" type="checkbox"
+                                    id="Chem">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Drybulk">
                                 COMMODITIES DRY BULK
                             </label>
-                            <input class="form-check-input" name="Drybulk" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Drybulk" value="x" type="checkbox"
+                                    id="Drybulk">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Coldfood">
                                 REFRIGERATED FOOD
                             </label>
-                            <input class="form-check-input" name="Coldfood" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Coldfood" value="x" type="checkbox"
+                                    id="Coldfood">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Beverages">
                                 BEVERAGES
                             </label>
-                            <input class="form-check-input" name="Beverages" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Beverages" value="x" type="checkbox"
+                                    id="Beverages">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Paperprod">
                                 PAPER PRODUCTS
                             </label>
-                            <input class="form-check-input" name="Paperprod" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Paperprod" value="x" type="checkbox"
+                                    id="Paperprod">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Utility">
                                 UTILITY
                             </label>
-                            <input class="form-check-input" name="Utility" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Utility" value="x" type="checkbox"
+                                    id="Utility">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Farmsupp">
                                 FARM SUPPLIES
                             </label>
-                            <input class="form-check-input" name="Farmsupp" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Farmsupp" value="x" type="checkbox"
+                                    id="Farmsupp">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Construct">
                                 CONSTRUCTION
                             </label>
-                            <input class="form-check-input" name="Construct" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Construct" value="x" type="checkbox"
+                                    id="Construct">
+                            </div>          
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Waterwell">
                                 WATER-WELL
                             </label>
-                            <input class="form-check-input" name="Waterwell" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Waterwell" value="x" type="checkbox"
+                                    id="Waterwell">
+                            </div>        
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                     <div class="finaces">
                         <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
+                            <label class="form-check-label" for="Cargoother">
                                 OTHER
                             </label>
-                            <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <div class="synergy">
+                                <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
+                                    id="Cargoother">
+                            </div>    
                         </div>
                     </div>
                 </div>
                 <div class="census">
                 <div class="form-check mb-2 mr-sm-2">
                             <label class="form-check-label" for="inlineFormCheck">
-                                Do you want to incluide the insurance data in the census ?
+                                Do you want to include the insurance data in the census ?
                             </label>
-                            <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
-                                id="inlineCheck">
+                            <input class="form-check-input" name="insurance_data" value="yes" type="checkbox"
+                                id="insurance_dataff">
                         </div>
-                </div>
+                </div>        
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="network">
                         <button type="submit" class="btn btn">Submit</button>

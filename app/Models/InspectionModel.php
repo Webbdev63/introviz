@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OutOfServiceModel extends Model
+class InspectionModel extends Model
 {
     use HasFactory;
-    public $table='CENSUS_INS_ACTIVE';
-    public function scopeFilterOutofService($query,$state, $Phy_city, $zip_code, $LEGAL_NAME,$DBA_NAME,$BUS_STREET_PO,$BUS_TELNO )
+    public $table='inspection_reports';
+    public function scopeFilterinspectionreports($query,$state, $Phy_city, $zip_code, $LEGAL_NAME,$DBA_NAME,$BUS_STREET_PO,$BUS_TELNO )
     {
         return $query->where(function ($query) use ($state, $Phy_city, $zip_code,$LEGAL_NAME,$DBA_NAME,$BUS_STREET_PO,$BUS_TELNO ) {
             if ($state != '') {

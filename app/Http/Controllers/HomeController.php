@@ -11,6 +11,7 @@ use App\Models\CensusFile;
 use DB;
 use App\PhpXlsxGenerator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 
@@ -29,114 +30,185 @@ class HomeController extends Controller
     }
     public function exportToExcel($id)
     {
-        $data = SaveCensusFile::where('id', $id)->first()->toArray();
-      //  echo "<pre>"; print_r($data); echo "</pre>";
-       // die();
-       $savefilename = $data['fileName'];
-       // die();
-        $city =  $data['Phy_city'] != null ? $data['Phy_city'] : '';
-        $state =  $data['state'] != null ? $data['state'] : '';
-        $Phy_city =  $data['Phy_city'] != null ? $data['Phy_city'] : '';
-        $zip_code =  $data['zip_code'] != null ? $data['zip_code'] : '';
-        $cls =  $data['cls'] != null ? $data['cls'] : '';
-        $Carship =  $data['Carship'] != null ? $data['Carship'] : '';
+        $data = SaveCensusFile::findOrFail($id)->toArray();
+        $savefilename = $data['fileName'];
+        $insurancedata = strtolower($data['insurance_data']);
+        $city = $data['Phy_city'] ?? '';
+        $state = $data['state'] ?? '';
+        $zip_code = $data['zip_code'] ?? '';
+        $cls = $data['cls'] ?? '';
+        $Carship = $data['Carship'] ?? '';
 
-        $Private_passenger = $data['Private_passenger'] != null && $data['Private_passenger'] != 'No' ? 'x' : '';
-        $Genfreight = $data['Genfreight'] != null  ? $data['Genfreight'] : '';
-        $Household =$data['Household'] != null  ? $data['Household'] : '';
-        $Metalsheet =  $data['Metalsheet'] != null ? $data['Metalsheet'] : '';
-        $Motorveh = $data['Motorveh'] != null  ? $data['Motorveh'] : '';
-        $Drivetow = $data['Drivetow'] != null  ? $data['Drivetow'] : '';
-        $Logpole = $data['Logpole'] != null ? $data['Logpole'] : '';
-        $Bldgmat = $data['Bldgmat'] != null  ? $data['Bldgmat'] : '';
-        $MobileHome =  $data['MobileHome'] != null ? $data['MobileHome'] : '';
-        $Machlrg = $data['Machlrg'] != null  ? $data['Machlrg'] : '';
-        $Produce = $data['Produce'] != null  ? $data['Produce'] : '';
-        $Liqgas = $data['Liqgas'] != null ? $data['Liqgas'] : '';
-        $Hazmat_indicator =  $data['Hazmat_indicator'] != null ? $data['Hazmat_indicator'] : '';
-        $Oilfield =  $data['Oilfield'] != null ? $data['Oilfield'] : '';
-        $Livestock =  $data['Livestock'] != null ? $data['Livestock'] : '';
-        $Coalcoke = $data['Coalcoke'] != null  ? $data['Coalcoke'] : '';
-        $Meat =  $data['Meat'] != null ? $data['Meat'] : '';
-        $Garbage =  $data['Garbage'] != null ? $data['Garbage'] : '';
-        $Chem =  $data['Chem'] != null  ? $data['Chem'] : '';
-        $Drybulk =  $data['Drybulk'] != null ? $data['Drybulk'] : '';
-        $Coldfood =  $data['Coldfood'] != null  ? $data['Coldfood'] : '';
-        $Intermodal =  $data['Intermodal'] != null  ? $data['Intermodal'] : '';
-        $Usmail =  $data['Usmail'] != null  ? $data['Usmail'] : '';
-        $Beverages =$data['Beverages'] != null  ? $data['Beverages'] : '';
-        $Paperprod =  $data['Paperprod'] != null ? $data['Paperprod'] : '';
-        $Farmsupp =  $data['Farmsupp'] != null  ? $data['Farmsupp'] : '';
-        $Construct =  $data['Construct'] != null ? $data['Construct'] : '';
-        $Waterwell =  $data['Waterwell'] != null ? $data['Waterwell'] : '';
-        $Cargoother =  $data['Cargoother'] != null  ? $data['Cargoother'] : '';
-        $Grainfeed =  $data['Grainfeed'] != null  ? $data['Grainfeed'] : '';
+        $fields = [
+            'Genfreight', 'Household', 'Metalsheet', 'Motorveh', 'Drivetow', 'Logpole', 'Bldgmat', 'MobileHome',
+            'Machlrg', 'Produce', 'Liqgas', 'Private_passenger', 'Oilfield', 'Livestock', 'Coalcoke', 'Meat',
+            'Garbage', 'Chem', 'Drybulk', 'Coldfood', 'Utility', 'Intermodal', 'Usmail', 'Beverages', 'Paperprod',
+            'Farmsupp', 'Construct', 'Waterwell', 'Cargoother', 'Grainfeed', 'Hazmat_indicator'
+        ];
 
-        $Utility =  $data['Utility'] != null ? $data['Utility'] : '';
-        $Intermodal =  $data['Intermodal'] != null  ? $data['Intermodal'] : '';
-
-        $TOT_PWR_FROM = $data['TOT_PWR_min'] != null  ? $data['TOT_PWR_min'] : '';
-
-        $TOT_PWR_TO =   $data['TOT_PWR_max'] != null  ? $data['TOT_PWR_max'] : '';
-
-        if ($Phy_city != '') {
-            $cityState = explode('-', $Phy_city);
-
-            $Phy_city = $cityState[1];
+        $conditions = [];
+        foreach ($fields as $field) {
+            $conditions[$field] = $data[$field] ?? '';
         }
 
-        $filData = CensusFile::filterByCriteria(
+        $TOT_PWR_FROM = $data['TOT_PWR_min'] ?? '';
+        $TOT_PWR_TO = $data['TOT_PWR_max'] ?? '';
+
+        if (!empty($city)) {
+            $cityState = explode('-', $city);
+            $city = $cityState[1] ?? $city;
+        }
+
+        $dotNumbers = CensusFile::filterByCriteria(
             $state,
-            $Phy_city,
+            $city,
             $zip_code,
             $cls,
             $Carship,
             $TOT_PWR_FROM,
             $TOT_PWR_TO,
-            $Genfreight,
-            $Household,
-            $Metalsheet,
-            $Motorveh,
-            $Drivetow,
-            $Logpole,
-            $Bldgmat,
-            $MobileHome,
-            $Machlrg,
-            $Produce,
-            $Liqgas,
-            $Private_passenger,
-            $Oilfield,
-            $Livestock,
-            $Coalcoke,
-            $Meat,
-            $Garbage,
-            $Chem,
-            $Drybulk,
-            $Coldfood,
-            $Utility,
-            $Intermodal,
-            $Usmail,
-            $Beverages,
-            $Paperprod,
-            $Farmsupp,
-            $Construct,
-            $Waterwell,
-            $Cargoother,
-            $Grainfeed,
-            $Hazmat_indicator
-        )->take($data['orderQuantity'])->get()->toArray();
+            $conditions['Genfreight'],
+            $conditions['Household'],
+            $conditions['Metalsheet'],
+            $conditions['Motorveh'],
+            $conditions['Drivetow'],
+            $conditions['Logpole'],
+            $conditions['Bldgmat'],
+            $conditions['MobileHome'],
+            $conditions['Machlrg'],
+            $conditions['Produce'],
+            $conditions['Liqgas'],
+            $conditions['Private_passenger'],
+            $conditions['Oilfield'],
+            $conditions['Livestock'],
+            $conditions['Coalcoke'],
+            $conditions['Meat'],
+            $conditions['Garbage'],
+            $conditions['Chem'],
+            $conditions['Drybulk'],
+            $conditions['Coldfood'],
+            $conditions['Utility'],
+            $conditions['Intermodal'],
+            $conditions['Usmail'],
+            $conditions['Beverages'],
+            $conditions['Paperprod'],
+            $conditions['Farmsupp'],
+            $conditions['Construct'],
+            $conditions['Waterwell'],
+            $conditions['Cargoother'],
+            $conditions['Grainfeed'],
+            $conditions['Hazmat_indicator']
+        )->take($data['orderQuantity'])->pluck('DOT_NUMBER')->toArray();
 
-        if(count($filData)>0){
+        if ($insurancedata == 'yes') {
+            $filData = DB::table('Census-file')
+                ->join('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
+                ->whereIn('Census-file.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'Census-file.DOT_NUMBER',
+                    'Census-file.NAME',
+                    'Census-file.NAME_DBA',
+                    'Census-file.PHY_STR',
+                    'Census-file.PHY_CITY',
+                    'Census-file.PHY_ST',
+                    'Census-file.PHY_ZIP',
+                    'Census-file.TEL_NUM',
+                    'Census-file.CARSHIP',
+                    'Census-file.TOT_PWR',
+                    'Census-file.HM_IND',
+                    'Census-file.PASSENGERS',
+                    'Census-file.GENFREIGHT',
+                    'Census-file.HOUSEHOLD',
+                    'Census-file.METALSHEET',
+                    'Census-file.MOTORVEH',
+                    'Census-file.DRIVETOW',
+                    'Census-file.LOGPOLE',
+                    'Census-file.BLDGMAT',
+                    'Census-file.MOBILEHOME',
+                    'Census-file.MACHLRG',
+                    'Census-file.PRODUCE',
+                    'Census-file.OILFIELD',
+                    'Census-file.LIVESTOCK',
+                    'Census-file.COALCOKE',
+                    'Census-file.MEAT',
+                    'Census-file.CHEM',
+                    'Census-file.DRYBULK',
+                    'Census-file.COLDFOOD',
+                    'Census-file.INTERMODAL',
+                    'Census-file.USMAIL',
+                    'Census-file.BEVERAGES',
+                    'Census-file.PAPERPROD',
+                    'Census-file.UTILITY',
+                    'Census-file.FARMSUPP',
+                    'Census-file.CONSTRUCT',
+                    'Census-file.WATERWELL',
+                    'Census-file.CARGOOTHR',
+                    'CENSUS_INS_ACTIVE.EFFECTIVE_DATE',
+                    'CENSUS_INS_ACTIVE.NAME_COMPANY'
+                )
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+           // echo "<pre>";
+           // print_r($filData);
+           // echo "</pre>";
+           // die();
+        } else {
+            $filData = CensusFile::filterByCriteria(
+                $state,
+                $city,
+                $zip_code,
+                $cls,
+                $Carship,
+                $TOT_PWR_FROM,
+                $TOT_PWR_TO,
+                $conditions['Genfreight'],
+                $conditions['Household'],
+                $conditions['Metalsheet'],
+                $conditions['Motorveh'],
+                $conditions['Drivetow'],
+                $conditions['Logpole'],
+                $conditions['Bldgmat'],
+                $conditions['MobileHome'],
+                $conditions['Machlrg'],
+                $conditions['Produce'],
+                $conditions['Liqgas'],
+                $conditions['Private_passenger'],
+                $conditions['Oilfield'],
+                $conditions['Livestock'],
+                $conditions['Coalcoke'],
+                $conditions['Meat'],
+                $conditions['Garbage'],
+                $conditions['Chem'],
+                $conditions['Drybulk'],
+                $conditions['Coldfood'],
+                $conditions['Utility'],
+                $conditions['Intermodal'],
+                $conditions['Usmail'],
+                $conditions['Beverages'],
+                $conditions['Paperprod'],
+                $conditions['Farmsupp'],
+                $conditions['Construct'],
+                $conditions['Waterwell'],
+                $conditions['Cargoother'],
+                $conditions['Grainfeed'],
+                $conditions['Hazmat_indicator']
+            )->take($data['orderQuantity'])->get()->toArray();
+        }
+
+        if (count($filData) > 0) {
             $header = array_keys($filData[0]);
             array_unshift($filData, $header);
         }
-            $xlsx = PhpXlsxGenerator::fromArray($filData);
-            $xlsx->downloadAs($savefilename . '.xlsx');
 
-
-
-
+        $xlsx = PhpXlsxGenerator::fromArray($filData);
+        $xlsx->downloadAs($savefilename . '.xlsx');
     }
+
+
+
     public function savedOrder()
     {
         // $totalRecords = CensusFile::count();
@@ -145,7 +217,7 @@ class HomeController extends Controller
 
         $userId = 2;
 
-        $savedData = SaveCensusFile::where('user_id', $userId)->get();
+        $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
 
 
         // die();
@@ -169,15 +241,24 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         // echo "<pre>";
-        // print_r($request->all());
-         //die();
+        //  print_r($request->all());
+        //  die();
         // DB::connection()->enableQueryLog();
+        //  $ins_data = ($request['insurance_data']);
 
+        //  if (!empty($request['insurance_data'])){
+
+        //     $ins_data = 'Yes';
+        //  } else{
+        //      $ins_data = 'No';
+        //   }
+
+        //  echo "<pre>";
+        //  print_r($ins_data);
+        // die();
         if ($request['saveRunCount'] == 'YES') {
 
             $data = Session::get('searchFilter');
-           // echo "<pre>"; print_r($data); echo "</pre>";
-          //  die();
 
             // removed token and flag from array
             $appliedFilter = array_filter($data, function ($value) {
@@ -197,14 +278,15 @@ class HomeController extends Controller
 
 
                 $data['TOT_PWR_max'] = $TOT_PWR_TO;
-                $data['TOT_PWR_min'] = $TOT_PWR_FROM ;
-                $data['Phy_city'] =$data['city'];
-                $data['zip_code'] =$data['Phy_zip'];
+                $data['TOT_PWR_min'] = $TOT_PWR_FROM;
+                $data['Phy_city'] = $data['city'];
 
-// dd($data);
+                // dd($data);
                 $saveRecord = SaveCensusFile::create($data);
 
-                return response()->json(['message'=>'sucess']);
+                if ($saveRecord['id']) {
+                    return response()->json(['message' => 'success', 'data' => $saveRecord]);
+                }
             } else {
                 echo 'please Select filter';
             }
@@ -217,22 +299,78 @@ class HomeController extends Controller
 
                 return $value != null;
             });
+
             unset($appliedFilter["saveRunCount"]);
             unset($appliedFilter["_token"]);
 
             $filter = '';
+     
             foreach ($appliedFilter as $key => $ap) {
                 $key = str_replace(' ', '_', $key);
-                if ($key == 'city') {
+                // if ($key == 'city') {
 
-                    $cityData = explode("-", $ap);
+                //     $cityData = explode("-", $ap);
 
-                    $ap = $cityData[1];
+                //     $ap = $cityData[1];
+                // }
+                
+                // if ($key == 'TOT_PWR_min') {
+
+                //     $key = 'Minimum  Power';
+
+                    
+                // }
+                // if ($key == 'TOT_PWR_max') {
+
+                //     $key = 'Maximum Power';
+
+                    
+                // }
+                switch ($key) {
+                    case 'city':
+                     $cityData = explode("-", $ap);
+                      $ap = $cityData[1];
+                        break;
+                    case 'TOT_PWR_min':
+                        $key = 'Minimum  Power';
+
+                        break;
+                     case "TOT_PWR_max":
+                         $key = 'Maximum Power';
+                         break;
+                    case 'Bldgmat':
+                        $key = 'BUILDING MATERIALS';  
+                        break;
+                    case 'Machlrg':
+                        $key = 'MACHINERY';  
+                        break;
+                    case 'Chem':
+                        $key = 'CHEMICALS';  
+                        break;
+                    case 'Drivetow':
+                        $key = 'DRIVEAWAY / TOWAWAY';  
+                        break;
+                    case 'Motorveh':
+                        $key = 'MOTOR VEHICLES';  
+                        break;
+                    case 'Logpole':
+                        $key = 'LOGS, POLES, BEAMS';  
+                        break;
+                    case 'Paperprod':
+                        $key = 'PAPER PRODUCTS';  
+                        break;
+                    case 'cls':
+                   
+                        
+                        break;
+                    
+                    
                 }
+         
                 $key = str_replace('_', '  ', strtoupper($key));
 
                 $ap = strtoupper($ap);
-                if ($ap == 'X') {
+                if ($ap == 'X' || $key== 'CLS' || $key== 'CARSHIP' ) {
                     $filter .= $key  . ', ';
                 } else {
                     $filter .= $key . '=' . $ap . ', ';
@@ -247,7 +385,7 @@ class HomeController extends Controller
         }
 
         Session::put('searchFilter', $data);
-
+        $insurance_data = isset($data['insurance_data']) && $data['insurance_data'] != null ? $data['insurance_data'] : '';
         $state = isset($data['state']) && $data['state'] != null ? $data['state'] : '';
         $Phy_city = isset($data['city']) && $data['city'] != null ? $data['city'] : '';
         $zip_code = isset($data['Phy_zip']) && $data['Phy_zip'] != null ? $data['Phy_zip'] : '';
@@ -298,7 +436,7 @@ class HomeController extends Controller
 
             $Phy_city = $cityState[1];
         }
-    //   echo "<pre>"; print_r($data); echo "</pre>";
+        //   echo "<pre>"; print_r($data); echo "</pre>";
 
         $filData = CensusFile::filterByCriteria(
             $state,
@@ -341,14 +479,14 @@ class HomeController extends Controller
             $Hazmat_indicator
         )->get()->toArray();
 
-       // echo "<pre>"; print_r($filData); echo "</pre>";
-       // die();
+        // echo "<pre>"; print_r($filData); echo "</pre>";
+        // die();
 
         $count = count($filData);
 
 
-        $viewName='CENSUS';
-        return view('results', compact('count','viewName', 'filter', 'countFilters'));
+        $viewName = 'CENSUS';
+        return view('results', compact('count', 'viewName', 'filter', 'countFilters'));
     }
 
 
@@ -430,7 +568,23 @@ class HomeController extends Controller
         return view('InsuranceFile', compact('states'));
     }
 
+    public function processPayment(Request $request)
+    {
+        $data =  $request->all();
+        $appId = Config::get('square.sandbox_application_id');
+        $locationId = Config::get('square.sandbox_location_id');
+        return view('checkout', compact("data", "appId", "locationId"));
+    }
 
-
-
+    public function Userlogin()
+    {
+        
+        return view('user_login',);
+    }
+    public function userRegister()
+    {
+        
+        return view('user_register');
+    }
+    
 }

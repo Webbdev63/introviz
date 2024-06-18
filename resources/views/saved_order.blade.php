@@ -20,20 +20,20 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          @foreach($savedData as $i=>$data)
+                                          {{-- @foreach($savedData as $i=>$data) --}}
                                         
                                           <tr>
-                                            <td>{{++$i}}</td>
+                                            <td>{{$savedData->id}}</td>
                                            
-                                            <td>{{$data->fileName}}</td>
-                                            <td>{{$data->orderQuantity}}</td>
-                                            <td>$ {{ $data->orderPrice}}</td>
+                                            <td>{{$savedData->fileName}}</td>
+                                            <td>{{$savedData->orderQuantity}}</td>
+                                            <td>$ {{ $savedData->orderPrice}}</td>
                                             {{-- <td>{{$data->id}}</td> --}}
                                             
                                         
-                                            <td><a href="{{ route('exportToExcel', ['id' => $data->id]) }}" class="btn btn">Download</button></td>
+                                            <td><a href="{{ route('exportToExcel', ['id' => $savedData->id]) }}" class="btn btn">Download</button></td>
                                           </tr>
-                                          @endforeach
+                                          {{-- @endforeach --}}
                                         
                                         </tbody>
                                       </table>

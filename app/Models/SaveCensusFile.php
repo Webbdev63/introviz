@@ -19,6 +19,7 @@ class SaveCensusFile extends Model
         'Carship',
         'TOT_PWR_min',
         'TOT_PWR_max',
+        'insurance_data',
         'Genfreight',
         'Household',
         'Metalsheet',

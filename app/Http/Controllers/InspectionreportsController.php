@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OutOfServiceModel;
-use App\Models\SaveOutofServiceFile;
+use App\Models\InspectionModel;
+use App\Models\SaveInspectionreports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\PhpXlsxGenerator;
 use DB;
 
-class OutOfService extends Controller
+class InspectionreportsController extends Controller
 {
-    public function outOfServiceSearch(Request $request)
+    public function Inspectionreports(Request $request)
     {
       //  dd($request->all());
-       // die();
 
         if ($request['saveRunCount'] == 'YES') {
            
 
-            $data = Session::get('searchOutOfServiceFilter');
+            $data = Session::get('searchInspectionreports');
 
             $appliedFilter = array_filter($data, function ($value) {
                 return $value != null;
@@ -40,7 +39,7 @@ class OutOfService extends Controller
           //  die();
 
 
-                $saveRecord = SaveOutofServiceFile::create($data);
+                $saveRecord = SaveInspectionreports::create($data);
                 if ($saveRecord['id']) {
                     return response()->json(['message' => 'success', 'data' => $saveRecord]);
                 }
@@ -84,7 +83,7 @@ class OutOfService extends Controller
             // $appliedFilter=  count($appliedFilter) -2;
         }
 
-        Session::put('searchOutOfServiceFilter', $data);
+        Session::put('searchInspectionreports', $data);
 
         $state = isset($data['state']) && $data['state'] != null ? $data['state'] : '';
         $Phy_city = isset($data['city']) && $data['city'] != null ? $data['city'] : '';
