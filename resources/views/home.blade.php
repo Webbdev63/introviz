@@ -3,9 +3,9 @@
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-           
-            <div class="col-sm-12 form_data">  
-            <form method="POST" action="{{ route('search') }}">
+
+            <div class="col-sm-12 form_data">
+            <form method="POST" action="/search">
     @csrf
     <section class="after">
         <div class="container">
@@ -165,10 +165,19 @@
 
         const result = JSON.parse(data.contents);
 
-        $('#Phy_zip').html(''); // Clear previous options
-        $.each(result.zip_codes, function(key, value) {
-            $('#Phy_zip').append('<option value="' + value + '">' + value + '</option>');
-        });
+       // $('#Phy_zip').html(''); // Clear previous options
+        //$.each(result.zip_codes, function(key, value) {
+           // $('#Phy_zip').append('<option value="' + value + '">' + value + '</option>');
+       // });
+
+       $('#Phy_zip').html(''); // Clear previous options
+
+// Add a blank option at the beginning
+            $('#Phy_zip').append('<option value="">Select Zip Code</option>');
+
+            $.each(result.zip_codes, function(key, value) {
+                $('#Phy_zip').append('<option value="' + value + '">' + value + '</option>');
+            });
     } catch (error) {
         console.error('Fetch error:', error);
         //alert('There was an error fetching the city data. Please try again later.');
@@ -267,7 +276,7 @@
                                 <input class="form-check-input" type="radio" name="Private_passenger"
                                     id="private-passenger-no" value="No">
 
-                            </div>   
+                            </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-5 col-md-6 col-12">
@@ -310,7 +319,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Genfreight" value="x" name type="checkbox"
                                         id="Genfreight">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -323,7 +332,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Household" value="x" type="checkbox"
                                         id="Household">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -336,7 +345,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" type="checkbox" value="x" name="Metalsheet"
                                         id="Metalsheet">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -349,7 +358,7 @@
                                 <div class="synergy">
                                 <input class="form-check-input" name=" Motorveh" value="x" type="checkbox"
                                     id="Motorveh">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -362,7 +371,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Drivetow" value="x" type="checkbox"
                                         id="Drivetow">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -376,7 +385,7 @@
                                     <input class="form-check-input" name="Logpole" value="x" type="checkbox"
                                         id="Logpole">
                             </div>
-                        </div>   
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -389,7 +398,7 @@
                                     <input class="form-check-input" name="Bldgmat" value="x" type="checkbox"
                                         id="Bldgmat">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -402,7 +411,7 @@
                                 <input class="form-check-input" name="MobileHome" value="x" type="checkbox"
                                     id="MobileHome">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -415,7 +424,7 @@
                                 <input class="form-check-input" name="Machlrg" value="x" type="checkbox"
                                     id="Machlrg">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -428,7 +437,7 @@
                                     <input class="form-check-input" name="Produce" value="x" type="checkbox"
                                         id="Produce">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -441,7 +450,7 @@
                                     <input class="form-check-input" name="Liqgas" value="x" type="checkbox"
                                         id="Liqgas">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -454,7 +463,7 @@
                                     <input class="form-check-input" name="Intermodal" value="x" type="checkbox"
                                         id="Intermodal">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -467,7 +476,7 @@
                                     <input class="form-check-input" name="Passengers" value="x" type="checkbox"
                                         id="Passengers">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -481,7 +490,7 @@
                                         <input class="form-check-input" name="Oilfield" value="x" type="checkbox"
                                             id="Oilfield">
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -496,7 +505,7 @@
                                         <input class="form-check-input" name="Livestock" value="x" type="checkbox"
                                             id="Livestock">
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -510,7 +519,7 @@
                                     <input class="form-check-input" name="Grainfeed" value="x" type="checkbox"
                                         id="Grainfeed">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -523,7 +532,7 @@
                                     <input class="form-check-input" name="Coalcoke" value="x" type="checkbox"
                                         id="Coalcoke">
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -537,7 +546,7 @@
                                         <input class="form-check-input" name="Meat" value="x" type="checkbox"
                                             id="Meat">
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -563,7 +572,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Usmail" value="x" type="checkbox"
                                     id="Usmail">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -576,7 +585,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Chem" value="x" type="checkbox"
                                     id="Chem">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -589,7 +598,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Drybulk" value="x" type="checkbox"
                                     id="Drybulk">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -602,7 +611,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Coldfood" value="x" type="checkbox"
                                     id="Coldfood">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -615,7 +624,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Beverages" value="x" type="checkbox"
                                     id="Beverages">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -628,7 +637,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Paperprod" value="x" type="checkbox"
                                     id="Paperprod">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -641,7 +650,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Utility" value="x" type="checkbox"
                                     id="Utility">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -654,7 +663,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Farmsupp" value="x" type="checkbox"
                                     id="Farmsupp">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -667,7 +676,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Construct" value="x" type="checkbox"
                                     id="Construct">
-                            </div>          
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -680,7 +689,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Waterwell" value="x" type="checkbox"
                                     id="Waterwell">
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -693,7 +702,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
                                     id="Cargoother">
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -705,7 +714,7 @@
                             <input class="form-check-input" name="insurance_data" value="yes" type="checkbox"
                                 id="insurance_dataff">
                         </div>
-                </div>        
+                </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="network">
                         <button type="submit" class="btn btn">Submit</button>

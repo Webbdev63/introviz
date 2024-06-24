@@ -12,6 +12,7 @@ class SaveCensusFile extends Model
     protected $fillable = [
         'fileName',
         'orderQuantity',
+        'datatype',
         'state',
         'Phy_city',
         'zip_code',
@@ -20,6 +21,9 @@ class SaveCensusFile extends Model
         'TOT_PWR_min',
         'TOT_PWR_max',
         'insurance_data',
+        'VEHICLE',
+        'DRIVER',
+        'VIOLATIONS',
         'Genfreight',
         'Household',
         'Metalsheet',
@@ -51,6 +55,13 @@ class SaveCensusFile extends Model
         'Cargoother',
         'Grainfeed',
         'is_saved',
-        'orderPrice','user_id','payment_status',
-        'Hazmat_indicator'];
+        'orderPrice','user_id',
+        'payment_status',
+        'Hazmat_indicator' ,
+         'payment_id',
+         'source_type',
+        'payment_order_id',
+        'payment_status',
+        'receipt_number',
+        'receipt_url'];
 }

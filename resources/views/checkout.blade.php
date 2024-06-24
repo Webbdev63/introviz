@@ -92,7 +92,7 @@
                                     <h5>Account Information</h5>
                                 </div>
                                 <div class="ibnherable">
-                                   <a href="/user_login"> <p>Already have an account</p></a>
+                                   <a href="{{route('login')}}"> <p>Already have an account</p></a>
                                 </div>
                             </div>
                         </div>

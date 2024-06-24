@@ -148,7 +148,7 @@
         }
 
         $.ajax({
-            url: "{{ route('search') }}", // Replace with your backend script URL
+            url: "/search", // Replace with your backend script URL
             type: "POST",
             data: formData,
 
@@ -249,14 +249,14 @@
         var minQuantity = 100;
         updateCount = parseInt(updateCount)
         oldCount = parseInt(oldCount)
-      
+
 
 
         if (updateCount <= oldCount) {
             if (updateCount < minQuantity) {
                  document.getElementById('order_quantity').value = minQuantity;
                 updateCount=minQuantity;
-              
+
             }
             var price = updateCount * 0.10;
             document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
@@ -264,12 +264,12 @@
             document.getElementById('records').innerHTML = oldCount + ' Records';
 
         } else {
-       
-            // document.getElementById('order_quantity').value = minQuantity;
-            // updateCount=minQuantity;
-            // document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
-            // document.getElementById('totalPrice').value = price.toFixed(2);
-            // document.getElementById('records').innerHTML = oldCount + ' Records';
+
+            document.getElementById('order_quantity').value = oldCount;
+            var price = oldCount * 0.10;
+            document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
+            document.getElementById('totalPrice').value = price.toFixed(2);
+            document.getElementById('records').innerHTML = oldCount + ' Records';
         }
 
 

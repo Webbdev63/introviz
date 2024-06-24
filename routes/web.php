@@ -24,12 +24,12 @@ use App\Http\Controllers\SquareUpPaymentGateway;
  Route::post('/makePayment', [SquareUpPaymentGateway::class, 'makePayment'])->name('makePayment');
 
 
- Route::get('/dashboard', function () {
-     return view('home');
- })->middleware(['auth', 'verified'])->name('dashboard');
+//  Route::get('/dashboard', function () {
+//      return view('home');
+//  })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/about', [ProfileController::class, 'index']);
 Route::get('/exportToExcel/{id}', [HomeController::class, 'exportToExcel'])->name('exportToExcel');
-Route::get('/export-outof-serviceFile/{id}', [OutOfService::class, 'exportServiceFile'])->name('exportServiceFile');
+Route::get('/exportServiceFile/{id}', [OutOfService::class, 'exportServiceFile'])->name('exportServiceFile');
 Route::get('/saved-Insurance-record', [OutOfService::class, 'savedOutofService'])->name('savedOutofService');
 
 Route::middleware('auth')->group(function () {
