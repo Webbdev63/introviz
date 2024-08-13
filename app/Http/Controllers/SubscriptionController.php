@@ -27,7 +27,7 @@ class SubscriptionController extends Controller
     // {
     //     $user = $request->user();
     //     $now = now();
-
+    
     //     $subscription = Subscription::updateOrCreate(
     //         ['user_id' => $user->id],
     //         [
@@ -38,7 +38,7 @@ class SubscriptionController extends Controller
     //             'ends_at' => $now->addMonths(3),
     //         ]
     //     );
-
+    
     //     return response()->json($subscription);
     // }
 
@@ -55,5 +55,5 @@ class SubscriptionController extends Controller
         $locationId = Config::get('square.sandbox_location_id');
             return view('subscriptioncheckout', compact("data", "appId", "locationId"));
     }
-
+    
 }

@@ -28,13 +28,13 @@ class HomeController extends Controller
     }
 
     public function home()
-    {
+    { 
             $states = State::all();
 
 
  return view('home', compact('states'));
-
-}
+    
+}   
 
     public function verifyUser($id)
     {
@@ -62,7 +62,7 @@ class HomeController extends Controller
 
 
 public function exportToExcel($id)
-
+   
     {
         $data = SaveCensusFile::findOrFail($id)->toArray();
        //echo "<pre>"; print_r($data); echo "</pre>";
@@ -80,27 +80,27 @@ public function exportToExcel($id)
         $zip_code = $data['zip_code'] ?? '';
         $cls = $data['cls'] ?? '';
         $Carship = $data['Carship'] ?? '';
-
+        
         $fields = [
             'Genfreight', 'Household', 'Metalsheet', 'Motorveh', 'Drivetow', 'Logpole', 'Bldgmat', 'MobileHome',
             'Machlrg', 'Produce', 'Liqgas', 'Private_passenger', 'Oilfield', 'Livestock', 'Coalcoke', 'Meat',
             'Garbage', 'Chem', 'Drybulk', 'Coldfood', 'Utility', 'Intermodal', 'Usmail', 'Beverages', 'Paperprod',
             'Farmsupp', 'Construct', 'Waterwell', 'Cargoother', 'Grainfeed', 'Hazmat_indicator'
         ];
-
+        
         $conditions = [];
         foreach ($fields as $field) {
             $conditions[$field] = $data[$field] ?? '';
         }
-
+        
         $TOT_PWR_FROM = $data['TOT_PWR_min'] ?? '';
         $TOT_PWR_TO = $data['TOT_PWR_max'] ?? '';
-
+        
         if (!empty($city)) {
             $cityState = explode('-', $city);
             $city = $cityState[1] ?? $city;
         }
-
+        
         $dotNumbers = CensusFile::filterByCriteria(
                             $state,
                             $city,
@@ -142,7 +142,7 @@ public function exportToExcel($id)
                             $conditions['Hazmat_indicator']
 
         )->take($data['orderQuantity'])->pluck('DOT_NUMBER')->toArray();
-
+        
         if (empty($email) && empty($Insurance) && empty($outservices)) {
             $filData = CensusFile::filterByCriteria(
                 $state,
@@ -183,7 +183,7 @@ public function exportToExcel($id)
                 $conditions['Cargoother'],
                 $conditions['Grainfeed'],
                 $conditions['Hazmat_indicator'],
-
+             
             )->take($data['orderQuantity'])->get()->toArray();
         } elseif (!empty($email) && empty($Insurance) && empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
             $filData = DB::table('census')
@@ -333,7 +333,7 @@ public function exportToExcel($id)
                 'census.CARGOOTHR',
                 'census.EMAILADDRESS',
                 DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
-
+            
             )
             ->take($data['orderQuantity'])
             ->get()
@@ -342,7 +342,7 @@ public function exportToExcel($id)
             })
             ->toArray();
         }
-
+        
      elseif (!empty($email) && empty($Insurance) && !empty($DRIVER) && empty($VEHICLE)  && empty($VIOLATIONS)) {
         $filData = DB::table('census')
         ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
@@ -505,7 +505,7 @@ public function exportToExcel($id)
                 return (array) $item;
             })
             ->toArray();
-
+    
         } elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
             $filData = DB::table('census')
                 ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
@@ -553,8 +553,8 @@ public function exportToExcel($id)
                     DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
                     DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
                     DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
-
-
+                 
+                
                 )
                 ->take($data['orderQuantity'])
                 ->get()
@@ -562,8 +562,8 @@ public function exportToExcel($id)
                     return (array) $item;
                 })
                 ->toArray();
-        }
-
+        } 
+        
         elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
             $filData = DB::table('census')
                 ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
@@ -611,8 +611,8 @@ public function exportToExcel($id)
                     DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
                     DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
                     DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
-
-
+           
+                
                 )
                 ->take($data['orderQuantity'])
                 ->get()
@@ -621,7 +621,7 @@ public function exportToExcel($id)
                 })
                 ->toArray();
         }
-
+        
         elseif (empty($email) && !empty($Insurance) && empty($VEHICLE) && !empty($DRIVER) && empty($VIOLATIONS)) {
             $filData = DB::table('census')
                 ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
@@ -669,7 +669,7 @@ public function exportToExcel($id)
                     DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
                     DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
                     DB::raw('COALESCE(NULLIF(inspection.DRIVER_OOS_TOTAL, 0), "") as `OUT OF SERVICE DRIVER`'),
-
+                 
                 )
                 ->take($data['orderQuantity'])
                 ->get()
@@ -726,7 +726,7 @@ public function exportToExcel($id)
                     DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
                     DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
                     DB::raw('COALESCE(NULLIF(inspection.OOS_TOTAL, 0), "") as `OUT OF SERVICE VIOLATIONS`')
-
+                
                 )
                 ->take($data['orderQuantity'])
                 ->get()
@@ -779,9 +779,9 @@ public function exportToExcel($id)
                 'census.CONSTRUCT',
                 'census.WATERWELL',
                 'census.CARGOOTHR',
-
+              
                 DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
-
+             
             )
             ->take($data['orderQuantity'])
             ->get()
@@ -910,7 +910,7 @@ public function exportToExcel($id)
     }
 
 
-
+    
     public function savedOrder()
     {
         // $totalRecords = CensusFile::count();
@@ -949,13 +949,13 @@ public function exportToExcel($id)
     {
         $viewName = 'CENSUS';
         if ($request['saveRunCount'] == 'YES') {
-
+           
             $data = Session::get('searchFilter');
             //echo "<pre>"; print_r($data); echo "</pre>";
           // die();
             $TOT_PWR_FROM = $this->getMin($data['TOT_PWR_min']);
             $TOT_PWR_TO = $this->getMax($data['TOT_PWR_max']);
-
+            
             if ($data) {
                 $data = array_merge($data, [
                     'fileName' => $request['fileName'],
@@ -966,11 +966,11 @@ public function exportToExcel($id)
                     'TOT_PWR_max' => $TOT_PWR_TO,
                     'TOT_PWR_min' => $TOT_PWR_FROM,
                     'Phy_city' => $data['city'],
-
+                   
                 ]);
                 $data['datatype'] = 'census';
                 $saveRecord = SaveCensusFile::create($data);
-
+    
                 if ($saveRecord['id']) {
                     return response()->json(['message' => 'success', 'data' => $saveRecord]);
                 }
@@ -979,7 +979,7 @@ public function exportToExcel($id)
             }
         } else {
             $data = $request->all();
-
+        
 
             $email = $request['email'];
             $Insurance = $request['insurance_data'];
@@ -990,32 +990,32 @@ public function exportToExcel($id)
                 return $value != null;
             });
             unset($appliedFilter["saveRunCount"], $appliedFilter["_token"]);
-
+    
             $filter = $this->constructFilter($appliedFilter);
             $countFilters = count($appliedFilter);
-
+    
             Session::put('searchFilter', $data);
-
+    
             // Extract filter criteria
             $filterCriteria = $this->extractFilterCriteria($data);
             extract($filterCriteria);
-
+    
             // Fetch filtered data based on criteria
             $filData = CensusFile::filterByCriteria(
-                $state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO,
-                $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole,
-                $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger,
-                $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk,
-                $Coldfood, $Utility, $Intermodal, $Usmail, $Beverages, $Paperprod,
+                $state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO, 
+                $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole, 
+                $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger, 
+                $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk, 
+                $Coldfood, $Utility, $Intermodal, $Usmail, $Beverages, $Paperprod, 
                 $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator
             )->pluck('DOT_NUMBER')->toArray();
-
-
+    
+         
             $count = count($filData);
             return view('results', compact('count', 'viewName', 'filter', 'countFilters','email','Insurance','outservices'));
         }
     }
-
+    
     private function constructFilter($appliedFilter)
     {
         $filter = '';
@@ -1056,10 +1056,10 @@ public function exportToExcel($id)
                 case 'cls':
                     break;
             }
-
+    
             $key = str_replace('_', ' ', strtoupper($key));
             $ap = strtoupper($ap);
-
+    
             if ($ap == 'X' || $key == 'CLS' || $key == 'CARSHIP') {
                 $filter .= $key . ', ';
             } else {
@@ -1068,7 +1068,7 @@ public function exportToExcel($id)
         }
         return $filter;
     }
-
+    
     private function extractFilterCriteria($data)
     {
         return [
@@ -1113,11 +1113,11 @@ public function exportToExcel($id)
             'TOT_PWR_TO' => $this->getMax($data['TOT_PWR_max']),
         ];
     }
-
+    
     private function fetchDataWithInsurance($filData)
     {
         //echo "<pre>"; print_r($filData); echo "</pre>";
-       // die();
+       // die(); 
         return DB::table('Census-file')
             ->join('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
             ->whereIn('Census-file.DOT_NUMBER', $filData)
@@ -1169,7 +1169,7 @@ public function exportToExcel($id)
             })
             ->toArray();
     }
-
+    
 
 
     function  getMin($vl)
@@ -1236,8 +1236,8 @@ public function exportToExcel($id)
     {
         return view('checkout');
     }
-
-
+     
+  
     public function Outofservicefile()
     {
         $states = State::all();

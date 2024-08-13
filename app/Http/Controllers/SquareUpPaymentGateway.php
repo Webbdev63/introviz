@@ -17,7 +17,7 @@ class SquareUpPaymentGateway extends Controller
     $data=$request->all();
   return view('card-payment',compact('data'));
   }
-
+   
 
     // EAAAl_QKIALxAV1gYt5cPXQDYuZeL1XWCh3ZBtdOZIWxsda5fYe6Xh_LEG410d2l
     // EAAAl3SphNpun4jg9As1YlFYgS0W20BH22jb3fNIKSS6wwohKwl_f6zJ03gSeLP0
@@ -74,7 +74,7 @@ class SquareUpPaymentGateway extends Controller
             'reference_id' => $order_id,
         ]);
        $responseData = $response->json();
-
+ 
 
 
         if ($responseData['payment']['status'] = 'COMPLETED') {
@@ -193,5 +193,5 @@ public function subcriptionPayment(Request $request)
         ], 400);
     }
 }
-
+   
 }

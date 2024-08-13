@@ -28,13 +28,13 @@
 		background-color: #0060AA;
 		margin-left: 14px;
 		border: 1px solid #0060AA;
-
+		
 	}
 
 
 .hardest .navbar.navbar-expand-lg.navbar-light {
 	background-color: #f5f5f5;
-
+	
 }
 .form-check-sub{display: flex;justify-content:center;align-items:center; padding: 0;}
 .form-check-sub .form-check-label{margin-right: 15px;}
@@ -239,7 +239,7 @@ padding: 0px 30px;
 
 	border-radius: 7px;
 	background-color: #0081fe;
-
+	
 }
 .yourself {
 	margin-top: 3rem;
@@ -328,7 +328,7 @@ padding: 0px 30px;
 	margin-top: 20px;
 }
 .census .form-check-label {
-
+	
 	color: black;
 	font-weight: 600;
 	font-size: 17px;
@@ -349,7 +349,7 @@ padding: 0px 30px;
 }
 .finaces #inlineFormCheck {
 	font-size: 23px;
-
+	
 	margin-left: 35px;
 }
 
@@ -357,20 +357,20 @@ padding: 0px 30px;
 	background-color: #0060aa;
 	border-color: #0060aa;
 	font-size: 19px;
-}
+} 
 
 .finaces .form-check-label {
 	font-size: 13px;
 	color: #252641;
 	font-weight: 500;
-
-
-}
+	
+	
+}  
 
 .finaces .form-check-input {
-
+	
 	border: 2px solid #0060aa;
-
+	
 }
 .without #inlineFormCheck {
 	margin-left: 53px;
@@ -391,7 +391,7 @@ padding: 0px 30px;
 	float: center;
 	/* margin-left: 10px; */
 	margin: 2px auto;
-}
+}  
 .network {
 	text-align: center;
 }
@@ -453,7 +453,7 @@ table, th, td {
 }
 table, th, td {
 	border: 1px solid #c1bebe;
-
+	
 	/* margin-left: 2rem; */
 	height: 40px;
 }
@@ -559,8 +559,8 @@ table, th, td {
 	border-radius: 7px;
 }
 .view .form-control {
-
-
+	
+	
 	padding: 6px 18px 6px;
 }
 .outside #order_quantity {
@@ -629,7 +629,7 @@ table, th, td {
 	padding-left: ;
 	margin-left: 3px;
 	margin-top: -5px;
-}
+}	
 .mind .btn {
 	background-color: #0060AA;
 	color: white;
@@ -747,7 +747,7 @@ table, th, td {
 	font-weight: 400;
 }
 .innnovate .form-control {
-
+	
 	border: 1px solid #d5d3d3;
 }
 .adipiscing .btn.btn {
@@ -786,7 +786,7 @@ table, th, td {
 	font-size: 14px;
 }
 .innnovate .form-select {
-
+	
 	color: #8c8c8c;
 }
 .khaitan #email {
@@ -891,7 +891,7 @@ table, th, td {
   	font-weight: 600;
   	padding: 5px 8px 5px 4px;
  	 border-radius: 10px;
-
+ 
 }
 .orthographic th {
 	text-align: center;
@@ -936,7 +936,7 @@ table, th, td {
 	width: 68%;
 }
 .hardest a {
-
+	
 	color: black;
 	text-decoration: none;
 	font-size: 16px;
@@ -1157,7 +1157,7 @@ table {
     padding: .35em;
   }
   table tr:nth-child(even) {
-    background: #f8f8f8;
+    background: #f8f8f8;  
   }
   table th,
   table td {
@@ -1185,7 +1185,7 @@ table td {
 	font-weight: 400;
 	font-family: 'Poppins';
 	border-right: 1px solid black;
-
+   
 }
 .recover span {
 	padding-left: 64px;
@@ -1207,18 +1207,18 @@ table td {
 }
 @media screen and (max-width: 992px) {
     .monthy th {
-        font-size: 16px;
+        font-size: 16px; 
     }
     .table-sec th {
-        font-size: 17px;
+        font-size: 17px; 
     }
     .maximum {
         font-size: 11px;
     }
     .passion h4 {
-
+        
         font-size: 46px;
-
+       
     }
     .table-sec p {
         font-size: 8px;
@@ -1265,41 +1265,41 @@ table td {
 @media(max-width: 1400px){
 
 	.encodhing {
-
+		
 		width: 68%;
 	}
 	.indictors h4 {
-
+		
 		left: 12rem !important;
 	}
-
+	
 	.currency {
-
+	
 		left: 12rem !important;
 	}
 	.club p {
 		font-size: 12px;
 		line-height: 19px;
-
+	
 	}
 	.mind {
-
+		
 		margin-left: 22rem;
 		margin-top: 3rem;
 	}
 	.mind {
-
+		
 		width: 52%;
-
+		
 	}
 	.finaces .form-check-label {
 		font-size: 12px !important;
-	}
-
+	} 
+	
 	.carship h5 {
-
+	
 		font-size: 25px;
-
+		
 	}
 	.indicators {
 
@@ -1308,7 +1308,7 @@ table td {
 	.encodhing {
 		width: 105%;
 	}
-
+	
 }
 
 
@@ -1317,27 +1317,27 @@ table td {
 
 
 @media(max-width: 1200px){
-
+	
 	.encodhing {
-
+		
 		width: 82%;
 	}
 	.currency {
-
+	
 		left: 6rem !important;
 	}
 	.indictors h4 {
-
+		
 		left: 6rem;
 	}
 	.finaces .form-check-label {
 		font-size: 13px;
-
+	
 	}*/
 	.club p {
 		font-size: 10px;
 		line-height: 15px;
-
+		
 	}
 	.mind {
 		/* text-align: center; */
@@ -1347,23 +1347,23 @@ table td {
 	}
 	.adipiscing .btn.btn {
 		width: 81%;
-
+		
 	}
 	.street p {
 		font-size: 15px;
-
+		
 	}
 	.hardest {
-
+	
 		line-height: 24px !important;
-
+		
 	}
 	.diffretiation {
-
+		
 		left: 9rem !important;
 		width: 71%;
 		padding-left: 5rem !important;
-
+		
 	}
 	.indictors h4 {
 		left: 6rem !important;
@@ -1372,7 +1372,7 @@ table td {
 		font-size: 11px !important;
 	}
 	.indicators {
-
+		
 		width: 81%;
 	}
 	.encodhing {
@@ -1382,7 +1382,7 @@ table td {
 		font-size: 10px;
 		line-height: 16px;
 	}
-
+	
 	.finaces .form-check-label {
 		font-size: 10px !important;
 	}
@@ -1393,26 +1393,26 @@ table td {
 
 			.finaces .form-check-label {
 						font-size: 15px;
-
+						
 			}
 			.indictors h4 {
-
+					
 				left: 5rem;
 			}
 			.currency {
-
+				
 				left: 5rem !important;
 			}
 			.encodhing {
-
+					
 				width: 92%;
 			}
 				.explicit {
 					width: 51%;
-
+					
 				}
 			.mind {
-
+				
 				margin-left: 9rem !important;
 				margin-top: 3rem !important;
 				width: 79%;
@@ -1427,16 +1427,16 @@ table td {
 			}
 			.adipiscing .btn.btn {
 				width: 71%;
-
+				
 			}
 			.awarde h5 {
 				font-size: 17px;
-
+				
 			}
 			.diffretiation {
 				left: 4rem !important;
 				width: 80%;
-
+				
 			}
 			.khaitan #email {
 				width: 85% !important;
@@ -1451,18 +1451,18 @@ table td {
 
 			}
 			.diffretiation {
-
+				
 				padding-left: 3rem !important;
-
+				
 			}
 			.optimization .form-control {
-
+				
 				width: 90% !important;
 			}
 			.finaces .form-check-label {
 				font-size: 10px !important;
 			}
-
+			
 			.indicators {
 				width: 87%;
 			}
@@ -1477,21 +1477,21 @@ table td {
 @media(max-width: 922px){
 
 	.indictors h4 {
-
+		
 		left: 0rem;
 	}
 	.currency {
-
+	
 		left: 0rem !important;
 	}
 	.finaces .form-check-label {
 		font-size: 16px;
-
+		
 	}
 	.network .btn {
-
+		
 		width: 37%;
-
+		
 	}
 	.mind {
 		Width:70% !important;
@@ -1505,7 +1505,7 @@ table td {
 	}
 	.explicit {
 		width: 48%;
-
+		
 	}
 	.awarde h5 {
 		font-size: 16px;
@@ -1514,30 +1514,30 @@ table td {
 	}
 	.adipiscing .btn.btn {
 		width: 90%;
-
+		
 	}
 	.street p {
-
+		
 		position: relative;
 		top: -4px !important;
 	}
 	.street p {
 		font-size: 10px;
-
+		
 	}
 	.diffretiation {
-
+		
 		left: 0rem !important;
 		width: 100%;
-
+		
 	}
 	.optimization .form-control {
-
+	
 		width: 91% !important;
 	}
 	.beanticion .btn {
 		width: 96% !important;
-
+		
 	}
 	.indictors h4 {
 		left: 0rem !important;
@@ -1556,28 +1556,28 @@ table td {
 @media(max-width: 768px){
 
 	.currency {
-
+		
 		left: 0rem !important;
 	}
 	.indictors h4 {
-
+		
 		left: 0rem;
 	}
 	.Register h5 {
-
+		
 		text-align: center;
 	}
 	.Register p {
-
+		
 		text-align: center;
 	}
 	.carship h5 {
 		margin-left: 2rem !important;
 	}
 	.network .btn {
-
+	
 		width: 34%;
-
+		
 	}
 	.club p {
 		font-size: 12px;
@@ -1587,46 +1587,46 @@ table td {
 		text-align: center;
 	}
 	.mind {
-
+		
 		width: 74%;
-
+		
 	}
-
+	
 	.start {
-
+		
 		margin-top: 3rem;
 	}
 	.explicit {
 		width: 48%;
-
+		
 	}
 	.mind {
-
+	
 		margin-left: 3rem !important;
 		margin-top: 3rem !important;
 	}
 	.club p {
 		font-size: 12px;
 		line-height: 18px;
-
+		
 	}
 	.awarde h5 {
 
 		font-size: 16px;
-
+		
 	}
 	.street p {
 		font-size: 10px;
-
+		
 
 	}
 	.adipiscing .btn.btn {
 		width: 89%;
-
+		
 	}
-
+	
 	.adipiscing .btn.btn {
-
+		
 		margin-bottom: 3rem;
 	}
 	.diffretiation {
@@ -1642,7 +1642,7 @@ table td {
 	}
 	.become .btn {
 		width: 84%;
-
+		
 	}
 	.optimization .form-control {
 		margin-bottom: 1rem;
@@ -1654,23 +1654,23 @@ table td {
 		width: 91% !important;
 	}
 	.encodhing {
-
+	
 		margin-bottom: 1rem !important;
 	}
 	.after .form-label {
 		font-size: 15px;
-
+	
 	}
 	.after .form-select {
 
 		font-size: 13px;
-
+		
 	}
 	.carship h5 {
-
+	
 		font-size: 24px;
 		line-height: 33px;
-
+		
 	}
 	.indicators {
 		width: 94%;
@@ -1707,7 +1707,7 @@ p.symbol {
     margin-bottom: 0rem;
 }
 .nonum hr:not([size]) {
-
+   
     margin-top: 2rem;
 }
 .diam {
@@ -1732,12 +1732,12 @@ p.symbol {
 	}
 	.Register h5 {
 		font-size: 28px;
-
+		
 	}
 	.hardest.club {
-
+	
 		margin: 5px;
-
+		
 	}
 	.indicators {
 		width: 101%;
@@ -1752,27 +1752,27 @@ p.symbol {
 		width: 106%;
 	}
 	.network {
-
+		
 		padding-left: 28px;
 	}
 	.network .btn {
-
+		
 		padding: 5px 17px 5px;
-
+	
 	}
 	.sucess .btn {
-
+		
 		margin-bottom: 13px;
-
+		
 	}
 	.sucess .btn {
-
+		
 		margin-left: 0px;
 	}
 	.winner {
-
+		
 		margin-left: 10px;
-
+		
 	}
 	.activity {
 		display: flex;
@@ -1789,7 +1789,7 @@ p.symbol {
 }
 @media(max-width: 335px){
 
-
+	
 	.encodhing {
 		width: 119%;
 	}
@@ -1863,9 +1863,11 @@ p.symbol {
 
 .nav-sidbar:hover {
     background-color: #0056b3;
-
+   
 }
 
 .nav-sidbar.active {
     background-color: #0056b3;
 }
+
+
