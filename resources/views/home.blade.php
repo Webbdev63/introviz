@@ -1,11 +1,16 @@
 @include('front.header')
+<style>
+    .subfilled{
+        margin-top: 50px;
+    }
+</style>
 
 <section class="yourself">
     <div class="container-fluid">
         <div class="row">
-
-            <div class="col-sm-12 form_data">
-            <form method="POST" action="/search">
+           
+            <div class="col-sm-12 form_data">  
+            <form method="POST" action="{{ route('search') }}">
     @csrf
     <section class="after">
         <div class="container">
@@ -13,9 +18,9 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                     <div class="absences">
 
-                        <label for="sel1" class="form-label">Search by State</label>
+                        <label for="sel1" class="form-label">Search by State<span class="statemaindet"> *</span></label>
 
-                        <select class="form-select" id="state" name="state">
+                        <select class="form-select" id="state" name="state" required>
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->state_code }}"
@@ -276,7 +281,7 @@
                                 <input class="form-check-input" type="radio" name="Private_passenger"
                                     id="private-passenger-no" value="No">
 
-                            </div>
+                            </div>   
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-5 col-md-6 col-12">
@@ -302,7 +307,105 @@
             </div>
         </div>
     </section>
+
     <section class="tracking">
+        <div class="container">
+            <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                            <div class="carship">
+                                <h5>SELECT ADDITIONAL FIELDS</h5>
+                            </div>
+                    </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="finaces">
+                        <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="email">
+                                EMAIL
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="email" value="yes" name type="checkbox"
+                                        id="email">
+                                        
+                            </div>  
+                        </div>
+                        <p>Additional $0.05 per record will be applied</p>  
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="finaces">
+                        <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="insurance_data">
+                                  Insurance 
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" name="insurance_data" value="yes" type="checkbox"
+                                        id="insurance_data">
+                            </div>        
+                        </div>
+                        <p>Additional $0.07 per record will be applied</p> 
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="finaces ">
+                        <div class="form-check mb-2 mr-sm-2">
+                                <label class="form-check-label" for="out_service">
+                                   OUT OF SERVICES
+                                </label>
+                                <div class="synergy">
+                                    <input class="form-check-input" type="checkbox" value="" name="out_service"
+                                        id="out_service">
+                            </div>        
+                        </div>
+                        <p>Additional $0.05 per record will be applied</p>  
+                        <div class="row outservic z-20" style="display: none;">
+                            <div class="activity display-flex">
+                            <div class="col-lg-4">
+                                <div class="form-check form-check-sub mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="VEHICLE">
+                                          VEHICLE
+                                    </label>
+                                     <div class="synergy">
+                                            <div class="bridge">
+                                                <input class="form-check-input" type="checkbox" value="VEHICLE" name="VEHICLE"
+                                                id="VEHICLE">
+                                            </div>        
+                                    </div>
+                                        
+                                 </div>
+                            </div> 
+                            <div class="col-lg-4">
+                                <div class="form-check form-check-sub mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="DRIVER">
+                                     DRIVER 
+                                    </label>
+                                     <div class="synergy">
+                                         <div class="bridge">
+                                            <input class="form-check-input" name="DRIVER" value="DRIVER" name type="checkbox"
+                                             id="DRIVER">
+                                        </div>        
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-lg-4">
+                                <div class="form-check form-check-sub  mb-2 mr-sm-2">
+                                    <label class="form-check-label" for="VIOLATIONS">
+                                     VIOLATIONS
+                                   </label>
+                                    <div class="synergy">
+                                        <input class="form-check-input" name="VIOLATIONS" value="VIOLATIONS" name type="checkbox"
+                                        id="VIOLATIONS">
+                                    </div>        
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                    </div>
+                </div>
+             </div>
+         </div>
+</section> 
+    <section class="tracking subfilled cargotransported">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -319,7 +422,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Genfreight" value="x" name type="checkbox"
                                         id="Genfreight">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -332,7 +435,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Household" value="x" type="checkbox"
                                         id="Household">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -345,7 +448,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" type="checkbox" value="x" name="Metalsheet"
                                         id="Metalsheet">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -358,7 +461,7 @@
                                 <div class="synergy">
                                 <input class="form-check-input" name=" Motorveh" value="x" type="checkbox"
                                     id="Motorveh">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -371,7 +474,7 @@
                                 <div class="synergy">
                                     <input class="form-check-input" name="Drivetow" value="x" type="checkbox"
                                         id="Drivetow">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -385,7 +488,7 @@
                                     <input class="form-check-input" name="Logpole" value="x" type="checkbox"
                                         id="Logpole">
                             </div>
-                        </div>
+                        </div>   
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -398,7 +501,7 @@
                                     <input class="form-check-input" name="Bldgmat" value="x" type="checkbox"
                                         id="Bldgmat">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -411,7 +514,7 @@
                                 <input class="form-check-input" name="MobileHome" value="x" type="checkbox"
                                     id="MobileHome">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -424,7 +527,7 @@
                                 <input class="form-check-input" name="Machlrg" value="x" type="checkbox"
                                     id="Machlrg">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -437,7 +540,7 @@
                                     <input class="form-check-input" name="Produce" value="x" type="checkbox"
                                         id="Produce">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -450,7 +553,7 @@
                                     <input class="form-check-input" name="Liqgas" value="x" type="checkbox"
                                         id="Liqgas">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -463,7 +566,7 @@
                                     <input class="form-check-input" name="Intermodal" value="x" type="checkbox"
                                         id="Intermodal">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -476,7 +579,7 @@
                                     <input class="form-check-input" name="Passengers" value="x" type="checkbox"
                                         id="Passengers">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -490,7 +593,7 @@
                                         <input class="form-check-input" name="Oilfield" value="x" type="checkbox"
                                             id="Oilfield">
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -505,7 +608,7 @@
                                         <input class="form-check-input" name="Livestock" value="x" type="checkbox"
                                             id="Livestock">
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -519,7 +622,7 @@
                                     <input class="form-check-input" name="Grainfeed" value="x" type="checkbox"
                                         id="Grainfeed">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -532,7 +635,7 @@
                                     <input class="form-check-input" name="Coalcoke" value="x" type="checkbox"
                                         id="Coalcoke">
                             </div>
-                        </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12">
@@ -546,7 +649,7 @@
                                         <input class="form-check-input" name="Meat" value="x" type="checkbox"
                                             id="Meat">
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -572,7 +675,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Usmail" value="x" type="checkbox"
                                     id="Usmail">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -585,7 +688,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Chem" value="x" type="checkbox"
                                     id="Chem">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -598,7 +701,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Drybulk" value="x" type="checkbox"
                                     id="Drybulk">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -611,7 +714,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Coldfood" value="x" type="checkbox"
                                     id="Coldfood">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -624,7 +727,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Beverages" value="x" type="checkbox"
                                     id="Beverages">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -637,7 +740,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Paperprod" value="x" type="checkbox"
                                     id="Paperprod">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -650,7 +753,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Utility" value="x" type="checkbox"
                                     id="Utility">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -663,7 +766,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Farmsupp" value="x" type="checkbox"
                                     id="Farmsupp">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -676,7 +779,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Construct" value="x" type="checkbox"
                                     id="Construct">
-                            </div>
+                            </div>          
                         </div>
                     </div>
                 </div>
@@ -689,7 +792,7 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Waterwell" value="x" type="checkbox"
                                     id="Waterwell">
-                            </div>
+                            </div>        
                         </div>
                     </div>
                 </div>
@@ -702,24 +805,31 @@
                             <div class="synergy">
                                 <input class="form-check-input" name="Cargoother" value="x" type="checkbox"
                                     id="Cargoother">
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
-                <div class="census">
-                <div class="form-check mb-2 mr-sm-2">
-                            <label class="form-check-label" for="inlineFormCheck">
-                                Do you want to include the insurance data in the census ?
-                            </label>
-                            <input class="form-check-input" name="insurance_data" value="yes" type="checkbox"
-                                id="insurance_dataff">
-                        </div>
+
+                
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                    <div class="network">
+                        <button type="submit" class="btn btn">Search</button>
+                    </div>
                 </div>
+                <!-- @auth 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="network">
                         <button type="submit" class="btn btn">Submit</button>
                     </div>
                 </div>
+                @else
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                    <div class="network">
+                       <p>*Log in to review the search data records.</p>
+                    </div>
+                </div>
+                @endauth -->
+            
             </div>
         </div>
     </section>
@@ -764,8 +874,30 @@
         });
     });
 
+    // $(document).ready(function() {
+    //     $("#out_service").click(function() {
+    //         $(".outservic").show();
+           
+           
+    //     });
+    // });
+
+    $(document).ready(function() {
+    let isVisible = false; // Initial state
+
+    $("#out_service").click(function() {
+        isVisible = !isVisible; // Toggle the state
+        if (isVisible) {
+            $(".outservic").show();
+        } else {
+            $(".outservic").hide();
+        }
+    });
+});
+
+
 
 
 </script>
 
-@include('front.footer');
+@include('front.footer')

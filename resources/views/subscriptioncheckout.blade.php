@@ -72,7 +72,7 @@
 </style>
 <div id="loader"></div>
 <section class="register">
-    <div class="container">
+  <div class="container">
         <div class="row">
             <div class="col-xl-7 col-lg-7 col-md-6 col-12">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <form>
+                   <form>
                         <div class="row">
                             <div class="col">
                                 <div class="process">
@@ -176,123 +176,10 @@
                 @endauth
                 
 
-                </form>
+                </form>  
                 </div>
             </div>
-            {{-- <div class="col-xl-5 col-lg-5 col-md-6 col-12">
-                <div class="business">
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-10 col-md-12 col-12">
-                            <div class="development">
-                                <form action="" id="square-payment-form" method="POST">
-                                    @csrf
-                                    <div class="conditions">
-                                        <h5>Credit Card Details</h5>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="innnovate">
-                                                <label for="Name on Card" class="form-label">Name on Card</label>
-                                                <input type="text" class="form-control" placeholder="Meet Patel"
-                                                    name="NameOnCard">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="innnovate">
-                                                <label for="Card number" class="form-label">Card number</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="00000 0000 0000 0000" name="CardNumber">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="innnovate">
-                                                <label for="Code" class="form-label">Card Security Code</label>
-                                                <div class="row">
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                                        <select class="form-select" id="sel1" name="sellist1">
-                                                            <option>Month</option>
-                                                            <option value="1">January</option>
-                                                            <option value="2">February</option>
-                                                            <option value="3">March</option>
-                                                            <option value="4">April</option>
-                                                            <option value="5">May</option>
-                                                            <option value="6">June</option>
-                                                            <option value="7">July</option>
-                                                            <option value="8">August</option>
-                                                            <option value="9">September</option>
-                                                            <option value="10">October</option>
-                                                            <option value="11">November</option>
-                                                            <option value="12">December</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                                        <select class="form-select" id="sel1" name="sellist1">
-                                                            <option>Year</option>
-                                                            @php $currYear=date("Y");@endphp
-                                                            forea
-
-                                                            <option value="2025">2025</option>
-                                                            <option value="2025">2026</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2028">2028</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="innnovate">
-                                                <label for="Code" class="form-label">Card expirstion</label>
-                                                <input type="text" class="form-control" placeholder="Code"
-                                                    name="Code">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden" name="amount" value="{{ $data['orderPrice'] }}">
-                                    <input type="hidden" name="order_id" value="{{ $data['orderId'] }}">
-                                    <input type="hidden" name="customer_id" value="{{ $data['customer_id'] }}">
-                                    <div class="ratna">
-                                        <button type="button" class="btn btn" onclick="makePayment();">Continue
-                                            {{ $data['orderPrice'] }}</button>
-                                    </div>
-                                    <div class="function">
-                                        <p>Payment Method</p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-4">
-                                            <div class="time">
-                                                <img src="public/front/image/stripe.png" class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-4">
-                                            <div class="time">
-                                                <img src="public/front/image/paypal-logo.png" class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-4">
-                                            <div class="time">
-                                                <img src="public/front/image/applepay.png" class="img-fluid">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+        
             <div class="col-xl-5 col-lg-5 col-md-6 col-12">
                 <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
                 <script>
@@ -319,7 +206,7 @@
                             idempotencyKey: window.crypto.randomUUID(),
                         });
 
-                        // const paymentResponse = await fetch('/makePayment', {
+                        // const paymentResponse = await fetch('/subcriptionPayment', {
                         //     method: 'POST',
                         //     headers: {
                         //         'Content-Type': 'application/json',
@@ -328,7 +215,7 @@
                         // });
                
              
-                        var ddf = await makePayment(body);
+                        var ddf = await subcriptionPayment(body);
                         if (paymentResponse.ok) {
                             return paymentResponse.json();
                         }
@@ -468,7 +355,7 @@
             </div>
 
         </div>
-    </div>
+    </div>  
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -476,7 +363,7 @@
 
 
     <script>
-        function makePayment(data) {
+        function subcriptionPayment(data) {
             var formData = new FormData(document.getElementById("payment-form"))
             var data1 = JSON.parse(data);
             // formdata.append("file", data1);
@@ -494,40 +381,45 @@
 
 
             //var inputbox =  fillInput.value;
+
+
             $.ajax({
-                url: "{{ route('makePayment') }}", // Replace with your backend script URL
+                url: "{{ route('subcriptionPayment') }}", // Replace with your backend script URL
                 type: "POST",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                     document.getElementById('loader').style.display = 'none';
-               
-                    if (response.message == 'success') {
+                    document.getElementById('loader').style.display = 'none';
+
+                    if (response.message === 'success') {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success!',
-                            html: 'Payment submitted successfully!.Your payment id is <b> ' + response
-                                .data.payment_id + '</b>',
+                            html: 'Payment submitted successfully! Your payment ID is <b>' + response.data.payment_id + '</b>',
                         }).then((result) => {
                             // Perform an action after the Swal message is closed
-                            window.location.href = window.location.origin + '/saved-order'
+                            window.location.href = window.location.origin + '/';
                         });
-                        // console.log(window.location.origin);
-                        // window.location.href=window.location.origin+'/saved-order'
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Failed!',
-                            text: 'Payment submission failed. Please try again later.',
+                            text: response.message || 'Payment submission failed. Please try again later.',
                         });
                     }
                 },
                 error: function(xhr, status, error) {
                     // Handle error here
                     console.error("Error submitting form:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'An error occurred while submitting the form. Please try again later.',
+                    });
                 }
             });
+
         }
     </script>
 </section>

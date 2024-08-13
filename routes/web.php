@@ -3,17 +3,21 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\OutOfService;
-use App\Http\Controllers\SquareUpPaymentGateway;
+use App\Http\Controllers\SquareUpPaymentGateway; 
+use Illuminate\Support\Facades\DB;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
  Route::get('/home', [HomeController::class, 'home'])->name('home');
- Route::get('/', [HomeController::class, 'home'])->name('home');
+ Route::get('/', [HomeController::class, 'home']);
+ Route::get('/price', [SubscriptionController::class, 'packagePrice'])->name('packagePrice');
  Route::post('/get-cities', [HomeController::class, 'getCities'])->name('getCities');
- Route::get('/checkoutpage', [HomeController::class, 'checkoutpage'])->name('checkoutpage');
+ Route::get('/checkoutpage', [HomeController::class, 'checkoutpage'])->name('checkoutpage'); 
+ Route::post('/subscriptionpage', [SubscriptionController::class, 'subscriptioncheckout'])->name('subscriptioncheckout');
  Route::post('/search', [HomeController::class, 'search'])->name('search');
  Route::get('/saved-order', [HomeController::class, 'savedOrder'])->name('savedOrder');
  Route::get('Outofservicefile', [HomeController::class, 'Outofservicefile'])->name('Outofservicefile');
@@ -22,6 +26,11 @@ use App\Http\Controllers\SquareUpPaymentGateway;
  Route::post('process-payment', [HomeController::class, 'processPayment'])->name('processPayment');
  Route::get('pay',  [SquareUpPaymentGateway::class, 'cardPayment'])->name('card-payment');
  Route::post('/makePayment', [SquareUpPaymentGateway::class, 'makePayment'])->name('makePayment');
+ Route::post('/subcriptionPayment', [SquareUpPaymentGateway::class, 'subcriptionPayment'])->name('subcriptionPayment');
+ Route::get('/users', function () {
+    $user=DB::table('users')->get();
+    dd($user);
+});
 
 
 //  Route::get('/dashboard', function () {

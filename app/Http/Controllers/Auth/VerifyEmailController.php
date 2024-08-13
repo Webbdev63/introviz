@@ -24,4 +24,12 @@ class VerifyEmailController extends Controller
 
         return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
     }
+    // public function resend()
+    // {
+    //     $user = Auth::user();
+    //     dd($user);
+    //     $user->sendEmailVerificationNotification();
+
+    //     return back()->with('messageRegister', 'A new verification email has been sent to your address.');
+    // }
 }

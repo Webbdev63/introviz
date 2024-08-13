@@ -32,6 +32,28 @@
         </div>
     </div>
 </section>
+
+
+
+@php
+
+
+
+        $price = 0.12;
+        if (!empty($email)){
+            $price = $price + 0.05;
+        }
+        if (!empty($Insurance)){
+            $price = $price + 0.07;
+        }
+        if (!empty($outservices)){
+            $price = $price + 0.05;
+        }
+
+
+
+@endphp
+
 <section class="applied">
     <div class="container">
         <div class="row">
@@ -66,6 +88,7 @@
                             <li class="list-group-item layout">
                                 <input type="text" class="form-control" id="order_quantity" value="{{$count}}" placeholder="Enter order quantity" name="order_quantity" readonly>
                                 <input type="hidden" class="form-control" id="order_count" value="{{$count}}" placeholder="Enter order quantity" name="old_order_quantity">
+                                
                             </li>
                         </ul>
             </div>
@@ -79,6 +102,7 @@
                     <li class="list-group-item layout">
                         <input type="text" onchange="updateRowCount()" class="form-control" id="order_quantity" value="{{ $count }}" placeholder="Enter order quantity" name="order_quantity">
                         <input type="hidden" class="form-control" id="order_count" value="{{ $count }}" placeholder="Enter order quantity" name="old_order_quantity" min="100" max="{{ $count }}">
+                        <input type="hidden" class="form-control" id="single_row_price" value="<?php echo $price;?>" placeholder="Enter order quantity" name="single_row_price">
                     </li>
                 </ul>
             </div>
@@ -89,10 +113,16 @@
                 <input type="text" required class="form-control" placeholder="Enter file name" id="fileName123" name="fileName">
             </div>
             <p id="elementToHide"> Please Enter name</p>
-            <input type="hidden" id="totalPrice" value="{{ number_format($count * 0.1, 2) }}" name="totalPrice">
+         
+            <input type="hidden" id="totalPrice" value="{{ number_format($count * $price, 2) }}" name="totalPrice">
+            <input type="hidden" name="userid" value="{{ auth()->check() ? auth()->user()->id : '' }}">
             <input type="hidden" name="saveRunCount" value="YES">
             <div class="explicit">
+                @auth
                 <button type="button" id="save-button" class="btn btn-secondary" onclick="submitCensusForm()">SaveCount <img src="/front/image/grocery-store.png" class="img-fluid"></button>
+                @else
+                <a href="{{route('login')}}" id="save-button" class="btn btn-secondary">SaveCount <img src="/front/image/grocery-store.png" class="img-fluid"></a>
+                @endauth
             </div>
 
             </form>
@@ -101,7 +131,8 @@
             <div class="empolyee d-flex">
                 <p>Total Cost: </p>
                 <div class="were">
-                    <p id="order_count_price">$ {{ number_format($count * 0.1, 2) }}</p>
+                    <p id="order_count_price">$ {{ number_format($count * $price
+                        , 2) }}</p>
                 </div>
             </div>
         </div>
@@ -118,7 +149,7 @@
                     <input type="hidden" id="orderQuantity" name="orderQuantity">
                     <input type="hidden" id="customer_id" name="customer_id">
 
-                    <button type="submit" class="btn ">place order </button>
+                    <button type="submit" id="placeOrderHide" class="btn d-none">Place order </button>
                 </form>
             </div>
         </div>
@@ -148,7 +179,7 @@
         }
 
         $.ajax({
-            url: "/search", // Replace with your backend script URL
+            url: "{{ route('search') }}", // Replace with your backend script URL
             type: "POST",
             data: formData,
 
@@ -157,11 +188,16 @@
 
             success: function(response) {
                 if (response.message == 'success') {
-                    var savedData = response.data
-                    console.log(savedData)
 
+                    document.getElementById('placeOrderHide').classList.remove('d-none');
+                // Set its display property to 'block' to make it visible
+       
+                    var savedData = response.data
+             
+                    var prc = parseFloat(savedData.orderPrice.replace(/,/g, ''));
+                
                     document.getElementById('orderId').value = savedData.id
-                    document.getElementById('orderPrice').value = savedData.orderPrice
+                    document.getElementById('orderPrice').value = prc.toFixed(2);
                     document.getElementById('orderQuantity').value = savedData.orderQuantity
                     document.getElementById('customer_id').value = savedData.user_id
                     localStorage.setItem('savedData', JSON.stringify(savedData));
@@ -245,30 +281,32 @@
         //debugger
         var updateCount = document.getElementById('order_quantity').value
         var oldCount = document.getElementById('order_count').value
+        var singlerowprice = document.getElementById('single_row_price').value
         var order_price = document.getElementById('order_count_price').innerHTML
         var minQuantity = 100;
         updateCount = parseInt(updateCount)
         oldCount = parseInt(oldCount)
-
-
+      
+       // alert(singlerowprice);
 
         if (updateCount <= oldCount) {
             if (updateCount < minQuantity) {
                  document.getElementById('order_quantity').value = minQuantity;
                 updateCount=minQuantity;
-
+              
             }
-            var price = updateCount * 0.10;
-            document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
-            document.getElementById('totalPrice').value = price.toFixed(2);
+            var singlerowprice = document.getElementById('single_row_price').value
+            var pricenew = updateCount * singlerowprice;
+            document.getElementById('order_count_price').innerHTML = '$ ' + pricenew.toFixed(2);
+            document.getElementById('totalPrice').value = pricenew.toFixed(2);
             document.getElementById('records').innerHTML = oldCount + ' Records';
 
         } else {
-
+            var singlerowprice = document.getElementById('single_row_price').value
             document.getElementById('order_quantity').value = oldCount;
-            var price = oldCount * 0.10;
-            document.getElementById('order_count_price').innerHTML = '$ ' + price.toFixed(2);
-            document.getElementById('totalPrice').value = price.toFixed(2);
+            var pricenew = oldCount * singlerowprice;
+            document.getElementById('order_count_price').innerHTML = '$ ' + pricenew.toFixed(2);
+            document.getElementById('totalPrice').value = pricenew.toFixed(2);
             document.getElementById('records').innerHTML = oldCount + ' Records';
         }
 

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExportToExcelJob;
 use Illuminate\Http\Request;
 use App\Models\State;
 use Auth;
 use App\Models\SaveCensusFile;
 use App\Models\City;
 use App\Models\CensusFile;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -20,6 +22,11 @@ class HomeController extends Controller
 
 {
 
+    public function __construct()
+    {
+        ini_set('max_execution_time', 300);
+    }
+
     public function home()
     {
             $states = State::all();
@@ -28,11 +35,46 @@ class HomeController extends Controller
  return view('home', compact('states'));
 
 }
-    public function exportToExcel($id)
+
+    public function verifyUser($id)
+    {
+        //  $user=  User::find($id);
+        $user = User::find($id);
+        if ($user) {
+
+            // if ($request->user()->hasVerifiedEmail()) {
+            if ($user->hasVerifiedEmail()) {
+
+                return redirect()->intended(route('login', absolute: false) . '?verified=1');
+                return redirect()->route('login')->with('messageVerify', 'Please Log in.');
+            }
+            else {
+                $user->markEmailAsVerified();
+                // event(new Verified($user()));
+            }
+            // return redirect()->intended(route('login', absolute: false) . '?verified=1');
+            return redirect()->route('login')->with('messageVerify', 'Email Verified.');
+        }else{
+            return redirect()->intended(route('login' ) );
+        }
+    }
+
+
+
+public function exportToExcel($id)
+
     {
         $data = SaveCensusFile::findOrFail($id)->toArray();
-        $savefilename = $data['fileName'];
-        $insurancedata = strtolower($data['insurance_data']);
+       //echo "<pre>"; print_r($data); echo "</pre>";
+     //  die();
+        $savefilename = $data['fileName'] ?? '';
+        $Insurance = strtolower($data['insurance_data'] ?? '');
+        $email = strtolower($data['email'] ?? '');
+      //  $outservices = strtolower($data['out_service'] ?? '');
+        $VEHICLE = strtolower($data['VEHICLE'] ?? '');
+        $DRIVER = strtolower($data['DRIVER'] ?? '');
+        $VIOLATIONS = strtolower($data['VIOLATIONS'] ?? '');
+
         $city = $data['Phy_city'] ?? '';
         $state = $data['state'] ?? '';
         $zip_code = $data['zip_code'] ?? '';
@@ -60,155 +102,48 @@ class HomeController extends Controller
         }
 
         $dotNumbers = CensusFile::filterByCriteria(
-            $state,
-            $city,
-            $zip_code,
-            $cls,
-            $Carship,
-            $TOT_PWR_FROM,
-            $TOT_PWR_TO,
-            $conditions['Genfreight'],
-            $conditions['Household'],
-            $conditions['Metalsheet'],
-            $conditions['Motorveh'],
-            $conditions['Drivetow'],
-            $conditions['Logpole'],
-            $conditions['Bldgmat'],
-            $conditions['MobileHome'],
-            $conditions['Machlrg'],
-            $conditions['Produce'],
-            $conditions['Liqgas'],
-            $conditions['Private_passenger'],
-            $conditions['Oilfield'],
-            $conditions['Livestock'],
-            $conditions['Coalcoke'],
-            $conditions['Meat'],
-            $conditions['Garbage'],
-            $conditions['Chem'],
-            $conditions['Drybulk'],
-            $conditions['Coldfood'],
-            $conditions['Utility'],
-            $conditions['Intermodal'],
-            $conditions['Usmail'],
-            $conditions['Beverages'],
-            $conditions['Paperprod'],
-            $conditions['Farmsupp'],
-            $conditions['Construct'],
-            $conditions['Waterwell'],
-            $conditions['Cargoother'],
-            $conditions['Grainfeed'],
-            $conditions['Hazmat_indicator']
+                            $state,
+                            $city,
+                            $zip_code,
+                            $cls,
+                            $Carship,
+                            $TOT_PWR_FROM,
+                            $TOT_PWR_TO,
+                            $conditions['Genfreight'],
+                            $conditions['Household'],
+                            $conditions['Metalsheet'],
+                            $conditions['Motorveh'],
+                            $conditions['Drivetow'],
+                            $conditions['Logpole'],
+                            $conditions['Bldgmat'],
+                            $conditions['MobileHome'],
+                            $conditions['Machlrg'],
+                            $conditions['Produce'],
+                            $conditions['Liqgas'],
+                            $conditions['Private_passenger'],
+                            $conditions['Oilfield'],
+                            $conditions['Livestock'],
+                            $conditions['Coalcoke'],
+                            $conditions['Meat'],
+                            $conditions['Garbage'],
+                            $conditions['Chem'],
+                            $conditions['Drybulk'],
+                            $conditions['Coldfood'],
+                            $conditions['Utility'],
+                            $conditions['Intermodal'],
+                            $conditions['Usmail'],
+                            $conditions['Beverages'],
+                            $conditions['Paperprod'],
+                            $conditions['Farmsupp'],
+                            $conditions['Construct'],
+                            $conditions['Waterwell'],
+                            $conditions['Cargoother'],
+                            $conditions['Grainfeed'],
+                            $conditions['Hazmat_indicator']
+
         )->take($data['orderQuantity'])->pluck('DOT_NUMBER')->toArray();
-      //  echo "<pre>"; print_r($dotNumbers); echo "</pre>";
-     //   die();
 
-        if ($insurancedata == 'yes') {
-
-            $filData = DB::table('Census-file')
-            ->leftJoin('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
-            ->whereIn('Census-file.DOT_NUMBER', $dotNumbers)
-            ->select(
-                'Census-file.DOT_NUMBER',
-                'Census-file.NAME',
-                'Census-file.NAME_DBA',
-                'Census-file.PHY_STR',
-                'Census-file.PHY_CITY',
-                'Census-file.PHY_ST',
-                'Census-file.PHY_ZIP',
-                'Census-file.TEL_NUM',
-                'Census-file.CARSHIP',
-                'Census-file.TOT_PWR',
-                'Census-file.HM_IND',
-                'Census-file.PASSENGERS',
-                'Census-file.GENFREIGHT',
-                'Census-file.HOUSEHOLD',
-                'Census-file.METALSHEET',
-                'Census-file.MOTORVEH',
-                'Census-file.DRIVETOW',
-                'Census-file.LOGPOLE',
-                'Census-file.BLDGMAT',
-                'Census-file.MOBILEHOME',
-                'Census-file.MACHLRG',
-                'Census-file.PRODUCE',
-                'Census-file.OILFIELD',
-                'Census-file.LIVESTOCK',
-                'Census-file.COALCOKE',
-                'Census-file.MEAT',
-                'Census-file.CHEM',
-                'Census-file.DRYBULK',
-                'Census-file.COLDFOOD',
-                'Census-file.INTERMODAL',
-                'Census-file.USMAIL',
-                'Census-file.BEVERAGES',
-                'Census-file.PAPERPROD',
-                'Census-file.UTILITY',
-                'Census-file.FARMSUPP',
-                'Census-file.CONSTRUCT',
-                'Census-file.WATERWELL',
-                'Census-file.CARGOOTHR',
-                DB::raw('COALESCE(CENSUS_INS_ACTIVE.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
-                DB::raw('COALESCE(CENSUS_INS_ACTIVE.NAME_COMPANY, "") as `COMPANY NAME`')
-
-            )
-            ->take($data['orderQuantity'])
-            ->distinct()
-            ->get()
-            ->map(function ($item) {
-                return (array) $item;
-            })
-            ->toArray();
-
-            // $filData = DB::table('Census-file')
-            //     ->join('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
-            //     ->whereIn('Census-file.DOT_NUMBER', $dotNumbers)
-            //     ->select(
-            //         'Census-file.DOT_NUMBER',
-            //         'Census-file.NAME',
-            //         'Census-file.NAME_DBA',
-            //         'Census-file.PHY_STR',
-            //         'Census-file.PHY_CITY',
-            //         'Census-file.PHY_ST',
-            //         'Census-file.PHY_ZIP',
-            //         'Census-file.TEL_NUM',
-            //         'Census-file.CARSHIP',
-            //         'Census-file.TOT_PWR',
-            //         'Census-file.HM_IND',
-            //         'Census-file.PASSENGERS',
-            //         'Census-file.GENFREIGHT',
-            //         'Census-file.HOUSEHOLD',
-            //         'Census-file.METALSHEET',
-            //         'Census-file.MOTORVEH',
-            //         'Census-file.DRIVETOW',
-            //         'Census-file.LOGPOLE',
-            //         'Census-file.BLDGMAT',
-            //         'Census-file.MOBILEHOME',
-            //         'Census-file.MACHLRG',
-            //         'Census-file.PRODUCE',
-            //         'Census-file.OILFIELD',
-            //         'Census-file.LIVESTOCK',
-            //         'Census-file.COALCOKE',
-            //         'Census-file.MEAT',
-            //         'Census-file.CHEM',
-            //         'Census-file.DRYBULK',
-            //         'Census-file.COLDFOOD',
-            //         'Census-file.INTERMODAL',
-            //         'Census-file.USMAIL',
-            //         'Census-file.BEVERAGES',
-            //         'Census-file.PAPERPROD',
-            //         'Census-file.UTILITY',
-            //         'Census-file.FARMSUPP',
-            //         'Census-file.CONSTRUCT',
-            //         'Census-file.WATERWELL',
-            //         'Census-file.CARGOOTHR',
-            //         'CENSUS_INS_ACTIVE.EFFECTIVE_DATE',
-            //         'CENSUS_INS_ACTIVE.NAME_COMPANY'
-            //     )
-            //     ->get()
-            //     ->map(function ($item) {
-            //         return (array) $item;
-            //     })
-            //     ->toArray();
-        } else {
+        if (empty($email) && empty($Insurance) && empty($outservices)) {
             $filData = CensusFile::filterByCriteria(
                 $state,
                 $city,
@@ -247,12 +182,724 @@ class HomeController extends Controller
                 $conditions['Waterwell'],
                 $conditions['Cargoother'],
                 $conditions['Grainfeed'],
-                $conditions['Hazmat_indicator']
+                $conditions['Hazmat_indicator'],
+
             )->take($data['orderQuantity'])->get()->toArray();
+        } elseif (!empty($email) && empty($Insurance) && empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                'census.EMAILADDRESS'
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+        } elseif (!empty($email) && !empty($Insurance) && empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+            ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                'census.EMAILADDRESS',
+                DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`')
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+        } elseif (!empty($email) && empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+            ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                'census.EMAILADDRESS',
+                DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
+
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
         }
 
-       // echo "<pre>"; print_r($filData); echo "</pre>";
-      //  die();
+     elseif (!empty($email) && empty($Insurance) && !empty($DRIVER) && empty($VEHICLE)  && empty($VIOLATIONS)) {
+        $filData = DB::table('census')
+        ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+        ->whereIn('census.DOT_NUMBER', $dotNumbers)
+        ->select(
+            'census.DOT_NUMBER',
+            'census.NAME',
+            'census.NAME_DBA',
+            'census.PHY_STR',
+            'census.PHY_CITY',
+            'census.PHY_ST',
+            'census.PHY_ZIP',
+            'census.TEL_NUM',
+            'census.CARSHIP',
+            'census.TOT_PWR',
+            'census.HM_IND',
+            'census.PASSENGERS',
+            'census.GENFREIGHT',
+            'census.HOUSEHOLD',
+            'census.METALSHEET',
+            'census.MOTORVEH',
+            'census.DRIVETOW',
+            'census.LOGPOLE',
+            'census.BLDGMAT',
+            'census.MOBILEHOME',
+            'census.MACHLRG',
+            'census.PRODUCE',
+            'census.OILFIELD',
+            'census.LIVESTOCK',
+            'census.COALCOKE',
+            'census.MEAT',
+            'census.CHEM',
+            'census.DRYBULK',
+            'census.COLDFOOD',
+            'census.INTERMODAL',
+            'census.USMAIL',
+            'census.BEVERAGES',
+            'census.PAPERPROD',
+            'census.UTILITY',
+            'census.FARMSUPP',
+            'census.CONSTRUCT',
+            'census.WATERWELL',
+            'census.CARGOOTHR',
+            'census.EMAILADDRESS',
+            DB::raw('COALESCE(NULLIF(inspection.DRIVER_OOS_TOTAL, 0), "") as `OUT OF SERVICE DRIVER`'),
+        )
+        ->take($data['orderQuantity'])
+        ->get()
+        ->map(function ($item) {
+            return (array) $item;
+        })
+        ->toArray();
+    }
+
+
+    elseif (!empty($email) && empty($Insurance) && !empty($VIOLATIONS) && empty($VEHICLE) && empty($DRIVER)) {
+        $filData = DB::table('census')
+        ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+        ->whereIn('census.DOT_NUMBER', $dotNumbers)
+        ->select(
+            'census.DOT_NUMBER',
+            'census.NAME',
+            'census.NAME_DBA',
+            'census.PHY_STR',
+            'census.PHY_CITY',
+            'census.PHY_ST',
+            'census.PHY_ZIP',
+            'census.TEL_NUM',
+            'census.CARSHIP',
+            'census.TOT_PWR',
+            'census.HM_IND',
+            'census.PASSENGERS',
+            'census.GENFREIGHT',
+            'census.HOUSEHOLD',
+            'census.METALSHEET',
+            'census.MOTORVEH',
+            'census.DRIVETOW',
+            'census.LOGPOLE',
+            'census.BLDGMAT',
+            'census.MOBILEHOME',
+            'census.MACHLRG',
+            'census.PRODUCE',
+            'census.OILFIELD',
+            'census.LIVESTOCK',
+            'census.COALCOKE',
+            'census.MEAT',
+            'census.CHEM',
+            'census.DRYBULK',
+            'census.COLDFOOD',
+            'census.INTERMODAL',
+            'census.USMAIL',
+            'census.BEVERAGES',
+            'census.PAPERPROD',
+            'census.UTILITY',
+            'census.FARMSUPP',
+            'census.CONSTRUCT',
+            'census.WATERWELL',
+            'census.CARGOOTHR',
+            'census.EMAILADDRESS',
+            DB::raw('COALESCE(NULLIF(inspection.OOS_TOTAL, 0), "") as `OUT OF SERVICE VIOLATIONS`')
+        )
+        ->take($data['orderQuantity'])
+        ->get()
+        ->map(function ($item) {
+            return (array) $item;
+        })
+        ->toArray();
+    }
+
+        elseif (empty($email) && !empty($Insurance) && empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+            ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`')
+
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+
+        } elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+                ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->whereIn('census.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'census.DOT_NUMBER',
+                    'census.NAME',
+                    'census.NAME_DBA',
+                    'census.PHY_STR',
+                    'census.PHY_CITY',
+                    'census.PHY_ST',
+                    'census.PHY_ZIP',
+                    'census.TEL_NUM',
+                    'census.CARSHIP',
+                    'census.TOT_PWR',
+                    'census.HM_IND',
+                    'census.PASSENGERS',
+                    'census.GENFREIGHT',
+                    'census.HOUSEHOLD',
+                    'census.METALSHEET',
+                    'census.MOTORVEH',
+                    'census.DRIVETOW',
+                    'census.LOGPOLE',
+                    'census.BLDGMAT',
+                    'census.MOBILEHOME',
+                    'census.MACHLRG',
+                    'census.PRODUCE',
+                    'census.OILFIELD',
+                    'census.LIVESTOCK',
+                    'census.COALCOKE',
+                    'census.MEAT',
+                    'census.CHEM',
+                    'census.DRYBULK',
+                    'census.COLDFOOD',
+                    'census.INTERMODAL',
+                    'census.USMAIL',
+                    'census.BEVERAGES',
+                    'census.PAPERPROD',
+                    'census.UTILITY',
+                    'census.FARMSUPP',
+                    'census.CONSTRUCT',
+                    'census.WATERWELL',
+                    'census.CARGOOTHR',
+                    DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                    DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
+                    DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
+
+
+                )
+                ->take($data['orderQuantity'])
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+        }
+
+        elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+                ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->whereIn('census.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'census.DOT_NUMBER',
+                    'census.NAME',
+                    'census.NAME_DBA',
+                    'census.PHY_STR',
+                    'census.PHY_CITY',
+                    'census.PHY_ST',
+                    'census.PHY_ZIP',
+                    'census.TEL_NUM',
+                    'census.CARSHIP',
+                    'census.TOT_PWR',
+                    'census.HM_IND',
+                    'census.PASSENGERS',
+                    'census.GENFREIGHT',
+                    'census.HOUSEHOLD',
+                    'census.METALSHEET',
+                    'census.MOTORVEH',
+                    'census.DRIVETOW',
+                    'census.LOGPOLE',
+                    'census.BLDGMAT',
+                    'census.MOBILEHOME',
+                    'census.MACHLRG',
+                    'census.PRODUCE',
+                    'census.OILFIELD',
+                    'census.LIVESTOCK',
+                    'census.COALCOKE',
+                    'census.MEAT',
+                    'census.CHEM',
+                    'census.DRYBULK',
+                    'census.COLDFOOD',
+                    'census.INTERMODAL',
+                    'census.USMAIL',
+                    'census.BEVERAGES',
+                    'census.PAPERPROD',
+                    'census.UTILITY',
+                    'census.FARMSUPP',
+                    'census.CONSTRUCT',
+                    'census.WATERWELL',
+                    'census.CARGOOTHR',
+                    DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                    DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
+                    DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
+
+
+                )
+                ->take($data['orderQuantity'])
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+        }
+
+        elseif (empty($email) && !empty($Insurance) && empty($VEHICLE) && !empty($DRIVER) && empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+                ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->whereIn('census.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'census.DOT_NUMBER',
+                    'census.NAME',
+                    'census.NAME_DBA',
+                    'census.PHY_STR',
+                    'census.PHY_CITY',
+                    'census.PHY_ST',
+                    'census.PHY_ZIP',
+                    'census.TEL_NUM',
+                    'census.CARSHIP',
+                    'census.TOT_PWR',
+                    'census.HM_IND',
+                    'census.PASSENGERS',
+                    'census.GENFREIGHT',
+                    'census.HOUSEHOLD',
+                    'census.METALSHEET',
+                    'census.MOTORVEH',
+                    'census.DRIVETOW',
+                    'census.LOGPOLE',
+                    'census.BLDGMAT',
+                    'census.MOBILEHOME',
+                    'census.MACHLRG',
+                    'census.PRODUCE',
+                    'census.OILFIELD',
+                    'census.LIVESTOCK',
+                    'census.COALCOKE',
+                    'census.MEAT',
+                    'census.CHEM',
+                    'census.DRYBULK',
+                    'census.COLDFOOD',
+                    'census.INTERMODAL',
+                    'census.USMAIL',
+                    'census.BEVERAGES',
+                    'census.PAPERPROD',
+                    'census.UTILITY',
+                    'census.FARMSUPP',
+                    'census.CONSTRUCT',
+                    'census.WATERWELL',
+                    'census.CARGOOTHR',
+                    DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                    DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
+                    DB::raw('COALESCE(NULLIF(inspection.DRIVER_OOS_TOTAL, 0), "") as `OUT OF SERVICE DRIVER`'),
+
+                )
+                ->take($data['orderQuantity'])
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+        }
+
+        elseif (empty($email) && !empty($Insurance) && empty($VEHICLE) && empty($DRIVER) && !empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+                ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->whereIn('census.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'census.DOT_NUMBER',
+                    'census.NAME',
+                    'census.NAME_DBA',
+                    'census.PHY_STR',
+                    'census.PHY_CITY',
+                    'census.PHY_ST',
+                    'census.PHY_ZIP',
+                    'census.TEL_NUM',
+                    'census.CARSHIP',
+                    'census.TOT_PWR',
+                    'census.HM_IND',
+                    'census.PASSENGERS',
+                    'census.GENFREIGHT',
+                    'census.HOUSEHOLD',
+                    'census.METALSHEET',
+                    'census.MOTORVEH',
+                    'census.DRIVETOW',
+                    'census.LOGPOLE',
+                    'census.BLDGMAT',
+                    'census.MOBILEHOME',
+                    'census.MACHLRG',
+                    'census.PRODUCE',
+                    'census.OILFIELD',
+                    'census.LIVESTOCK',
+                    'census.COALCOKE',
+                    'census.MEAT',
+                    'census.CHEM',
+                    'census.DRYBULK',
+                    'census.COLDFOOD',
+                    'census.INTERMODAL',
+                    'census.USMAIL',
+                    'census.BEVERAGES',
+                    'census.PAPERPROD',
+                    'census.UTILITY',
+                    'census.FARMSUPP',
+                    'census.CONSTRUCT',
+                    'census.WATERWELL',
+                    'census.CARGOOTHR',
+                    DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                    DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
+                    DB::raw('COALESCE(NULLIF(inspection.OOS_TOTAL, 0), "") as `OUT OF SERVICE VIOLATIONS`')
+
+                )
+                ->take($data['orderQuantity'])
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+        }
+  //out service
+        elseif (empty($email) && empty($Insurance) && !empty($VEHICLE)) {
+            $filData = DB::table('census')
+            ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+
+                DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
+
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+        }
+
+
+        elseif (empty($email) && empty($Insurance) && !empty($DRIVER)) {
+            $filData = DB::table('census')
+            ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                DB::raw('COALESCE(NULLIF(inspection.DRIVER_OOS_TOTAL, 0), "") as `OUT OF SERVICE DRIVER`'),
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+        }
+
+
+        elseif (empty($email) && empty($Insurance) && !empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+            ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+            ->whereIn('census.DOT_NUMBER', $dotNumbers)
+            ->select(
+                'census.DOT_NUMBER',
+                'census.NAME',
+                'census.NAME_DBA',
+                'census.PHY_STR',
+                'census.PHY_CITY',
+                'census.PHY_ST',
+                'census.PHY_ZIP',
+                'census.TEL_NUM',
+                'census.CARSHIP',
+                'census.TOT_PWR',
+                'census.HM_IND',
+                'census.PASSENGERS',
+                'census.GENFREIGHT',
+                'census.HOUSEHOLD',
+                'census.METALSHEET',
+                'census.MOTORVEH',
+                'census.DRIVETOW',
+                'census.LOGPOLE',
+                'census.BLDGMAT',
+                'census.MOBILEHOME',
+                'census.MACHLRG',
+                'census.PRODUCE',
+                'census.OILFIELD',
+                'census.LIVESTOCK',
+                'census.COALCOKE',
+                'census.MEAT',
+                'census.CHEM',
+                'census.DRYBULK',
+                'census.COLDFOOD',
+                'census.INTERMODAL',
+                'census.USMAIL',
+                'census.BEVERAGES',
+                'census.PAPERPROD',
+                'census.UTILITY',
+                'census.FARMSUPP',
+                'census.CONSTRUCT',
+                'census.WATERWELL',
+                'census.CARGOOTHR',
+                DB::raw('COALESCE(NULLIF(inspection.OOS_TOTAL, 0), "") as `OUT OF SERVICE VIOLATIONS`')
+            )
+            ->take($data['orderQuantity'])
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+        }
+            // echo "<pre>"; print_r($filData); echo "</pre>";
+           // die();
         if(count($filData)>0){
             $header = array_keys($filData[0]);
             array_unshift($filData, $header);
@@ -263,22 +910,27 @@ class HomeController extends Controller
     }
 
 
+
     public function savedOrder()
     {
         // $totalRecords = CensusFile::count();
         // echo "Total number of records: " . $totalRecords;
         //die();
 
-        $userId = 2;
-
-       $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
-        //$savedData = SaveCensusFile::where('user_id', $userId)->get();
-        $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->get();
-
-
-        // die();
-        return view('front.saved_order', compact('savedData'));
-        // return view('home');
+       // $userId = 2;
+        $userId = Auth::id();
+     if(isset($userId)){
+        $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
+       // $savedData = SaveCensusFile::where('user_id', $userId)->latest()->first();
+        //$savedData = SaveCensusFile::get();
+       // echo "<pre>"; print_r($savedData); echo "</pre>";
+         // die();
+       // $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->get();
+        return view('saved_order', compact('savedData'));
+     }
+       else{
+        return redirect('/login');
+       }
     }
 
     public function getCities(Request $request)
@@ -293,13 +945,14 @@ class HomeController extends Controller
         return response()->json($cities);
     }
 
-
     public function search(Request $request)
     {
-        ini_set('max_execution_time', 300);
         $viewName = 'CENSUS';
         if ($request['saveRunCount'] == 'YES') {
+
             $data = Session::get('searchFilter');
+            //echo "<pre>"; print_r($data); echo "</pre>";
+          // die();
             $TOT_PWR_FROM = $this->getMin($data['TOT_PWR_min']);
             $TOT_PWR_TO = $this->getMax($data['TOT_PWR_max']);
 
@@ -307,7 +960,7 @@ class HomeController extends Controller
                 $data = array_merge($data, [
                     'fileName' => $request['fileName'],
                     'orderPrice' => $request['totalPrice'],
-                    'user_id' => 2,
+                     'user_id' => $request['userid'],
                     'orderQuantity' => $request['order_quantity'],
                     'is_saved' => 1,
                     'TOT_PWR_max' => $TOT_PWR_TO,
@@ -326,6 +979,13 @@ class HomeController extends Controller
             }
         } else {
             $data = $request->all();
+
+
+            $email = $request['email'];
+            $Insurance = $request['insurance_data'];
+            $outservices = $request['out_service'];
+          // echo "<pre>"; print_r($data); echo "</pre>";
+          // die();
             $appliedFilter = array_filter($data, function ($value) {
                 return $value != null;
             });
@@ -350,29 +1010,9 @@ class HomeController extends Controller
                 $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator
             )->pluck('DOT_NUMBER')->toArray();
 
-            if ($insurance_data == 'yes') {
 
-                $filDatawithInsurance = $this->fetchDataWithInsurance($filData);
-                $count = count($filDatawithInsurance);
-                // echo "<pre>"; print_r($count); echo "</pre>";
-              //   echo "<pre>"; print_r($filDatawithInsurance); echo "</pre>"; die();
-            } else {
-                $censusfilData = CensusFile::filterByCriteria(
-                    $state, $Phy_city, $zip_code, $cls, $Carship, $TOT_PWR_FROM, $TOT_PWR_TO,
-                    $Genfreight, $Household, $Metalsheet, $Motorveh, $Drivetow, $Logpole,
-                    $Bldgmat, $MobileHome, $Machlrg, $Produce, $Liqgas, $Private_passenger,
-                    $Oilfield, $Livestock, $Coalcoke, $Meat, $Garbage, $Chem, $Drybulk,
-                    $Coldfood, $Utility, $Intermodal, $Usmail, $Beverages, $Paperprod,
-                    $Farmsupp, $Construct, $Waterwell, $Cargoother, $Grainfeed, $Hazmat_indicator
-                )->get()->toArray();
-                  $count = count($censusfilData);
-            //     echo "<pre>"; print_r($count); echo "</pre>";
-              //   echo "<pre>"; print_r($censusfilData); echo "</pre>"; die();
-            }
-
-
-            //$count = count($filData);
-            return view('results', compact('count', 'viewName', 'filter', 'countFilters'));
+            $count = count($filData);
+            return view('results', compact('count', 'viewName', 'filter', 'countFilters','email','Insurance','outservices'));
         }
     }
 
@@ -476,8 +1116,10 @@ class HomeController extends Controller
 
     private function fetchDataWithInsurance($filData)
     {
+        //echo "<pre>"; print_r($filData); echo "</pre>";
+       // die();
         return DB::table('Census-file')
-            ->leftJoin('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
+            ->join('CENSUS_INS_ACTIVE', 'CENSUS_INS_ACTIVE.DOT_NUMBER', '=', 'Census-file.DOT_NUMBER')
             ->whereIn('Census-file.DOT_NUMBER', $filData)
             ->select(
                 'Census-file.DOT_NUMBER',
@@ -518,16 +1160,14 @@ class HomeController extends Controller
                 'Census-file.CONSTRUCT',
                 'Census-file.WATERWELL',
                 'Census-file.CARGOOTHR',
-                DB::raw('COALESCE(CENSUS_INS_ACTIVE.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
-                DB::raw('COALESCE(CENSUS_INS_ACTIVE.NAME_COMPANY, "") as `COMPANY NAME`')
-
+                'CENSUS_INS_ACTIVE.EFFECTIVE_DATE',
+                'CENSUS_INS_ACTIVE.NAME_COMPANY'
             )
             ->get()
-           ->map(function ($item) {
-               return (array) $item;
-           })
-           ->toArray();
-
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
     }
 
 
@@ -594,8 +1234,9 @@ class HomeController extends Controller
 
     public function checkoutpage()
     {
-        return view('front.checkout');
+        return view('checkout');
     }
+
 
     public function Outofservicefile()
     {
@@ -614,6 +1255,6 @@ class HomeController extends Controller
         $data =  $request->all();
         $appId = Config::get('square.sandbox_application_id');
         $locationId = Config::get('square.sandbox_location_id');
-            return view('front.checkout', compact("data", "appId", "locationId"));
+            return view('checkout', compact("data", "appId", "locationId"));
     }
 }
