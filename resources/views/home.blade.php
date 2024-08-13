@@ -353,7 +353,7 @@
                                    OUT OF SERVICES
                                 </label>
                                 <div class="synergy">
-                                    <input class="form-check-input" type="checkbox" value="" name="out_service"
+                                    <input class="form-check-input" type="checkbox" value="yes" name="out_service"
                                         id="out_service">
                             </div>        
                         </div>

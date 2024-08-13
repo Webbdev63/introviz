@@ -149,7 +149,14 @@
                     <input type="hidden" id="orderQuantity" name="orderQuantity">
                     <input type="hidden" id="customer_id" name="customer_id">
 
-                    <button type="submit" id="placeOrderHide" class="btn d-none">Place order </button>
+                    @if (isset($subscribuser))
+                        <a href="/saved-order">
+                            <button type="button" id="placeOrderHide" class="btn d-none">Place order</button>
+                        </a>
+                    @else
+                        <button type="submit" id="placeOrderHide" class="btn d-none">Place order</button>
+                    @endif
+
                 </form>
             </div>
         </div>

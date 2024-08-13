@@ -69,9 +69,12 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .enclaves {
+    height: 43vh;
+}
 </style>
 <div id="loader"></div>
-<section class="register">
+<section class="register enclaves">
     <div class="container">
         <div class="row">
             <div class="col-xl-7 col-lg-7 col-md-6 col-12">
@@ -532,4 +535,4 @@
     </script>
 </section>
 
-@include('front.footer');
+@include('front.footer')

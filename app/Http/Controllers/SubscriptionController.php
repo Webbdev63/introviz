@@ -14,12 +14,16 @@ class SubscriptionController extends Controller
 
     public function packagePrice()
     {
+        $userId = Auth::id();
+       // $saveddata = SaveCensusFile::all();
+       // $subdata = Subscription::all();
+     //   $checksub = Subscription::where('user_id', $userId)->where()->get();
+     //$checksub = Subscription::where('user_id', $userId)->get();
+     $checksub = Subscription::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
 
-        $saveddata = SaveCensusFile::all();
-        $subdata = Subscription::all();
        // dd($subdata);
-        //echo "<pre>"; print_r($subdata); echo "</pre>";
-       // die();
+        echo "<pre>"; print_r($checksub); echo "</pre>";
+        die();
         return view('subscription');
     }
 

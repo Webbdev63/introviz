@@ -10,6 +10,7 @@ use App\Models\SaveCensusFile;
 use App\Models\City;
 use App\Models\CensusFile;
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -506,7 +507,70 @@ public function exportToExcel($id)
             })
             ->toArray();
     
-        } elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
+        } 
+        elseif (empty(!$email) && !empty($Insurance) && !empty($VEHICLE) && !empty($DRIVER) && !empty($VIOLATIONS)) {
+            $filData = DB::table('census')
+                ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
+                ->whereIn('census.DOT_NUMBER', $dotNumbers)
+                ->select(
+                    'census.DOT_NUMBER',
+                    'census.NAME',
+                    'census.NAME_DBA',
+                    'census.PHY_STR',
+                    'census.PHY_CITY',
+                    'census.PHY_ST',
+                    'census.PHY_ZIP',
+                    'census.TEL_NUM',
+                    'census.CARSHIP',
+                    'census.TOT_PWR',
+                    'census.HM_IND',
+                    'census.PASSENGERS',
+                    'census.GENFREIGHT',
+                    'census.HOUSEHOLD',
+                    'census.METALSHEET',
+                    'census.MOTORVEH',
+                    'census.DRIVETOW',
+                    'census.LOGPOLE',
+                    'census.BLDGMAT',
+                    'census.MOBILEHOME',
+                    'census.MACHLRG',
+                    'census.PRODUCE',
+                    'census.OILFIELD',
+                    'census.LIVESTOCK',
+                    'census.COALCOKE',
+                    'census.MEAT',
+                    'census.CHEM',
+                    'census.DRYBULK',
+                    'census.COLDFOOD',
+                    'census.INTERMODAL',
+                    'census.USMAIL',
+                    'census.BEVERAGES',
+                    'census.PAPERPROD',
+                    'census.UTILITY',
+                    'census.FARMSUPP',
+                    'census.CONSTRUCT',
+                    'census.WATERWELL',
+                    'census.CARGOOTHR',
+                    'census.EMAILADDRESS',
+                    DB::raw('COALESCE(census_ins_active.EFFECTIVE_DATE, "") as `EFFECTIVE DATE`'),
+                    DB::raw('COALESCE(census_ins_active.NAME_COMPANY, "") as `COMPANY NAME`'),
+                    DB::raw('COALESCE(NULLIF(inspection.VEHICLE_OOS_TOTAL, 0), "") as `OUT OF SERVICE VEHICLE`'),
+                    DB::raw('COALESCE(NULLIF(inspection.DRIVER_OOS_TOTAL, 0), "") as `OUT OF SERVICE DRIVER`'),
+                    DB::raw('COALESCE(NULLIF(inspection.OOS_TOTAL, 0), "") as `OUT OF SERVICE VIOLATIONS`')
+                    
+                 
+                
+                )
+                ->take($data['orderQuantity'])
+                ->get()
+                ->map(function ($item) {
+                    return (array) $item;
+                })
+                ->toArray();
+        } 
+        
+        elseif (empty($email) && !empty($Insurance) && !empty($VEHICLE) && empty($DRIVER) && empty($VIOLATIONS)) {
             $filData = DB::table('census')
                 ->leftJoin('census_ins_active', 'census_ins_active.DOT_NUMBER', '=', 'census.DOT_NUMBER')
                 ->leftJoin('inspection', 'inspection.DOT_NUMBER', '=', 'census.DOT_NUMBER')
@@ -911,27 +975,24 @@ public function exportToExcel($id)
 
 
     
-    public function savedOrder()
-    {
-        // $totalRecords = CensusFile::count();
-        // echo "Total number of records: " . $totalRecords;
-        //die();
+            public function savedOrder()
+            {
+        
+                $userId = Auth::id();
+            if(isset($userId)){
+                $subscribusr = Subscription::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
+                if(isset($subscribusr)){
+                    $savedData = SaveCensusFile::where('user_id', $userId)->latest()->first();
 
-       // $userId = 2;
-        $userId = Auth::id();
-     if(isset($userId)){
-        $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
-       // $savedData = SaveCensusFile::where('user_id', $userId)->latest()->first();
-        //$savedData = SaveCensusFile::get();
-       // echo "<pre>"; print_r($savedData); echo "</pre>";
-         // die();
-       // $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->get();
-        return view('saved_order', compact('savedData'));
-     }
-       else{
-        return redirect('/login');
-       }
-    }
+                } else{
+                    $savedData = SaveCensusFile::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
+                }
+                return view('saved_order', compact('savedData'));
+            }
+            else{
+                return redirect('/login');
+            }
+            }
 
     public function getCities(Request $request)
     {
@@ -1012,7 +1073,9 @@ public function exportToExcel($id)
     
          
             $count = count($filData);
-            return view('results', compact('count', 'viewName', 'filter', 'countFilters','email','Insurance','outservices'));
+            $userId = Auth::id();
+            $subscribuser = Subscription::where('user_id', $userId)->where('payment_status', 'completed')->latest()->first();
+            return view('results', compact('count', 'viewName', 'filter', 'countFilters','email','Insurance','outservices', 'subscribuser'));
         }
     }
     
